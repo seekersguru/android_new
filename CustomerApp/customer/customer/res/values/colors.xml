@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<resources>
+
+    <!--
+        Check Android Theme colors for color reference:
+        https://developer.android.com/training/material/images/ThemeColors.png
+
+        Refer also to Color palette for the UI colors you should use:
+        http://www.google.com/design/spec/style/color.html#color-ui-color-palette
+    -->
+
+
+    <!--
+    <color name="myPrimaryColor">#3F51B5</color>
+    <color name="myPrimaryDarkColor">#3F51B5</color>
+    <color name="myAccentColor">#3F51B5</color>
+    <color name="myDrawerBackground">#F2F2F2</color>
+    <color name="myWindowBackground">#DEDEDE</color>
+    <color name="myTextPrimaryColor">#FFFFFF</color>
+    <color name="myNavigationColor">#000000</color>
+    <color name="navigationBarColor">#000000</color>
+    <color name="selected_gray">#ffdbdbdb</color>
+    -->
+
+
+    <!-- NavigationDrawer -->
+
+    <color name="myPrimaryColor">#3F51B5</color>
+    <color name="myPrimaryDarkColor">#3F51B5</color>
+    <color name="myAccentColor">#3F51B5</color>
+    <color name="myDrawerBackground">#F2F2F2</color>
+    <color name="myWindowBackground">#DEDEDE</color>
+    <color name="myTextPrimaryColor">#FFFFFF</color>
+    <color name="myNavigationColor">#000000</color>
+    <color name="selected_gray">#F05543</color>
+    
+    
+    <color name="colorPrimary">#F50057</color>
+    <color name="colorPrimaryDark">#C51162</color>
+    <color name="textColorPrimary">#FFFFFF</color>
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="colorAccent">#FF80AB</color>
+    <color name="actionbar_bg">#FF0099CC</color>
+    <color name="ColorPrimary">#ffffff</color>
+    <!-- #00897B Dark Green Like Whatsapp -->
+    <color name="ColorPrimaryDark">#00695C</color>
+    <color name="tabsScrollColor">#F2685A</color>
+    <color name="blackColor">#000000</color>
+    <color name="OrangeColorTheme">#F05543</color>
+    <color name="darkGreyColor">#555555</color>
+    <color name="lightGreyColor">#c0c0c0</color>
+    <color name="appbackgroundcolor">#ffffff</color>
+    <!--
+    <color name="caldroid_white">#ffffff</color>
+    <color name="caldroid_black">#000000</color>
+    <color name="caldroid_transparent">#00000000</color>
+    For settings framework
+    <color name="caldroid_lighter_gray">#ddd</color>
+    <color name="caldroid_gray">#CCC</color>
+    <color name="caldroid_darker_gray">#aaa</color>
+    <color name="caldroid_middle_gray">#888</color>
+    A light Holo shade of blue
+    <color name="caldroid_holo_blue_light">#ff33b5e5</color>
+    A dark Holo shade of blue
+    <color name="caldroid_holo_blue_dark">#ff0099cc</color>
+    A really bright Holo shade of blue
+    <color name="caldroid_sky_blue">#FFA3E8F7</color>
+    <color name="caldroid_333">#333</color>
+    <color name="caldroid_555">#555</color>
+    <color name="caldroid_light_red">#ff7f7f</color>
+    <color name="green">#8FCC85</color>
+    <color name="blue">#ff33b5e5</color>
+    <color name="white">#ffffff</color>
+    <color name="sample_primary">#4590bd</color>
+    <color name="sample_accent">#88bfcb</color>
+    <color name="blue">#0099D2</color>
+    -->
+
+    <color name="holo_blue_bright">#ff00ddff</color>
+    <color name="light_gray">#AA808080</color>
+    <color name="gray">#dddddd</color>
+    <color name="tab_bg">#142029</color>
+    <color name="bg_light_blue">#EBF5FF</color>
+    <color name="light_black">#CC000000</color>
+    <color name="light_black_AA">#000000</color>
+    <color name="light_black_help">#DD000000</color>
+    <color name="light_black_">#33000000</color>
+    <color name="light_black_77">#77000000</color>
+    <color name="light_blackBB">#AC000000</color>
+    <color name="light_white_">#33FFFFFF</color>
+    <color name="setting_bottom_menu_bg">#060A0C</color>
+    <color name="devider">#d3d3d1</color>
+    <color name="list_devider">#dfdcd4</color>
+    <color name="list_selector">#E9E6D9</color>
+    <color name="tab_selected">#3373b1</color>
+    <color name="tab_unselected">#e6e6e6</color>
+    <color name="alert">#CC0000</color>
+    <color name="comment_bg">#3b7fbe</color>
+    <color name="confirm">#FF8800</color>
+    <color name="info">#669900</color>
+    <color name="custom">#3F9FE0</color>
+    <color name="holo_blue">#FF33E5B5</color>
+    <color name="proj_det_devider">#CACACA</color>
+    <color name="main_bg">#F0EFEF</color>
+
+</resources>

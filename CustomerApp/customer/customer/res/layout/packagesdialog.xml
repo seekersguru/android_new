@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/marginLeftRightllFields" >
+
+    <LinearLayout
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginLeftRightllFields"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Packages"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeLarge" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:shrinkColumns="*"
+            android:stretchColumns="*" >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <com.wedwiseapp.views.CTextView
+                    android:id="@+id/tvLocation2"
+                    style="@style/text_999_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginLeftRightllFields"
+                    android:gravity="center"
+                    android:text="Jain only"
+                    android:textSize="@dimen/textSizeNormal" />
+
+                <com.wedwiseapp.views.CTextView
+                    android:id="@+id/tvSharedRoom2"
+                    style="@style/text_333_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/marginLeftRightllFields"
+                    android:gravity="center"
+                    android:text="Yes"
+                    android:textSize="@dimen/textSizeNormal" />
+            </TableRow>
+
+            <com.wedwiseapp.views.CTextView
+                style="@style/text_999_16"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/marginLeftRightllFields"
+                android:background="#999999" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" >
+
+                <com.wedwiseapp.views.CTextView
+                    android:id="@+id/tvCapacity2"
+                    style="@style/text_999_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Veg"
+                    android:textSize="@dimen/textSizeNormal" />
+
+                <com.wedwiseapp.views.CTextView
+                    android:id="@+id/tvCapacityCount2"
+                    style="@style/text_333_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Yes"
+                    android:textSize="@dimen/textSizeNormal" />
+            </TableRow>
+
+            <com.wedwiseapp.views.CTextView
+                style="@style/text_999_16"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/marginLeftRightllFields"
+                android:background="#999999" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/marginLeftRightllFields" >
+
+                <com.wedwiseapp.views.CTextView
+                    android:id="@+id/tvType2"
+                    style="@style/text_999_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Alcohol"
+                    android:textSize="@dimen/textSizeNormal" />
+
+                <com.wedwiseapp.views.CTextView
+                    android:id="@+id/tvTypeData2"
+                    style="@style/text_333_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Yes"
+                    android:textSize="@dimen/textSizeNormal" />
+            </TableRow>
+        </TableLayout>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="@dimen/widthFilterSubmitButton"
+            android:layout_height="@dimen/heightwidthFilterSubmitButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/marginTopButtonBtnSubmit"
+            android:background="@color/OrangeColorTheme"
+            android:text="DONE"
+            android:textColor="#fff"
+            android:textSize="@dimen/textSizeMedium" />
+    </LinearLayout>
+
+</LinearLayout>

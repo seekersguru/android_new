@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlCalendar_DateCellPatrent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff" >
+
+    <RelativeLayout
+        android:id="@+id/rlContainer"
+        android:layout_width="50dp"
+        android:layout_height="47dp"
+        android:padding="1dp" >
+
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:text="13"
+            android:textColor="#000"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:background="@drawable/notification_date_bg"
+            android:gravity="center"
+            android:text="45"
+            android:textColor="#ffffff"
+            android:textSize="10sp" />
+
+        <TextView
+            android:id="@+id/tvPeekDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvDate"
+            android:layout_centerHorizontal="true"
+            android:text="Peek date"
+            android:textColor="#000"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:id="@+id/llSelectedDateBorder"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/selected_date_background_mf_cal"
+            android:visibility="gone" >
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnDisableOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="#00000000"
+            android:gravity="center" />
+    </RelativeLayout>
+
+</RelativeLayout>

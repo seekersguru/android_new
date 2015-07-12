@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:padding="@dimen/paddingLeftEditText" >
+
+    <LinearLayout
+        android:id="@+id/llFieldsSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".33"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeSmall"/>
+
+        <TextView
+            android:id="@+id/tvDateFirst"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".33"
+            android:gravity="center"
+            android:textColor="@color/calendarThemeOrangeColor"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:id="@+id/tvDateSecond"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".33"
+            android:gravity="center"
+            android:textColor="@color/calendarThemeOrangeColor"
+            android:textSize="@dimen/textSizeSmall" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvPackageDedtails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:gravity="center"
+        android:singleLine="false"
+        android:textColor="#000"
+        android:textSize="@dimen/textSizeSmall" />
+
+</LinearLayout>

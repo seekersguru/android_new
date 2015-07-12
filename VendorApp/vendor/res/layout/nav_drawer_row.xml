@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true" >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imViewMenuIcon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heightAlbumImage"
+            android:background="@drawable/img1" />
+
+        <TextView
+            android:id="@+id/tvCategoryName"
+            android:layout_width="@dimen/widthAlbumtextView"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/paddingLeftEditText"
+            android:textColor="#ffffff"
+            android:background="#F05543"
+            android:gravity="center"
+            android:text="Ankur paliwal"
+            android:layout_gravity="right|bottom"
+            android:textSize="@dimen/textSizeMedium" />
+    </FrameLayout>
+
+</RelativeLayout>

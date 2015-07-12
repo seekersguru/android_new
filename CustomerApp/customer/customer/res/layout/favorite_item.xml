@@ -1,0 +1,115 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="5dp" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/imViewBackground"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heightFavItemImage"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img3" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/imViewBackground"
+            android:layout_alignParentLeft="true"
+            android:background="@color/light_black_77"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/paddingLeftEditText" >
+
+            <!-- @color/light_black_77 -->
+
+            <ImageView
+                android:id="@+id/imViewCar"
+                android:layout_width="@dimen/iconFavListWidth"
+                android:layout_height="@dimen/iconFavListHeight"
+                android:src="@drawable/car" />
+
+            <ImageView
+                android:id="@+id/imViewGlass"
+                android:layout_width="@dimen/iconFavListWidth"
+                android:layout_height="@dimen/iconFavListHeight"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/glass" />
+
+            <ImageView
+                android:id="@+id/imViewLocation"
+                android:layout_width="@dimen/iconFavListWidth"
+                android:layout_height="@dimen/iconFavListHeight"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/location_favorite" />
+
+            <ImageView
+                android:id="@+id/imViewHeart"
+                android:layout_width="@dimen/iconFavListWidth"
+                android:layout_height="@dimen/iconFavListHeight"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/heart_favorite" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <com.wedwiseapp.views.CBTextView
+        android:id="@+id/tvVenue"
+        style="@style/text_666_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Royal Gardens At ITC Maratha" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@drawable/cup"
+            android:padding="3dp" />
+
+        <com.wedwiseapp.views.CTextView
+            android:id="@+id/tvVeg_NonVeg"
+            style="@style/text_666_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Veg only" />
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginLeft="@dimen/marginLeftRightllFields"
+            android:background="@drawable/man"
+            android:padding="3dp" />
+
+        <com.wedwiseapp.views.CTextView
+            android:id="@+id/tvCapacity"
+            style="@style/text_666_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            
+            android:text="Capacity : 500" />
+    </LinearLayout>
+
+    <com.wedwiseapp.views.CTextView
+        android:id="@+id/tvStartingPrice"
+        style="@style/text_333_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Starting Price: 15000"
+        android:textSize="@dimen/textSizeNormal" />
+
+</LinearLayout>

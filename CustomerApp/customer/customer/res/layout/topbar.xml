@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:elevation="4dp"
+    android:gravity="end"
+    android:orientation="horizontal"
+    android:padding="10dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:gravity="center_vertical" >
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/btnBackWidth"
+            android:layout_height="@dimen/btnBackHeight"
+            android:layout_marginLeft="@dimen/marginleftBackButton"
+            android:background="@drawable/arrow_back_orange" />
+
+        <TextView
+            android:id="@+id/tvToolBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marginleftToolbarText"
+            android:layout_toRightOf="@+id/btnBack"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textSizeMedium" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imView"
+        android:layout_width="@dimen/menuIconDimension"
+        android:layout_height="@dimen/menuIconDimension"
+        android:layout_gravity="end"
+        android:layout_marginRight="@dimen/marginleftBackButton"
+        android:background="@drawable/menu_unselected"
+        android:visibility="gone" />
+
+</LinearLayout>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg" >
+
+    <include
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/marginTopToolBar"
+        layout="@layout/toolbar" />
+
+    <ImageView
+        android:id="@+id/imViewLogo"
+        android:layout_width="93dp"
+        android:layout_height="93dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/logo"
+        android:contentDescription="@string/drawer_open"
+        android:visibility="gone" >
+    </ImageView>
+
+    <!--
+    <LinearLayout
+        android:id="@+id/llFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marginLeftRightButton"
+        android:layout_marginRight="@dimen/marginLeftRightButton"
+        android:layout_marginTop="@dimen/marginTopToolBar"
+        android:orientation="vertical" >
+    </LinearLayout>
+    -->
+
+    <LinearLayout
+        android:id="@+id/llSocialSitesLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="@dimen/marginleftToolbarText"
+        android:layout_marginRight="@dimen/marginleftToolbarText"
+        android:layout_marginTop="@dimen/marginTopSocialSiteLoginLayout"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnFBLogin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonheightFbLogin"
+            android:background="@drawable/sign_up_fb"
+            android:textColor="#fff"
+            android:textSize="@dimen/textSizeMedium"
+            android:text="SignIn from facebook" />
+
+        <Button
+            android:id="@+id/btnGoogleLogin"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonheightFbLogin"
+            android:layout_marginTop="@dimen/marginTopGoogleLoginButton"
+             android:textColor="#fff"
+            android:textSize="@dimen/textSizeMedium"
+            android:text="SignIn from Google+" 
+            android:background="@drawable/sign_up_google" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llSocialSitesLogin"
+        android:layout_marginTop="@dimen/marginTopGoogleLoginButton"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnSignUp"
+            android:layout_width="@dimen/buttonSignUpWidth"
+            android:layout_height="@dimen/buttonSignUpHeight"
+            android:background="@drawable/button_transparent"
+            android:gravity="center"
+            android:text="Sign Up"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textSizeMedium" />
+
+        <Button
+            android:id="@+id/btnLogin"
+            android:layout_width="@dimen/buttonSignUpWidth"
+            android:layout_height="@dimen/buttonSignUpHeight"
+            android:layout_marginLeft="@dimen/marginleftToolbarText"
+            android:background="@drawable/button_transparent"
+            android:gravity="center"
+            android:text="Log In"
+            android:textColor="#fff"
+            android:textSize="@dimen/textSizeMedium" />
+    </LinearLayout>
+
+ <TextView
+        android:id="@+id/tvBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/bottomBarHeight"
+        android:background="@drawable/textview_background_semitransparent"
+        android:gravity="center"
+        android:padding="@dimen/marginLeftRightllFields"
+        android:singleLine="false"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/textSizeNormal" />
+
+</RelativeLayout>

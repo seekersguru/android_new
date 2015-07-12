@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    <com.wedwiseapp.views.CTextView
+        android:id="@+id/tvVenue"
+        style="@style/text_333_16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:text="Royal Gardens At ITC Maratha"
+        android:textSize="@dimen/textSizeMedium" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <com.wedwiseapp.views.CTextView
+            android:id="@+id/tvAddress"
+            style="@style/text_999_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Sakinaka junction andheri Kurla Road, Andheri East, Mumbai 400072" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <com.wedwiseapp.views.CTextView
+            android:id="@+id/tvMobileNumber"
+            style="@style/text_666_16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/paddingLeftEditText"
+            android:text="8739994888" />
+
+        <Button
+            android:id="@+id/btnFavorites"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="80dp"
+            android:background="@drawable/favorites" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:gravity="center"
+        android:visibility="visible" >
+
+        <ImageView
+            android:id="@+id/imViewPicture"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/heightMapView"
+            android:scaleType="centerCrop"
+            android:src="@drawable/concert" />
+
+        <TextView
+            android:id="@+id/tvRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:background="@color/light_black_77"
+            android:padding="@dimen/marginLeftRightllFields"
+            android:text="Rs 10,000"
+            android:textColor="#fff"
+            android:textSize="@dimen/textSizeMedium" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/marginLeftRightllFields" >
+
+        <com.wedwiseapp.views.CTextView
+            android:id="@+id/tvVideoLink"
+            style="@style/text_333_14"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:background="@drawable/red_border"
+            android:gravity="center"
+            android:padding="@dimen/paddingLeftEditText"
+            android:text="Video Link"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeMedium" />
+
+        <com.wedwiseapp.views.CTextView
+            android:id="@+id/tvRotatingView"
+            style="@style/text_333_14"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|bottom"
+            android:layout_marginLeft="@dimen/marginLeftRightllFields"
+            android:background="@drawable/red_border"
+            android:gravity="center"
+            android:padding="@dimen/paddingLeftEditText"
+            android:text="360 View"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeMedium" />
+    </LinearLayout>
+
+</LinearLayout>

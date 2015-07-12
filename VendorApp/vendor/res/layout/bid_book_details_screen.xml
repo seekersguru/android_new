@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/rlTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottomBarHeight"
+        android:background="#fff" >
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/btnBackWidth"
+            android:layout_height="@dimen/btnBackHeight"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back_orange" />
+
+        <LinearLayout
+            android:id="@+id/llAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/marginLeftRightllFields"
+            android:layout_toRightOf="@+id/btnBack"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tvPlace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="50"
+                android:singleLine="true"
+                android:text="Random Place"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeMedium"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxLength="50"
+                android:singleLine="true"
+                android:text="The Random Address at Rd,Va,54321"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnLocation"
+            android:layout_width="@dimen/widthLocationIcon"
+            android:layout_height="@dimen/heightLocationIcon"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marginLeftRightllFields"
+            android:background="@drawable/locationicon" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarDividerHeight"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/divider_bottom_bar" />
+    </RelativeLayout>
+
+    <!--
+    <RelativeLayout
+        android:id="@+id/rlBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottomBarHeight"
+        android:layout_alignParentBottom="true"
+        android:background="@color/appbackgroundcolor" >
+
+        <LinearLayout
+            android:id="@+id/llBottomBarParent"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarHeight"
+            android:layout_alignParentBottom="true"
+            android:background="#F0EEEF"
+            android:orientation="vertical" >
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottomBarDividerHeight"
+                android:background="@drawable/divider_bottom_bar" />
+
+            <LinearLayout
+                android:id="@+id/llBottomBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00000000"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:weightSum="1" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25"
+                    android:gravity="center" >
+
+                    <Button
+                        android:id="@+id/btnMail"
+                        android:layout_width="@dimen/buttonMessageWidth"
+                        android:layout_height="@dimen/buttonMessageHeight"
+                        android:layout_gravity="center"
+                        android:background="@drawable/mail" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25"
+                    android:gravity="center" >
+
+                    <Button
+                        android:id="@+id/btnHome"
+                        android:layout_width="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
+                        android:layout_gravity="center"
+                        android:background="@drawable/home" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25"
+                    android:gravity="center" >
+
+                    <Button
+                        android:id="@+id/btnLike"
+                        android:layout_width="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
+                        android:layout_gravity="center"
+                        android:background="@drawable/like" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".25"
+                    android:gravity="center" >
+
+                    <Button
+                        android:id="@+id/btnMenu"
+                        android:layout_width="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/buttonMessageHeight"
+                        android:layout_gravity="center"
+                        android:background="@drawable/menu" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+    -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlTopBar"
+        android:background="@color/appbackgroundcolor" >
+
+        <!-- android:layout_above="@+id/rlBottomBar" -->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/rlDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:id="@+id/tvCoupleName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/marginLeftRightllFields"
+                        android:singleLine="true"
+                        android:text="Ramesh Weds Sujata"
+                        android:textColor="#000"
+                        android:textSize="@dimen/textSizeMedium" />
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvCoupleName"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/paddingLeftEditText"
+                        android:gravity="center"
+                        android:singleLine="false"
+                        android:text="Sarinaka Junction,Andheri Kurla Road,Andheri East,Mumbai,400702"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/textSizeNormal" />
+
+                    <TextView
+                        android:id="@+id/tvMobileNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvAddress"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/paddingLeftEditText"
+                        android:gravity="center"
+                        android:maxLength="15"
+                        android:singleLine="true"
+                        android:text="9314851230"
+                        android:textColor="#999999"
+                        android:textSize="@dimen/textSizeMedium" />
+
+                    <Button
+                        android:id="@+id/btnLike"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_below="@+id/tvAddress"
+                        android:layout_marginLeft="@dimen/heigthCreateButton"
+                        android:layout_toRightOf="@+id/tvMobileNumber"
+                        android:background="@drawable/likeicon" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/marginLeftRightllFields"
+                    android:layout_marginRight="@dimen/marginLeftRightllFields"
+                    android:layout_marginTop="@dimen/marginLeftRightllFields"
+                    android:orientation="vertical" >
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/viewSeparatorHeight"
+                        android:background="@drawable/divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Event Date"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tvEventDate"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Shared room"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/viewSeparatorHeight"
+                        android:background="@drawable/divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Time Slot"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tvTimeSlot"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="MONDAY  NIGHT"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/viewSeparatorHeight"
+                        android:background="@drawable/divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Package"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tvPackage"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="500 Rs Per plate Min. 100 Person"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/viewSeparatorHeight"
+                        android:background="@drawable/divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Quoted Price"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tvQuotdPrice"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="500 Rs Per plate Min. 100 Person"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/viewSeparatorHeight"
+                        android:background="@drawable/divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="Bid Price"
+                            android:textColor="#999999" />
+
+                        <TextView
+                            android:id="@+id/tvBidPrice"
+                            android:layout_width="0dp"
+                            android:layout_height="@dimen/heightTextView"
+                            android:layout_weight=".5"
+                            android:gravity="center"
+                            android:text="500 Person Min. 100 Person"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/viewSeparator_Divider"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/viewSeparatorHeight"
+                        android:background="@drawable/divider" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:orientation="horizontal"
+                        android:weightSum="1" >
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".25"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/layout_transparent_bg_orange_boundary"
+                                android:gravity="center" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/correct" />
+
+                                <TextView
+                                    android:id="@+id/tvAccept"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Accept"
+                                    android:textColor="@color/calendarThemeOrangeColor"
+                                    android:textSize="@dimen/textSizeSmall" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".25"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/layout_transparent_bg_orange_boundary"
+                                android:gravity="center" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/cross" />
+
+                                <TextView
+                                    android:id="@+id/tvReject"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Reject"
+                                    android:textColor="@color/calendarThemeOrangeColor"
+                                    android:textSize="@dimen/textSizeSmall" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".25"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/layout_transparent_bg_orange_boundary"
+                                android:gravity="center" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/rebid" />
+
+                                <TextView
+                                    android:id="@+id/tvRebid"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Rebid"
+                                    android:textColor="@color/calendarThemeOrangeColor"
+                                    android:textSize="@dimen/textSizeSmall" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight=".25"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <LinearLayout
+                                android:layout_width="80dp"
+                                android:layout_height="30dp"
+                                android:background="@drawable/layout_transparent_bg_orange_boundary"
+                                android:gravity="center" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/pending" />
+
+                                <TextView
+                                    android:id="@+id/tvPending"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Pending"
+                                    android:textColor="@color/calendarThemeOrangeColor"
+                                    android:textSize="@dimen/textSizeSmall" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+</RelativeLayout>

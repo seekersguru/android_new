@@ -1,0 +1,126 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--
+         Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+         https://developer.android.com/design/patterns/navigation-drawer.html
+    -->
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="toolbar_elevation">4dp</dimen>
+
+    <!-- LoginSignUpActivity -->
+
+
+    <!-- TextSizes -->
+    <dimen name="textSizeSmall">20sp</dimen>
+    <dimen name="textSizeNormal">25sp</dimen>
+    <dimen name="textSizeMedium">33sp</dimen>
+    <dimen name="textSizeLarge">42sp</dimen>
+    <dimen name="textSizeLarger">26sp</dimen>
+    <dimen name="textSizeXLarge">30sp</dimen>
+
+    <!-- LoginSignUpActivity -->
+    <dimen name="btnBackHeight">40dp</dimen>
+    <dimen name="btnBackWidth">41dp</dimen>
+    <dimen name="marginleftBackButton">5dp</dimen>
+    <dimen name="marginleftToolbarText">10dp</dimen>
+    <dimen name="menuIconDimension">30dp</dimen>
+    <dimen name="marginTopToolBar">30dp</dimen>
+    <dimen name="marginLeftRightButton">10dp</dimen>
+    <dimen name="buttonheightFbLogin">72dp</dimen>
+    <dimen name="marginTopSocialSiteLoginLayout">25dp</dimen>
+    <dimen name="marginTopGoogleLoginButton">20dp</dimen>
+    <dimen name="buttonSignUpWidth">180dp</dimen>
+    <dimen name="buttonSignUpHeight">70dp</dimen>
+
+    <!-- Registration -->
+    <dimen name="marginTopScrollView">50dp</dimen>
+    <dimen name="marginLeftRightllFields">10dp</dimen>
+    <dimen name="editTextHeight">80dp</dimen>
+    <dimen name="viewSeparatorHeight">1dp</dimen>
+    <dimen name="paddingLeftEditText">12dp</dimen>
+    <dimen name="buttonHeightSignIn">80dp</dimen>
+    <dimen name="marginTopBUttonSignIn">30dp</dimen>
+
+    <!-- LoginActivity -->
+
+    <dimen name="marginTopSignupButton">30dp</dimen>
+    <dimen name="marginTopEditTextFields">5dp</dimen>
+
+    <!-- Calendar Screen -->
+    <dimen name="arrowNavigationWidth">20dp</dimen>
+    <dimen name="arrowNavigationHeight">35dp</dimen>
+
+    <!-- Message Tab Activity -->
+    <dimen name="buttonMessageWidth">33dp</dimen>
+    <dimen name="buttonMessageHeight">35dp</dimen>
+    <dimen name="dimenBottomBarIcons">60dp</dimen>
+      <dimen name="heightMenuIcon">27dp</dimen>
+    <dimen name="bottomBarHeight">90dp</dimen>
+    <dimen name="bottomBarDividerHeight">5dp</dimen>
+    <dimen name="attachmentIconHeight">48dp</dimen>
+    <dimen name="attachmentIconWidth">50dp</dimen>
+    <dimen name="paddingListItem">8dp</dimen>
+    <!-- Message Chat Screen -->
+    <dimen name="overflowMenuIconWidth">8dp</dimen>
+    <dimen name="overflowMenuIconHeight">32dp</dimen>
+    <dimen name="attachmentBlackIconHeight">22dp</dimen>
+    <dimen name="attachmentBlackIconWidth">24dp</dimen>
+    <dimen name="sendmessageIconHeight">20dp</dimen>
+    <dimen name="sendmessageIconWidth">22dp</dimen>
+    <dimen name="circleSendButtonBg">35dp</dimen>
+
+    <!-- Album Screen Activity -->
+    <dimen name="heightAlbumImage">350dp</dimen>
+    <dimen name="widthAlbumtextView">170dp</dimen>
+
+    <!-- Bid Book Message Tab -->
+    <dimen name="marginTopCreateButton">10dp</dimen>
+    <dimen name="marginTopListView">15dp</dimen>
+    <dimen name="heigthCreateButton">50dp</dimen>
+
+    <!-- bid book crete -->
+    <dimen name="editTextWidth">150dp</dimen>
+    <dimen name="editTextHeightBidBookCreate">60dp</dimen>
+    <dimen name="widthSpinnerperplate">120dp</dimen>
+    <dimen name="heightSpinnerperplate">60dp</dimen>
+    <dimen name="widthButtonBidIt">150dp</dimen>
+    <dimen name="heightButtonBidIt">60dp</dimen>
+    <dimen name="widthSpinnerTimeSlot">160dp</dimen>
+    <dimen name="marginTopllFields">30dp</dimen>
+    <dimen name="marginTopbtnSchedule">60dp</dimen>
+
+    <!-- Favorite List Adapter -->
+    <dimen name="widthSpinnerSwitchCategory">230dp</dimen>
+    <dimen name="heightArrowDown">30dp</dimen>
+    <dimen name="widthArrowDown">33dp</dimen>
+    <dimen name="iconFavListWidth">50dp</dimen>
+    <dimen name="iconFavListHeight">50dp</dimen>
+    <dimen name="heightFavItemImage">350dp</dimen>
+
+    <!-- Vendor Details Activity -->
+    <dimen name="widthScheduleButton">150dp</dimen>
+    <dimen name="heightScheduleButton">80dp</dimen>
+    <dimen name="heightMapView">350dp</dimen>
+    <!-- Chat Adapter -->
+    <dimen name="heightChatBox">95dp</dimen>
+
+    <!-- Custom Action Bar -->
+    <dimen name="dimenCustomactionBarSearchIcom">35dp</dimen>
+    <dimen name="widthSearchBar">300dp</dimen>
+    <dimen name="heightSearchBar">60dp</dimen>
+      <dimen name="marginLeftSearchBar">180dp</dimen>
+
+    <!-- FilterDialog -->
+    <dimen name="widthFilterSubmitButton">130dp</dimen>
+    <dimen name="heightwidthFilterSubmitButton">70dp</dimen>
+
+    <!-- Facilities Dialog -->
+    <dimen name="marginTopButtonBtnSubmit">50dp</dimen>
+     <!-- Error Dialog -->
+     <dimen name="buttonHeightOk">50dp</dimen>
+
+</resources>

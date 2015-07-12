@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <com.wedwiseapp.views.CTextView
+                android:id="@+id/tvDescription"
+                style="@style/text_333_14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="@dimen/paddingLeftEditText"
+                android:text="Description"
+                android:textColor="#999999"
+                android:textSize="@dimen/textSizeMedium" />
+
+            <com.wedwiseapp.views.CTextView
+                style="@style/text_999_16"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/paddingLeftEditText"
+                android:background="#999999" />
+
+            <LinearLayout
+                android:id="@+id/key_value_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/marginLeftRightllFields"
+                android:paddingRight="@dimen/marginLeftRightllFields" >
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ExpandableListView
+        android:id="@+id/lvExp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp" />
+
+    <com.wedwiseapp.views.CTextView
+        android:id="@+id/tvPara"
+        style="@style/text_333_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/paddingLeftEditText"
+        android:text="Description"
+        android:textColor="#999999"
+        android:textSize="@dimen/textSizeMedium" />
+
+</LinearLayout>

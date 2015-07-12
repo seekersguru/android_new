@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:layout_gravity="end"
+    android:background="#00000000"
+    android:elevation="4dp"
+    android:gravity="end"
+    app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+    app:theme="@style/Theme.AppCompat.Light.NoActionBar" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:gravity="center_vertical" >
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/btnBackWidth"
+            android:layout_height="@dimen/btnBackHeight"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marginleftBackButton"
+            android:background="@drawable/back_arrow_header" />
+
+        <TextView
+            android:id="@+id/tvToolBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/marginleftToolbarText"
+            android:layout_toRightOf="@+id/btnBack"
+            android:singleLine="true"
+            android:layout_toLeftOf="@+id/refresh_button"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/textSizeMedium" />
+
+        <Button
+            android:id="@+id/refresh_button"
+            android:layout_width="@dimen/btnBackWidth"
+            android:layout_height="@dimen/btnBackWidth"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/refresh_button" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/imViewAttachment"
+                android:layout_width="@dimen/attachmentBlackIconWidth"
+                android:layout_height="@dimen/attachmentBlackIconHeight"
+                android:layout_marginRight="@dimen/marginTopBUttonSignIn"
+                android:background="@drawable/attechedment_black"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imViewOverFlow"
+                android:layout_width="@dimen/overflowMenuIconWidth"
+                android:layout_height="@dimen/overflowMenuIconHeight"
+                android:layout_marginRight="@dimen/marginLeftRightllFields"
+                android:background="@drawable/overflow_menu"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+    <!--
+    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
+    android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar"
+    
+    
+     app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
+    app:theme="@style/Theme.AppCompat.Light.NoActionBar"
+    -->
+
+    <ImageView
+        android:id="@+id/imView"
+        android:layout_width="@dimen/menuIconDimension"
+        android:layout_height="@dimen/menuIconDimension"
+        android:layout_gravity="end"
+        android:layout_marginRight="@dimen/marginleftBackButton"
+        android:background="@drawable/menu_unselected"
+        android:visibility="gone" />
+
+</android.support.v7.widget.Toolbar><!--
+     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:local="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/actionBarSize"
+    android:background="?attr/colorPrimary"
+    local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+    local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+-->

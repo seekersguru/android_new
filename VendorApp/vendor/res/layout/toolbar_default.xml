@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlParent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#fff" >
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="end"
+        android:background="#fff"
+        android:minHeight="@dimen/abc_action_bar_default_height_material" >
+
+        <!-- style="@style/ToolBarStyle" -->
+
+        <ImageButton
+            android:id="@+id/imgRightMenu"
+            android:layout_width="30dp"
+            android:layout_height="25dp"
+            android:background="@drawable/nav" />
+    </android.support.v7.widget.Toolbar>
+
+    <ImageView
+        android:layout_width="93dp"
+        android:layout_height="62dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/logo"
+        android:contentDescription="@string/open" >
+    </ImageView>
+
+</RelativeLayout>

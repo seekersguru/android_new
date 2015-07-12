@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context=".calendar.CalendarActivity" >
+
+    <!-- #F0EEEF -->
+
+    <RelativeLayout
+        android:id="@+id/rlTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#fff" >
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="21dp"
+            android:layout_height="22dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back_orange" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="WEDwise"
+            android:textColor="#ffffff"
+            android:textSize="22sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnBidTopbar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/mail_unselected"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottomBarParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottomBarHeight"
+        android:layout_alignParentBottom="true"
+        android:background="#F0EEEF"
+        android:orientation="vertical" >
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarDividerHeight"
+            android:background="@drawable/divider_bottom_bar" />
+
+        <LinearLayout
+            android:id="@+id/llBottomBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".25"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/btnMail"
+                    android:layout_width="@dimen/buttonMessageWidth"
+                    android:layout_height="@dimen/buttonMessageHeight"
+                    android:layout_gravity="center"
+                    android:background="@drawable/mail_unselected" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".25"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/btnHome"
+                    android:layout_width="@dimen/dimenBottomBarIcons"
+                    android:layout_height="@dimen/dimenBottomBarIcons"
+                    android:layout_gravity="center"
+                    android:background="@drawable/home_unselected" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".25"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/btnLike"
+                    android:layout_width="@dimen/dimenBottomBarIcons"
+                    android:layout_height="@dimen/dimenBottomBarIcons"
+                    android:layout_gravity="center"
+                    android:background="@drawable/like_unselected" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".25"
+                android:gravity="center" >
+
+                <Button
+                    android:id="@+id/btnMenu"
+                    android:layout_width="@dimen/dimenBottomBarIcons"
+                    android:layout_height="@dimen/buttonMessageHeight"
+                    android:layout_gravity="center"
+                    android:background="@drawable/menu_unselected" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llCalendarHolder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rlTopBar"
+        android:layout_marginBottom="@dimen/bottomBarHeight"
+        android:background="#ffffff"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/lvAlbums"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000"
+            android:cacheColorHint="#00000000"
+            android:divider="#00000000"
+            android:dividerHeight="0dp"
+            android:scrollbars="none" />
+        <!-- tools:listitem="@layout/item_demo_01" -->
+    </LinearLayout>
+
+    <!--
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llBottomBarParent"
+        android:layout_below="@+id/llCalendarHolder"
+        android:background="#ffffff" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:background="#EDECEA" >
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/add_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="30dp"
+                android:text="TODAY"
+                android:textColor="#C8C7C5"
+                android:textSize="16sp" />
+        </FrameLayout>
+    </LinearLayout>
+    -->
+
+</RelativeLayout>

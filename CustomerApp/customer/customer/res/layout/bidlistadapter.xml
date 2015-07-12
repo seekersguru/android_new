@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:padding="@dimen/paddingListItem" >
+
+    <TextView
+        android:id="@+id/tvContactName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:ellipsize="end"
+        android:maxLength="15"
+        android:singleLine="true"
+        android:text="Andy Lau"
+        android:textColor="@color/blackColor"
+        android:textSize="@dimen/textSizeMedium" />
+
+    <ImageView
+        android:id="@+id/imViewAttachment"
+        android:layout_width="@dimen/attachmentIconWidth"
+        android:layout_height="@dimen/attachmentIconHeight"
+        android:layout_marginLeft="@dimen/paddingLeftEditText"
+        android:layout_toRightOf="@+id/tvContactName"
+        android:background="@drawable/attachment" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:ellipsize="end"
+        android:maxLength="15"
+        android:text="5:32 pm"
+        android:textColor="@color/OrangeColorTheme"
+        android:textSize="@dimen/textSizeSmall" />
+
+    <TextView
+        android:id="@+id/tvSubject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvContactName"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:maxLength="25"
+        android:singleLine="true"
+        android:text="I am very happy to inform you"
+        android:textColor="@color/darkGreyColor"
+        android:textSize="@dimen/textSizeNormal" />
+
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvSubject"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:maxLength="50"
+        android:singleLine="true"
+        android:text="Contacted the bank here with the above account"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="@dimen/textSizeSmall" />
+
+</RelativeLayout>

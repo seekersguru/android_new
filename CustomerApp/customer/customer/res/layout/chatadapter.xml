@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1EFF0"
+    android:orientation="vertical"
+    android:padding="@dimen/marginleftBackButton" >
+
+    <RelativeLayout
+        android:id="@+id/rlRight"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/heightChatBox"
+        android:layout_gravity="right"
+        android:background="@drawable/chatboxright"
+        android:padding="@dimen/marginLeftRightllFields" >
+
+        <TextView
+            android:id="@+id/tvMessageRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Helo Guys how are you"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeNormal" />
+
+        <TextView
+            android:id="@+id/tvDateRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvMessageRight"
+            android:layout_marginTop="@dimen/marginleftBackButton"
+            android:text="6:15 pm"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeSmall"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/heightChatBox"
+        android:layout_gravity="left"
+        android:background="@drawable/chatboxleft"
+        android:padding="@dimen/marginLeftRightllFields" >
+
+        <TextView
+            android:id="@+id/tvMessageLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:text="Helo Guys how are you"
+            android:paddingLeft="@dimen/paddingLeftEditText"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeNormal" />
+
+        <TextView
+            android:id="@+id/tvDateLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvMessageLeft"
+            android:layout_marginTop="@dimen/marginleftBackButton"
+            android:text="6:15 pm"
+            android:paddingLeft="@dimen/paddingLeftEditText"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeSmall"
+            android:visibility="visible" />
+    </RelativeLayout>
+
+</LinearLayout>

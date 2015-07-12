@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="#fff"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="@dimen/marginLeftRightllFields" >
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTopButtonBtnSubmit"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/rdoButtonEnquiry"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:checked="false"
+                            android:background="@drawable/radio_button_selector_filter"
+                            android:button="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/paddingLeftEditText"
+                            android:text="ENQUIRY"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/CheckBoxMorning"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/check_box_selector_filter"
+                            android:button="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/paddingLeftEditText"
+                            android:text="MORNING"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/CheckBoxEvening"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/check_box_selector_filter"
+                            android:button="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/paddingLeftEditText"
+                            android:text="EVENING"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/rdoButtonEventDate"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/radio_button_selector_filter"
+                            android:button="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/paddingLeftEditText"
+                            android:text="EVENT DATE"
+                            android:textColor="#000" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#9c9c9c" 
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/paddingLeftEditText"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/rdoButtonBooking"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/radio_button_selector_filter"
+                            android:button="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/paddingLeftEditText"
+                            android:text="Booking"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/paddingLeftEditText"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <CheckBox
+                            android:id="@+id/CheckBoxAllDay"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/check_box_selector_filter"
+                            android:button="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/paddingLeftEditText"
+                            android:text="ALL DAY"
+                            android:textColor="#000" />
+                    </LinearLayout>
+
+                    <CheckBox
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/paddingLeftEditText"
+                        android:layout_marginTop="@dimen/marginTopBUttonSignIn"
+                        android:gravity="left|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/rdoButtonEventDate"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/radio_button_selector_filter"
+                            android:button="@null" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/paddingLeftEditText"
+                            android:text="BOOKING DATE"
+                            android:textSize="@dimen/textSizeNormal"
+                            android:textColor="#000" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="@dimen/widthFilterSubmitButton"
+            android:layout_height="@dimen/heightwidthFilterSubmitButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/marginTopButtonBtnSubmit"
+            android:background="@color/calendarThemeOrangeColor"
+            android:text="SUBMIT"
+            android:textColor="#fff"
+            android:textSize="@dimen/textSizeMedium" />
+    </LinearLayout>
+
+</LinearLayout>

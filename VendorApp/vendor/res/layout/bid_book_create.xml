@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/appbackgroundcolor" >
+
+    <!-- #F0EEEF -->
+
+    <RelativeLayout
+        android:id="@+id/rlTopBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottomBarHeight"
+        android:background="#fff" >
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/btnBackWidth"
+            android:layout_height="@dimen/btnBackHeight"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/back_orange" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_toRightOf="@+id/btnBack"
+            android:text="Schedule Visit"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeLarge"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btnBidTopbar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marginLeftRightllFields"
+            android:background="@drawable/leads_icon"
+            android:visibility="gone" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarDividerHeight"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/divider_bottom_bar" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llFields"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/llBottomBarParent"
+        android:layout_below="@+id/rlTopBar"
+        android:layout_marginTop="@dimen/marginTopScrollView"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarHeight"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/marginLeftRightllFields"
+                android:text="Event Date:"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5" >
+
+                <EditText
+                    android:id="@+id/etDate"
+                    android:layout_width="@dimen/editTextWidth"
+                    android:layout_height="@dimen/editTextHeightBidBookCreate"
+                    android:layout_gravity="left|center_vertical"
+                    android:background="@drawable/rounded_border_edittext"
+                    android:gravity="center"
+                    android:textColor="#000"
+                    android:text="26/6/2015"
+                    android:textSize="@dimen/textSizeNormal" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarHeight"
+            android:layout_marginTop="@dimen/marginTopllFields"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/marginLeftRightllFields"
+                android:text="Time Slot:"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="@dimen/widthSpinnerTimeSlot"
+                    android:layout_height="@dimen/heightSpinnerperplate"
+                    android:background="@drawable/dropdown_long"
+                    android:gravity="center"
+                    android:text="Morning"
+                    android:textColor="#000"
+                    android:drawableRight="@drawable/down_arrow_spinner"
+                    android:paddingRight="@dimen/marginLeftRightllFields"
+                    android:textSize="@dimen/textSizeNormal" />
+                <!--
+                         <Spinner
+                        android:id="@+id/spTimeSlot"
+                        android:layout_width="@dimen/widthSpinnerTimeSlot"
+                        android:layout_height="@dimen/heightSpinnerperplate"
+                        android:layout_gravity="left|center_vertical"
+                        android:background="#fff"
+                        android:spinnerMode="dropdown" />
+                -->
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarHeight"
+            android:layout_marginTop="@dimen/marginTopllFields"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/marginLeftRightllFields"
+                android:text="Package:"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="left|center_vertical"
+                android:text="500 Rs Per Plate Min 100 Person Required "
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarHeight"
+            android:layout_marginTop="@dimen/marginTopllFields"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/marginLeftRightllFields"
+                android:text="Quoted Price:"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="left|center_vertical"
+                android:text="450 Rs Per Plate Min 150 Person Required "
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarHeight"
+            android:layout_marginTop="@dimen/marginTopllFields"
+            android:orientation="horizontal"
+            android:weightSum="1" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/marginLeftRightllFields"
+                android:text="Bid Price:"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".5"
+                android:paddingRight="3dp"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/tvPerplate"
+                    android:layout_width="@dimen/widthSpinnerperplate"
+                    android:layout_height="@dimen/heightSpinnerperplate"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/spinnerbg"
+                    android:gravity="center"
+                    android:text="200"
+                    android:textColor="#000"
+                     android:drawableRight="@drawable/down_arrow_spinner"
+                    android:paddingRight="@dimen/marginLeftRightllFields"
+                    android:textSize="@dimen/textSizeNormal" />
+
+                <TextView
+                    android:layout_width="@dimen/widthSpinnerperplate"
+                    android:layout_height="@dimen/heightSpinnerperplate"
+                    android:layout_marginLeft="@dimen/paddingLeftEditText"
+                    android:layout_toRightOf="@+id/tvPerplate"
+                    android:background="@drawable/spinnerbg"
+                    android:gravity="center"
+                     android:drawableRight="@drawable/down_arrow_spinner"
+                    android:paddingRight="@dimen/marginLeftRightllFields"
+                    android:text="5"
+                    android:textColor="#000"
+                    android:textSize="@dimen/textSizeNormal" />
+
+                <!--
+                <Spinner
+                    android:id="@+id/spPerPlate"
+                    android:layout_width="@dimen/widthSpinnerperplate"
+                    android:layout_height="@dimen/heightSpinnerperplate"
+                    android:layout_alignParentLeft="true"
+                    android:background="#fff"
+                    android:spinnerMode="dropdown" />
+
+                <Spinner
+                    android:id="@+id/spMinPerson"
+                    android:layout_width="@dimen/widthSpinnerperplate"
+                    android:layout_height="@dimen/heightSpinnerperplate"
+                    android:layout_marginLeft="@dimen/paddingLeftEditText"
+                    android:layout_toRightOf="@+id/spPerPlate"
+                    android:background="#fff"
+                    android:spinnerMode="dropdown" />
+                -->
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bottomBarHeight"
+            android:layout_marginTop="@dimen/marginTopllFields"
+            android:orientation="horizontal"
+            android:weightSum="10" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="left|center_vertical"
+                android:paddingLeft="@dimen/marginLeftRightllFields"
+                android:text="Bid Price:"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal"
+                android:visibility="invisible" />
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/tvPerPlate"
+                    android:layout_width="@dimen/widthSpinnerperplate"
+                    android:layout_height="@dimen/heightSpinnerperplate"
+                    android:layout_alignParentLeft="true"
+                    android:background="#fff"
+                    android:gravity="center"
+                    android:text="Per Plate"
+                    android:textColor="#000" />
+
+                <TextView
+                    android:id="@+id/tvMinPerson"
+                    android:layout_width="@dimen/widthSpinnerperplate"
+                    android:layout_height="@dimen/heightSpinnerperplate"
+                    android:layout_marginLeft="@dimen/paddingLeftEditText"
+                    android:layout_toRightOf="@+id/tvPerPlate"
+                    android:background="#fff"
+                    android:text="Min Person"
+                    android:textColor="#000" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnBitIt"
+            android:layout_width="@dimen/widthButtonBidIt"
+            android:layout_height="@dimen/heightButtonBidIt"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/marginTopbtnSchedule"
+            android:background="@color/calendarThemeOrangeColor"
+            android:text="Schedule"
+            android:textColor="#fff"
+            android:textSize="@dimen/textSizeNormal" />
+    </LinearLayout>
+
+</RelativeLayout>

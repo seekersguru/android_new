@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/pop_up_background"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/paddingLeftEditText"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/marginLeftRightllFields"
+            android:gravity="center"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeMedium"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/paddingLeftEditText"
+            android:background="#9c9c9c" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/buttonHeightOk"
+            android:layout_marginTop="@dimen/paddingLeftEditText"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:text="OK"
+            android:textColor="#87CEEB"
+            android:textSize="@dimen/textSizeMedium"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>
