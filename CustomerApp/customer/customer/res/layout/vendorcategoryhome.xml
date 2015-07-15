@@ -80,7 +80,7 @@
                         android:layout_width="@dimen/dimenBottomBarIcons"
                         android:layout_height="@dimen/dimenBottomBarIcons"
                         android:layout_gravity="center"
-                        android:background="@drawable/home_unselected" />
+                        android:background="@drawable/home_selected" />
                 </LinearLayout>
             </LinearLayout>
 

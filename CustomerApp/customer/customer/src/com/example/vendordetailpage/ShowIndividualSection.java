@@ -8,12 +8,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 import com.wedwise.adapter.ExpandableListAdapter;
 import com.wedwise.gsonmodels.KeyValueHeader;
+import com.wedwise.gsonmodels.KeyValueHeader.KeyValue;
 import com.wedwise.gsonmodels.KeyValue_Model;
 import com.wedwise.gsonmodels.PackagesModel;
 import com.wedwise.gsonmodels.PackagesModel.Package_Values;
@@ -32,6 +34,7 @@ public class ShowIndividualSection extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.inidividual_section);
 		scrollView = (ScrollView) activity.findViewById(R.id.scrollView);
 		lvExp = (ExpandableListView) findViewById(R.id.lvExp);
@@ -57,8 +60,7 @@ public class ShowIndividualSection extends Activity {
 			break;
 		case packages:
 			//
-
-			scrollView.setVisibility(View.GONE);
+//			scrollView.setVisibility(View.GONE);
 			initPackages(sectionModel);
 			
 			break;
@@ -70,8 +72,7 @@ public class ShowIndividualSection extends Activity {
 	}
 
 	private void initPackages(SectionModel sectionModel) throws Exception {
-		PackagesModel packagesModel = (PackagesModel) sectionModel
-				.getReadTypeModel();
+		PackagesModel packagesModel = (PackagesModel) sectionModel.getReadTypeModel();
 		List<String> _listDataHeader = new ArrayList<String>();
 		HashMap<String, List<KeyValueHeader>> _listDataChild = new HashMap<String, List<KeyValueHeader>>();
 		for (Package_Values package_Values : packagesModel.getPackage_Values()) {
@@ -89,17 +90,17 @@ public class ShowIndividualSection extends Activity {
 				}
 				arrayList.add(keyValueHeader);
 			}
-			
-//			for (String key : package_Values
-//					.getSubsection_info()
-//					.get(SubSection.getSubSection(package_Values
-//							.getPackage_header())).keySet()) {
-//				KeyValue keyValue = new KeyValue(key, package_Values
-//						.getSubsection_info()
-//						.get(SubSection.getSubSection(package_Values
-//								.getPackage_header())).get(key));
-//				arrayList.add(keyValue);
-//			}
+			ArrayList<KeyValue> arrayListKeyValue = new ArrayList<KeyValue>();
+			for (String key : package_Values
+					.getSubsection_info()
+					.get(SubSection.getSubSection(package_Values
+							.getPackage_header())).keySet()) {
+				KeyValue keyValue = new KeyValue(key, package_Values
+						.getSubsection_info()
+						.get(SubSection.getSubSection(package_Values
+								.getPackage_header())).get(key));
+				arrayListKeyValue.add(keyValue);
+			}
 			_listDataChild.put(package_Values.getPackage_header(), arrayList);
 		}
 		ExpandableListAdapter expandableListAdapter = new ExpandableListAdapter(activity, _listDataHeader, _listDataChild);

@@ -90,18 +90,6 @@ public class BidBookCreateActivity extends FragmentActivity{
 		listAdapter.add("300");
 		listAdapter.add("600");
 
-
-
-		/*adapterSpinner=new SpinnerAdapter(BidBookCreateActivity.this, listAdapter);
-		spTimeSlot=(Spinner) findViewById(R.id.spTimeSlot);
-		spPerPlate=(Spinner) findViewById(R.id.spPerPlate);
-		spMinPerson=(Spinner) findViewById(R.id.spMinPerson);
-
-		spPerPlate.setAdapter(adapterSpinner);
-		spMinPerson.setAdapter(adapterSpinner);
-
-		 */
-
 		if(getIntent().getExtras().getString("type").equals("bid"))
 		{
 			tvTitle.setText("Create Bid");
@@ -188,7 +176,6 @@ public class BidBookCreateActivity extends FragmentActivity{
 			});
 		}
 
-
 		else if(getIntent().getExtras().getString("type").equals("book"))
 		{
 			tvTitle.setText("Create Book");
@@ -230,7 +217,6 @@ public class BidBookCreateActivity extends FragmentActivity{
 
 				@Override
 				public void onNothingSelected(AdapterView<?> arg0) {
-					// TODO Auto-generated method stub
 
 				}
 			});

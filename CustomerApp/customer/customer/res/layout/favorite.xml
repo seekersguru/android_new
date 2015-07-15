@@ -19,16 +19,16 @@
             android:layout_marginLeft="@dimen/marginLeftRightllFields"
             android:background="@drawable/back_orange" />
 
-        <ImageView
-            android:id="@+id/imViewCategoryType"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+        <TextView
+            android:id="@+id/tvCategoryType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/paddingLeftEditText"
             android:layout_toRightOf="@+id/btnBack"
-            android:background="@drawable/icecream"
-            android:contentDescription="@string/title_activity_category"
-            android:visibility="gone" />
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeMedium"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tvToolBar"
@@ -80,6 +80,46 @@
             android:layout_alignParentBottom="true"
             android:background="@drawable/divider_bottom_bar" />
     </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="150dp"
+        android:layout_height="35dp"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:layout_gravity="center_horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Switch Category"
+                android:textColor="@color/OrangeColorTheme"
+                android:textSize="@dimen/textSizeMedium" />
+
+            <Button
+                android:layout_width="15dp"
+                android:layout_height="10dp"
+                android:background="@drawable/arrow_down_orange" />
+        </LinearLayout>
+
+        <Spinner
+            android:id="@+id/spSwitchCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00000000"
+            android:spinnerMode="dialog"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btnCategory"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00000000" />
+    </FrameLayout>
 
     <ListView
         android:id="@+id/favList"

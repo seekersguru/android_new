@@ -35,6 +35,8 @@ import com.wedwise.adapter.AlbumAdapter;
 import com.wedwise.common.GlobalCommonMethods;
 import com.wedwise.common.GlobalCommonValues;
 import com.wedwise.dialogs.ErrorDialog;
+import com.wedwise.dialogs.LogoutConfirmationDialog;
+import com.wedwise.interfaces.INotify;
 import com.wedwise.tab.MessageTabActivity;
 import com.wedwiseapp.FavListActivity;
 import com.wedwiseapp.R;
@@ -52,6 +54,7 @@ public class VendorCategoryHomeFragment extends Fragment{
 	String image_type="";
 	String response="",url="";
 	ProgressDialog progress;
+	public static ArrayList<String> listItemsCategory=new ArrayList<String>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,10 +79,14 @@ public class VendorCategoryHomeFragment extends Fragment{
 				boolean isLogin = PreferenceUtil.getInstance().isLogin();
 				if(isLogin)
 				{
-					ErrorDialog dialog=new ErrorDialog();
+					LogoutConfirmationDialog dialogLogout=new LogoutConfirmationDialog();
+					dialogLogout.setCancelable(false);
+					dialogLogout.newInstance(getActivity(), "", "You are logged in.Do you want to logout?", iNotifyLogout);
+					dialogLogout.show(getFragmentManager(), "test");
+					/*ErrorDialog dialog=new ErrorDialog();
 					dialog.setCancelable(false);
 					dialog.newInstance(getActivity(),"Alert!", "You are already logged in",null);
-					dialog.show(getFragmentManager(),"tests");
+					dialog.show(getFragmentManager(),"tests");*/
 				}
 				else if (!isLogin)
 				{
@@ -125,12 +132,33 @@ public class VendorCategoryHomeFragment extends Fragment{
 					int position, long id) {
 				Intent myIntent = new Intent(getActivity(),
 						FavListActivity.class);
+				myIntent.putExtra("category_type", listItems.get(position).get("name"));
 				getActivity().startActivity(myIntent);
 				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			}
 		});
-
 	}
+
+	INotify iNotifyLogout=new INotify() {
+
+		@Override
+		public void yes() {
+			// In case of Logout
+			PreferenceUtil.getInstance().setEmail("");
+			PreferenceUtil.getInstance().setIdentifier("");
+			PreferenceUtil.getInstance().setLogin(false);
+			PreferenceUtil.getInstance().setRegister(false);
+			ErrorDialog dialog=new ErrorDialog();
+			dialog.newInstance(getActivity(), "", "you are logged out successfully",null);
+			dialog.setCancelable(false);
+			dialog.show(getFragmentManager(), "test");
+		}
+
+		@Override
+		public void no() {
+		}
+	};
+
 
 	@Override
 	public void onDestroy() {
@@ -186,18 +214,19 @@ public class VendorCategoryHomeFragment extends Fragment{
 			{
 				try {
 					JSONObject jsonObj = new JSONObject(response);
-					System.out.println("response is:"+jsonObj.toString());
 					JSONArray jsonArray=new JSONObject(jsonObj.getString("json")).getJSONArray("data");
 					HashMap<String,String> item;
+					listItemsCategory=new ArrayList<String>();
 					for (int i = 0; i < jsonArray.length(); i++)
 					{
 						item=new HashMap<String, String>();
 						String itemFirst=String.valueOf(jsonArray.get(i));
 						String[] array=itemFirst.split(",");
-						String name=array[0].substring(array[0].indexOf("\"")+1,array[0].lastIndexOf("\"")-1);
+						String name=array[0].substring(array[0].indexOf("\"")+1,array[0].lastIndexOf("\""));
 						String image_path=array[1].substring(1,array[1].length()-2).replace("\\","");
 						item.put("name",name);
 						item.put("image_path",image_path);
+						listItemsCategory.add(name);
 						listItems.add(item);
 					}
 					adapterAlbum.listItems=listItems;
@@ -285,6 +314,4 @@ public class VendorCategoryHomeFragment extends Fragment{
 			catch(Exception ex) {}
 		}
 	}
-
-
 }

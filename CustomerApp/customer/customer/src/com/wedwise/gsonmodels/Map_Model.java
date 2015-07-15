@@ -1,4 +1,4 @@
-package com.wedwise.gsonmodels;
+/*package com.wedwise.gsonmodels;
 
 import org.json.JSONObject;
 
@@ -43,3 +43,4 @@ public class Map_Model extends TypeModel {
 //		point = new LatLng(latt, lon);
 	}
 }
+*/

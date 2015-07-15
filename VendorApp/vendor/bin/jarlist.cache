@@ -1,6 +1,5 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1436545198415 1157388 605c447c20ca216b5556af9f215af5d4bba1b117 C:\software\personal\MarketPlace\android-master(1)\android-master\vendor\libs\android-support-v4.jar
-1436545198415 1157388 605c447c20ca216b5556af9f215af5d4bba1b117 C:\software\personal\MarketPlace\facebook-android-sdk-4.4.0\facebook\libs\android-support-v4.jar
-1436545118966 1157388 605c447c20ca216b5556af9f215af5d4bba1b117 C:\software\personal\MarketPlace\android-master(1)\android-master\appcompat\libs\android-support-v4.jar
+1436888387392 1157388 605c447c20ca216b5556af9f215af5d4bba1b117 C:\Users\Ankur\android_new\CustomerApp\appcompat\libs\android-support-v4.jar
+1436888400032 1157388 605c447c20ca216b5556af9f215af5d4bba1b117 C:\Users\Ankur\android_new\VendorApp\vendor\libs\android-support-v4.jar

@@ -39,7 +39,6 @@ import com.wedwise.gson.Book;
 import com.wedwise.gson.Section;
 import com.wedwise.gson.VendorDetail;
 import com.wedwise.gsonmodels.KeyValue_Model;
-import com.wedwise.gsonmodels.Map_Model;
 import com.wedwise.gsonmodels.PackagesModel;
 import com.wedwise.gsonmodels.ParaModel;
 import com.wedwise.gsonmodels.SectionModel;
@@ -201,22 +200,22 @@ public class MainActivity extends Activity {
 					e.printStackTrace();
 				}
 				for (SectionModel sectionModel : sectionModels) {
-//					Log.d(TAG, "getHeader= " + sectionModel.getHeader());
-//					Log.d(TAG,
-//							"getRead_header= " + sectionModel.getRead_header());
-//					Log.d(TAG,
-//							"getWidgetsType= " + sectionModel.getWidgetsType());
-//					Log.d(TAG,
-//							"getRead_widgetsType= "
-//									+ sectionModel.getRead_widgetsType());
-//					if(sectionModel.getRead_widgetsType() !=null && sectionModel.getRead_widgetsType().equals(WidgetsType.packages)){
-//						Log.d(TAG,
-//								"getReadTypeModel= "
-//										+ sectionModel.getReadTypeModel());
-//					}
-//					Log.d(TAG,
-//							"getExtraWidgetsType= "
-//									+ sectionModel.getExtraWidgetsType());
+					Log.d(TAG, "getHeader= " + sectionModel.getHeader());
+					Log.d(TAG,
+							"getRead_header= " + sectionModel.getRead_header());
+					Log.d(TAG,
+							"getWidgetsType= " + sectionModel.getWidgetsType());
+					Log.d(TAG,
+							"getRead_widgetsType= "
+									+ sectionModel.getRead_widgetsType());
+					if(sectionModel.getRead_widgetsType() !=null && sectionModel.getRead_widgetsType().equals(WidgetsType.packages)){
+						Log.d(TAG,
+								"getReadTypeModel= "
+										+ sectionModel.getReadTypeModel());
+					}
+					Log.d(TAG,
+							"getExtraWidgetsType= "
+									+ sectionModel.getExtraWidgetsType());
 				}
 				MergeAdapter mergeAdapter = new MergeAdapter();
 				fillVendorDetail(vendorDetail, mergeAdapter);
@@ -344,8 +343,8 @@ public class MainActivity extends Activity {
 			KeyValue_Model keyValue_Model = new KeyValue_Model(section_response);
 			return keyValue_Model;
 		case map:
-			Map_Model map_Model = new Map_Model(section_response);
-			return map_Model;
+			/*Map_Model map_Model = new Map_Model(section_response);
+			return map_Model;*/
 		case packages:
 			PackagesModel packagesModel = new PackagesModel(section_response);
 			return packagesModel;
