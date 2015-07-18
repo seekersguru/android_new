@@ -120,7 +120,10 @@
     <!-- Facilities Dialog -->
     <dimen name="marginTopButtonBtnSubmit">30dp</dimen>
 
-    <!-- Error Dialog -->
-    <dimen name="buttonHeightOk">40dp</dimen>
+    <!-- Enquiry Details -->
+    <dimen name="rowHeightEnquiryDetails">40dp</dimen>
+    <dimen name="widthBottomBarButtons">100dp</dimen>
+  <!-- Error Dialog -->
+     <dimen name="buttonHeightOk">40dp</dimen>
 
 </resources>

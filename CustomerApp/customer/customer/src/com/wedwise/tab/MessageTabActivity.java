@@ -1,7 +1,10 @@
 package com.wedwise.tab;
 
+import com.wedwiseapp.R;
+
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -12,8 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-
-import com.wedwiseapp.R;
 
 /**
  * Created by Edwin on 15/02/2015.
@@ -26,9 +27,10 @@ public class MessageTabActivity extends FragmentActivity {
 	ViewPager pager;
 	TabAdapter adapter;
 	SlidingTabLayout tabs;
-	CharSequence Titles[]={"Enquiry","Book","Message"};
-	int Numboftabs =3;
+	CharSequence Titles[]={"Enquiry","Book"};
+	int Numboftabs =2;
 	Button btnBack;
+	Button btnAddBidBook;
 
 	@SuppressLint("NewApi") @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,22 @@ public class MessageTabActivity extends FragmentActivity {
 		actionBar.setCustomView(mCustomView);
 		btnBack=(Button) mCustomView.findViewById(R.id.btnBack);
 		actionBar.setDisplayShowCustomEnabled(true);
-
+		btnAddBidBook=(Button) mCustomView.findViewById(R.id.btnAddBidBook);
+		btnAddBidBook.setVisibility(View.GONE);
+		btnAddBidBook.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent myIntent=new Intent(MessageTabActivity.this,BidBookCreateActivity.class);
+			if(pager.getCurrentItem()==0)
+				myIntent.putExtra("type","bid");
+			else
+				myIntent.putExtra("type","book");
+			
+			startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in, R.anim.left_out);	
+			}
+		});
+		
 		btnBack.setOnClickListener(new OnClickListener() {
 
 			@Override

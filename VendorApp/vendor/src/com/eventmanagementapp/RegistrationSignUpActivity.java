@@ -79,6 +79,7 @@ TextWatcher{
 		tintManager.setStatusBarAlpha(0.0f);
 		tintManager.setNavigationBarAlpha(0.0f);
 		toolbar=(Toolbar) findViewById(R.id.toolbar);
+		toolbar.findViewById(R.id.refresh_button).setVisibility(View.GONE);
 		btnBack=(Button) toolbar.findViewById(R.id.btnBack);
 		tvToolBar=(TextView)toolbar.findViewById(R.id.tvToolBar);
 		llFields=(LinearLayout) findViewById(R.id.llFields);

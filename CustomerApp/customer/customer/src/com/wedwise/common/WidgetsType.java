@@ -16,14 +16,6 @@ public enum WidgetsType {
 		this.widgettype = type;
 	}
 	
-//	public static WidgetsType getWidgetsType(String type){
-//		for (WidgetsType widgetsType : WidgetsType.values()) {
-//			if(widgetsType.widgettype.equals(type)){
-//				return widgetsType;
-//			}
-//		}
-//		return null;
-//	}
 	public static WidgetsType getWidgetsType(JSONObject jsonObject) throws Exception{
 		
 		String type = jsonObject.getString("type");

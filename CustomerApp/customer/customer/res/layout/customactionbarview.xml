@@ -46,8 +46,8 @@
             android:id="@+id/searchView"
             style="@style/edittext_style"
             android:layout_width="match_parent"
-            android:layout_marginLeft="@dimen/marginLeftSearchBar"
             android:layout_height="@dimen/heightSearchBar"
+            android:layout_marginLeft="@dimen/marginLeftSearchBar"
             android:gravity="right"
             android:iconifiedByDefault="true"
             android:paddingRight="@dimen/paddingLeftEditText"
@@ -73,6 +73,16 @@
             android:background="@drawable/overflow_menu"
             android:paddingRight="@dimen/paddingLeftEditText"
             android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btnAddBidBook"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/marginLeftRightllFields"
+            android:background="@drawable/floating_button"
+            android:visibility="gone" />
 
         <View
             android:id="@+id/viewTopbar"

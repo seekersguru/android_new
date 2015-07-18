@@ -68,7 +68,8 @@ public class MessageTab extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent myIntent=new Intent(getActivity(),MessageChatActivity.class);
-				/*getActivity().*/startActivity(myIntent);
+				myIntent.putExtra("receiver_email",listChat.get(position).get("receiver_email"));
+				startActivity(myIntent);
 				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			}
 		});
@@ -130,10 +131,12 @@ public class MessageTab extends Fragment {
 								String receiver_name=new JSONObject(jsonArray.getString(i)).getString("receiver_name");
 								String message=new JSONObject(jsonArray.getString(i)).getString("message");
 								String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
+								String receiver_email=new JSONObject(jsonArray.getString(i)).getString("receiver_email");
 								HashMap<String, String> hashMap=new HashMap<String,String>();
 								hashMap.put("receiver_name",receiver_name);
 								hashMap.put("message",message);
 								hashMap.put("msg_time", msg_time);
+								hashMap.put("receiver_email", receiver_email);
 								adapterMessageList.listChat.add(hashMap);
 								adapterMessageList.notifyDataSetChanged();
 							}

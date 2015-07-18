@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.google.gson.Gson;
+import com.wedwise.adapter.ViewPagerAdapter;
 import com.wedwise.common.GlobalCommonMethods;
 import com.wedwise.common.GlobalCommonValues;
 import com.wedwise.common.WidgetsType;
@@ -39,6 +41,7 @@ import com.wedwise.gson.Book;
 import com.wedwise.gson.Section;
 import com.wedwise.gson.VendorDetail;
 import com.wedwise.gsonmodels.KeyValue_Model;
+import com.wedwise.gsonmodels.Map_Model;
 import com.wedwise.gsonmodels.PackagesModel;
 import com.wedwise.gsonmodels.ParaModel;
 import com.wedwise.gsonmodels.SectionModel;
@@ -103,7 +106,7 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(Void result) {
 			// Toast.makeText(getBaseContext(), "Data Sent!"+response,
 			// Toast.LENGTH_LONG).show();
-			
+
 			if (progress != null && progress.isShowing()) {
 				progress.dismiss();
 				progress = null;
@@ -123,7 +126,7 @@ public class MainActivity extends Activity {
 								mContext,
 								" "
 										+ new JSONObject(response)
-												.getString("result"),
+								.getString("result"),
 								Toast.LENGTH_SHORT).show();
 					} catch (JSONException e1) {
 						// TODO Auto-generated catch block
@@ -141,81 +144,81 @@ public class MainActivity extends Activity {
 				try {
 					for (Section section : vendorDetail.getJson().getData()
 							.getSections()) {
-						 Log.d(TAG, "section= "
-						 + section.getDataDisplay().get(0).toString());
+						Log.d(TAG, "section= "
+								+ section.getDataDisplay().get(0).toString());
 						boolean hasExtraSection = section.getDataDisplay()
 								.size() > 1;
-						String section_response = section.getDataDisplay()
-								.get(0).toString();
-						JSONObject jsonObject = new JSONObject(section_response);
-						WidgetsType widgetsType = WidgetsType
-								.getWidgetsType(jsonObject);
-						TypeModel typeModel = getTypeModel(widgetsType,
-								section_response);
+								String section_response = section.getDataDisplay()
+										.get(0).toString();
+								JSONObject jsonObject = new JSONObject(section_response);
+								WidgetsType widgetsType = WidgetsType
+										.getWidgetsType(jsonObject);
+								TypeModel typeModel = getTypeModel(widgetsType,
+										section_response);
 
-						SectionModel sectionModel = new SectionModel();
-						sectionModel.setTypeModel(typeModel);
-						sectionModel.setHeader(section.getHeading());
-						sectionModel.setWidgetsType(widgetsType);
+								SectionModel sectionModel = new SectionModel();
+								sectionModel.setTypeModel(typeModel);
+								sectionModel.setHeader(section.getHeading());
+								sectionModel.setWidgetsType(widgetsType);
 
-						if (jsonObject.has("read_more")) {
-							JSONObject readmore_jsononobj = jsonObject
-									.getJSONArray("read_more").getJSONObject(0);// .getJSONObject("data_display");
-							String read_more_heading = readmore_jsononobj
-									.getString("heading");
-							JSONObject read_more_data_display_json = readmore_jsononobj
-									.getJSONArray("data_display")
-									.getJSONObject(0);
-							WidgetsType read_more_widgetsType = WidgetsType
-									.getWidgetsType(read_more_data_display_json);
-							TypeModel read_more_typeModel = getTypeModel(
-									read_more_widgetsType,
-									read_more_data_display_json.toString());
+								if (jsonObject.has("read_more")) {
+									JSONObject readmore_jsononobj = jsonObject
+											.getJSONArray("read_more").getJSONObject(0);// .getJSONObject("data_display");
+									String read_more_heading = readmore_jsononobj
+											.getString("heading");
+									JSONObject read_more_data_display_json = readmore_jsononobj
+											.getJSONArray("data_display")
+											.getJSONObject(0);
+									WidgetsType read_more_widgetsType = WidgetsType
+											.getWidgetsType(read_more_data_display_json);
+									TypeModel read_more_typeModel = getTypeModel(
+											read_more_widgetsType,
+											read_more_data_display_json.toString());
 
-							sectionModel.setReadTypeModel(read_more_typeModel);
+									sectionModel.setReadTypeModel(read_more_typeModel);
 
-							sectionModel.setRead_header(read_more_heading);
+									sectionModel.setRead_header(read_more_heading);
 
-							sectionModel
+									sectionModel
 									.setRead_widgetsType(read_more_widgetsType);
-						}
-						//
-						if (hasExtraSection) {
-							String extra_section_response = section
-									.getDataDisplay().get(1).toString();
-							JSONObject extra_jsonObject = new JSONObject(
-									extra_section_response);
-							WidgetsType extra_widgetsType = WidgetsType
-									.getWidgetsType(extra_jsonObject);
-							TypeModel extra_typeModel = getTypeModel(
-									extra_widgetsType, extra_section_response);
-							sectionModel.setExtraTypeModel(extra_typeModel);
-							sectionModel.setExtraWidgetsType(extra_widgetsType);
-						}
+								}
+								//
+								if (hasExtraSection) {
+									String extra_section_response = section
+											.getDataDisplay().get(1).toString();
+									JSONObject extra_jsonObject = new JSONObject(
+											extra_section_response);
+									WidgetsType extra_widgetsType = WidgetsType
+											.getWidgetsType(extra_jsonObject);
+									TypeModel extra_typeModel = getTypeModel(
+											extra_widgetsType, extra_section_response);
+									sectionModel.setExtraTypeModel(extra_typeModel);
+									sectionModel.setExtraWidgetsType(extra_widgetsType);
+								}
 
-						sectionModels.add(sectionModel);
+								sectionModels.add(sectionModel);
 					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				for (SectionModel sectionModel : sectionModels) {
-					Log.d(TAG, "getHeader= " + sectionModel.getHeader());
-					Log.d(TAG,
-							"getRead_header= " + sectionModel.getRead_header());
-					Log.d(TAG,
-							"getWidgetsType= " + sectionModel.getWidgetsType());
-					Log.d(TAG,
-							"getRead_widgetsType= "
-									+ sectionModel.getRead_widgetsType());
-					if(sectionModel.getRead_widgetsType() !=null && sectionModel.getRead_widgetsType().equals(WidgetsType.packages)){
-						Log.d(TAG,
-								"getReadTypeModel= "
-										+ sectionModel.getReadTypeModel());
-					}
-					Log.d(TAG,
-							"getExtraWidgetsType= "
-									+ sectionModel.getExtraWidgetsType());
+					//					Log.d(TAG, "getHeader= " + sectionModel.getHeader());
+					//					Log.d(TAG,
+					//							"getRead_header= " + sectionModel.getRead_header());
+					//					Log.d(TAG,
+					//							"getWidgetsType= " + sectionModel.getWidgetsType());
+					//					Log.d(TAG,
+					//							"getRead_widgetsType= "
+					//									+ sectionModel.getRead_widgetsType());
+					//					if(sectionModel.getRead_widgetsType() !=null && sectionModel.getRead_widgetsType().equals(WidgetsType.packages)){
+					//						Log.d(TAG,
+					//								"getReadTypeModel= "
+					//										+ sectionModel.getReadTypeModel());
+					//					}
+					//					Log.d(TAG,
+					//							"getExtraWidgetsType= "
+					//									+ sectionModel.getExtraWidgetsType());
 				}
 				MergeAdapter mergeAdapter = new MergeAdapter();
 				fillVendorDetail(vendorDetail, mergeAdapter);
@@ -224,40 +227,40 @@ public class MainActivity extends Activity {
 				sectionManager.initSections(sectionModels, mergeAdapter);
 				listView.setAdapter(mergeAdapter);
 
-				
+
 				// Bid & Book Button
 				final String vendorEmail = vendorDetail.getRequestData().getVendorEmail();
-				
-				TextView bid_button = (TextView)findViewById(R.id.bid_button);
-				bid_button.setText(vendorDetail.getJson().getData().getBid().getButton());
+
+				//				TextView bid_button = (TextView)findViewById(R.id.bid_button);
+				//				bid_button.setText(vendorDetail.getJson().getData().getBid().getButton());
 				final Bid bidDetail = vendorDetail.getJson().getData().getBid();
 				final Book bookDetail = vendorDetail.getJson().getData().getBook();
-				bid_button.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						IntentHelper.addObjectForKey(bidDetail, "bidDetail");
-						Intent myIntent=new Intent(getApplicationContext(),BidBookCreateActivity.class);
-						myIntent.putExtra("type","bid");
-						myIntent.putExtra("vendorEmail",vendorEmail);
-						startActivity(myIntent);
-						overridePendingTransition(R.anim.right_in, R.anim.left_out);	
-					}
-				});
-				
-				
-				TextView book_button = (TextView)findViewById(R.id.book_button);
-				book_button.setText(vendorDetail.getJson().getData().getBook().getButton());
-				book_button.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						IntentHelper.addObjectForKey(bookDetail, "bookDetail");
-						Intent myIntent=new Intent(getApplicationContext(),BidBookCreateActivity.class);
-						myIntent.putExtra("type","book");
-						myIntent.putExtra("vendorEmail",vendorEmail);
-						startActivity(myIntent);
-						overridePendingTransition(R.anim.right_in, R.anim.left_out);	
-					}
-				});
+				//				bid_button.setOnClickListener(new OnClickListener() {
+				//					@Override
+				//					public void onClick(View v) {
+				//						IntentHelper.addObjectForKey(bidDetail, "bidDetail");
+				//						Intent myIntent=new Intent(getApplicationContext(),BidBookCreateActivity.class);
+				//						myIntent.putExtra("type","bid");
+				//						myIntent.putExtra("vendorEmail",vendorEmail);
+				//						startActivity(myIntent);
+				//						overridePendingTransition(R.anim.right_in, R.anim.left_out);	
+				//					}
+				//				});
+
+
+				//				TextView book_button = (TextView)findViewById(R.id.book_button);
+				//				book_button.setText(vendorDetail.getJson().getData().getBook().getButton());
+				//				book_button.setOnClickListener(new OnClickListener() {
+				//					@Override
+				//					public void onClick(View v) {
+				//						IntentHelper.addObjectForKey(bookDetail, "bookDetail");
+				//						Intent myIntent=new Intent(getApplicationContext(),BidBookCreateActivity.class);
+				//						myIntent.putExtra("type","book");
+				//						myIntent.putExtra("vendorEmail",vendorEmail);
+				//						startActivity(myIntent);
+				//						overridePendingTransition(R.anim.right_in, R.anim.left_out);	
+				//					}
+				//				});
 			}
 		}
 	}
@@ -325,12 +328,21 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
-
+	private ArrayList<String> imageArra = new ArrayList<String>(){};
 	public void fillVendorDetail(VendorDetail vendorDetail, MergeAdapter mergeAdapter) {
 		View view = getLayoutInflater().inflate(
 				R.layout.vendor_detail_header, null);
+		for(int i = 0; i<3; i++){
+			String image = "R.drawable.bar_restaurant";
+			imageArra.add(image);
+		}
+		ViewPager myPager = (ViewPager) view.findViewById(R.id.myfivepanelpager);
+		ViewPagerAdapter adapterview = new ViewPagerAdapter(MainActivity.this, imageArra);
+		myPager.setAdapter(adapterview);
+		myPager.setCurrentItem(0);
+
 		mergeAdapter.addView(view);
-		
+
 	}
 
 	public TypeModel getTypeModel(WidgetsType widgetsType,
@@ -343,8 +355,8 @@ public class MainActivity extends Activity {
 			KeyValue_Model keyValue_Model = new KeyValue_Model(section_response);
 			return keyValue_Model;
 		case map:
-			/*Map_Model map_Model = new Map_Model(section_response);
-			return map_Model;*/
+			Map_Model map_Model = new Map_Model(section_response);
+			return map_Model;
 		case packages:
 			PackagesModel packagesModel = new PackagesModel(section_response);
 			return packagesModel;
@@ -357,5 +369,5 @@ public class MainActivity extends Activity {
 		}
 		return null;
 	}
-	
+
 }

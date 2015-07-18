@@ -6,6 +6,11 @@ import com.wedwise.common.WidgetsType;
 
 public class SectionModel implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 14415146L;
+	
 	TypeModel typeModel;
 	WidgetsType widgetsType;
 	WidgetsType read_widgetsType;

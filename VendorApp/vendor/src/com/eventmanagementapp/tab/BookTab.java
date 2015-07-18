@@ -62,16 +62,6 @@ public class BookTab extends Fragment {
 		
 		listMessages=new ArrayList<BookingDataBean>();
 		checkInternetConnection();
-		/*listMessages.add("Andy Lau");
-		listMessages.add("James Moore");
-		listMessages.add("Jorgen Flood");
-		listMessages.add("Claude");
-		listMessages.add("Stefanos Fanidis");
-		listMessages.add("James Moore");
-		listMessages.add("James Moore");
-		listMessages.add("James Moore");
-		listMessages.add("James Moore");
-		listMessages.add("James Moore");*/
 		adapterMessageList=new BookListAdapter(getActivity(), listMessages);
 		lvBook.setAdapter(adapterMessageList);
 		lvBook.setOnItemClickListener(new OnItemClickListener() {

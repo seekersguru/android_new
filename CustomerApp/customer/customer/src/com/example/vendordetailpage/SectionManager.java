@@ -7,10 +7,13 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.wedwise.gsonmodels.KeyValue_Model;
+import com.wedwise.gsonmodels.Map_Model;
+import com.wedwise.gsonmodels.ParaModel;
 import com.wedwise.gsonmodels.SectionModel;
 import com.wedwiseapp.R;
 import com.wedwiseapp.views.CTextView;
@@ -33,7 +36,7 @@ public class SectionManager {
 				mergeAdapter.addView(initKeyValue(sectionModel));
 				break;
 			case map:
-//				mergeAdapter.addView(initMap(sectionModel));
+				mergeAdapter.addView(initMap(sectionModel));
 				break;
 			case packages:
 
@@ -46,7 +49,7 @@ public class SectionManager {
 		}
 	}
 
-	/*private View initMap(SectionModel sectionModel) {
+	private View initMap(SectionModel sectionModel) {
 		View view = activity.getLayoutInflater().inflate(R.layout.maplayout,
 				null);
 		Map_Model map_Model = (Map_Model) sectionModel.getTypeModel();
@@ -69,7 +72,7 @@ public class SectionManager {
 			tvPara.setVisibility(View.GONE);
 		}
 		return view;
-	}*/
+	}
 
 	private View initKeyValue(final SectionModel sectionModel) {
 		View view = activity.getLayoutInflater().inflate(
@@ -107,19 +110,20 @@ public class SectionManager {
 			blank_line_view.setVisibility(View.GONE);
 		if(sectionModel.getReadTypeModel()!=null){
 			tvReadMoreSecond.setOnClickListener(new OnClickListener() {
-
+				
 				@Override
 				public void onClick(View v) {
 					Intent intent= new Intent(activity,ShowIndividualSection.class);
 					intent.putExtra(SectionModel.intent_key, sectionModel);
 					activity.startActivity(intent);
+					activity.overridePendingTransition(R.anim.right_in, R.anim.left_out);
 				}
 			});
-
+			
 		}else{
 			tvReadMoreSecond.setVisibility(View.GONE);
 		}
-
+		
 		return view;
 	}
 }

@@ -7,7 +7,7 @@
     <com.wedwiseapp.views.CTextView
         style="@style/text_999_16"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginTop="@dimen/paddingLeftEditText"
         android:background="#999999" />
 

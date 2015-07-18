@@ -15,7 +15,8 @@
         android:background="@color/OrangeColorTheme"
         android:text="Create a New Booking"
         android:textColor="#fff"
-        android:textSize="@dimen/textSizeMedium" />
+        android:textSize="@dimen/textSizeMedium"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/lvBook"

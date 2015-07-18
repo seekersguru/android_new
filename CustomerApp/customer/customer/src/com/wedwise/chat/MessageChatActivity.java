@@ -58,6 +58,7 @@ public class MessageChatActivity extends FragmentActivity{
 	String response,url,responseMessageList;
 	ProgressDialog progress;
 	String page_count="1";
+	String receiver_email="";
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -84,6 +85,11 @@ public class MessageChatActivity extends FragmentActivity{
 		CustomFonts.setFontOfTextView(mContext, tvToolBar, "fonts/GothamRnd-Light.otf");
 		adapterChat=new ChatAdapter(MessageChatActivity.this,listChat);
 		lvChatMessages.setAdapter(adapterChat);
+
+		if(getIntent()!=null && getIntent().getExtras()!=null)
+		{
+			receiver_email=getIntent().getExtras().getString("receiver_email");
+		}
 
 		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
 		new HttpAsyncTask().execute(url);
@@ -239,7 +245,7 @@ public class MessageChatActivity extends FragmentActivity{
 		String data="";
 		String identifier=PreferenceUtil.getInstance().getIdentifier();
 		String from_to="c2v";
-		String receiver_email="banquet_novotel@wedwise.in";	
+		String receiver_email="banquet_homotel@wedwise.in";//banquet_novotel@wedwise.in	
 		if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_CREATE))
 		{
 			String message=etMessage.getText().toString();
@@ -254,11 +260,11 @@ public class MessageChatActivity extends FragmentActivity{
 					+ URLEncoder.encode(message, "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("from_to", "UTF-8") 
-					+ "=" + URLEncoder.encode(from_to,"UTF-8");
-			
+			+ "=" + URLEncoder.encode(from_to,"UTF-8");
+
 			data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-					+ "=" + URLEncoder.encode("message","UTF-8");
-			
+			+ "=" + URLEncoder.encode("message","UTF-8");
+
 		}
 		else if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
 		{
@@ -273,10 +279,10 @@ public class MessageChatActivity extends FragmentActivity{
 					+ URLEncoder.encode(page_no, "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("from_to", "UTF-8") 
-					+ "=" + URLEncoder.encode(from_to,"UTF-8");
-			
+			+ "=" + URLEncoder.encode(from_to,"UTF-8");
+
 			data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-					+ "=" + URLEncoder.encode("message","UTF-8");
+			+ "=" + URLEncoder.encode("message","UTF-8");
 
 		}
 		BufferedReader reader=null;

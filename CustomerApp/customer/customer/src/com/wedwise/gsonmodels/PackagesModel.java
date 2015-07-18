@@ -4,23 +4,32 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.jar.Pack200.Packer;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.wedwise.gsonmodels.KeyValueHeader.KeyValue;
+import com.wedwise.json.PackagesModelNew;
+import com.wedwise.json.TopPackege;
 
 public class PackagesModel extends TypeModel {
 
 	String key_values = "key_values";
-	ArrayList<Package_Values> package_Values = new ArrayList<PackagesModel.Package_Values>();
+	ArrayList<TopPackege> package_Values = new ArrayList<TopPackege>();
 
-	public ArrayList<Package_Values> getPackage_Values() {
+	public ArrayList<TopPackege> getPackage_Values() {
 		return package_Values;
 	}
 
 	public PackagesModel(String reponse) {
 		super();
 		try {
-//			init(new JSONObject(reponse).getJSONArray(key_values));
+			//			init(new JSONObject(reponse).getJSONArray(key_values));
 			init(new JSONObject(reponse));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -32,25 +41,79 @@ public class PackagesModel extends TypeModel {
 		Iterator<String> iterator = jsonObject.keys();
 		while (iterator.hasNext()) {
 			String key = iterator.next();
-			package_Values.add(new Package_Values(key, jsonObject
-					.getJSONObject(key)));
+			if(!key.equals("type")){
+
+				TopPackege tp=new TopPackege();
+
+				String str=jsonObject.get(key).toString();
+				String str1=new JSONObject(str).getJSONArray("package_values").toString();
+				
+				tp.setPackegeType(key);
+				tp.setPackegeItems((ArrayList<PackagesModelNew>) new Gson().fromJson(str1, new TypeToken<List<PackagesModelNew>>(){}.getType()));
+				//init(jsonArray);
+				initarra(new JSONArray(str1),tp.getPackegeItems());
+				package_Values.add(tp);
+
+			}
+
 		}
 	}
 
-//	private void init(JSONArray jsonArray) throws Exception {
-//		for (int i = 0; i < jsonArray.length(); i++) {
-//			JSONObject jsonObject = jsonArray.getJSONObject(i);
-//			Iterator<String> iterator = jsonObject.keys();
-//			while (iterator.hasNext()) {
-//				String key = iterator.next();
-//				package_Values.add(new Package_Values(key, jsonObject
-//						.getJSONObject(key)));
-//			}
-//		}
-//	}
+	private void initarra(JSONArray jsonArray,ArrayList<PackagesModelNew> listData){
+		try {
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject jsonObject;
+
+				jsonObject = jsonArray.getJSONObject(i);
+
+
+				Iterator<String> iterator = jsonObject.keys();
+				while (iterator.hasNext()) {
+					String key = iterator.next();
+					if(key.equals("minimum")){
+						listData.get(i).setMinimum(getKeyValueObject(new JSONObject(jsonObject.getJSONObject(key).toString())));
+					}else if(key.equals("quoted")){
+						listData.get(i).setQuoted(getKeyValueObject(new JSONObject(jsonObject.getJSONObject(key).toString())));
+					}else if(key.equals("options")){
+						JSONArray arropt=jsonObject.getJSONArray(key);
+						ArrayList<KeyValue> keyval=new ArrayList<KeyValueHeader.KeyValue>();
+						for (int j = 0; j < arropt.length(); j++) {
+							JSONObject jobjoption;
+
+							jsonObject = arropt.getJSONObject(j);
+							keyval.add(getKeyValueObject(jsonObject));
+						}
+						listData.get(i).setOptions(keyval);
+					}
+
+				}
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	private KeyValue getKeyValueObject(JSONObject jobj){
+		Iterator<String> iterator = jobj.keys();
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+			try {
+				KeyValue keyval=new KeyValue(key, jobj.getString(key));
+				return keyval;
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+		}
+		return null;
+	}
 
 	public static class Package_Values implements Serializable{
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
 		String package_header;
 		HashMap<SubSection, HashMap<String, String>> subsection_info = new HashMap<PackagesModel.Package_Values.SubSection, HashMap<String, String>>();
 
@@ -62,7 +125,7 @@ public class PackagesModel extends TypeModel {
 			return subsection_info;
 		}
 
-		public Package_Values(String key, JSONObject jsonObject)
+		private Package_Values(String key, JSONObject jsonObject)
 				throws Exception {
 			package_header = key;
 			manageSubSection(jsonObject.getJSONArray("package_values"));

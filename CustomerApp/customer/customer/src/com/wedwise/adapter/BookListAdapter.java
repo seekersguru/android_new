@@ -2,24 +2,23 @@ package com.wedwise.adapter;
 
 import java.util.ArrayList;
 
+import com.wedwise.bean.BookingDataBean;
+import com.wedwiseapp.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.wedwiseapp.R;
-import com.wedwiseapp.util.CustomFonts;
 
 public class BookListAdapter extends BaseAdapter{
 
 	Context mContext;
-	ArrayList<String> listMessages;
+	ArrayList<BookingDataBean> listMessages;
 
-	public BookListAdapter(Context mContext,ArrayList<String> listMessages)
+	public BookListAdapter(Context mContext,ArrayList<BookingDataBean> listMessages)
 	{
 		this.mContext=mContext;	
 		this.listMessages=listMessages;
@@ -46,16 +45,20 @@ public class BookListAdapter extends BaseAdapter{
 		View listItem = convertView;
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 		listItem = inflater.inflate(R.layout.booklistadapter, parent, false);
-		TextView tvContactName=(TextView) listItem.findViewById(R.id.tvContactName);
-		TextView tvDate=(TextView) listItem.findViewById(R.id.tvDate);
-		TextView tvSubject=(TextView) listItem.findViewById(R.id.tvSubject);
-		TextView tvDescription=(TextView) listItem.findViewById(R.id.tvDescription);
-		ImageView imViewAtttachment=(ImageView) listItem.findViewById(R.id.imViewAttachment);
-		tvContactName.setText(listMessages.get(position));
-//		CustomFonts.setFontOfTextView(mContext,tvContactName,"fonts/GothamRnd-Light.otf");
+		TextView tvName=(TextView) listItem.findViewById(R.id.tvName);
+		TextView tvDateFirst=(TextView) listItem.findViewById(R.id.tvDateFirst);
+		TextView tvDateSecond=(TextView) listItem.findViewById(R.id.tvDateSecond);
+		TextView tvPackageDedtails=(TextView) listItem.findViewById(R.id.tvPackageDedtails);
 //		CustomFonts.setFontOfTextView(mContext,tvDate,"fonts/GothamRnd-Light.otf");
 //		CustomFonts.setFontOfTextView(mContext,tvSubject,"fonts/GothamRnd-Light.otf");
 //		CustomFonts.setFontOfTextView(mContext,tvDescription,"fonts/GothamRnd-Light.otf");
+		
+		tvName.setText(listMessages.get(position).receiver_name);
+		tvDateFirst.setText(listMessages.get(position).event_date);
+		String msg_time = (listMessages.get(position).msg_time).substring(0,listMessages.get(position).msg_time.indexOf(" "));
+		tvDateSecond.setText(msg_time);
+		tvPackageDedtails.setText(listMessages.get(position).line1+"\n"+listMessages.get(position).line2);
+		
 		return listItem;
 	}
 

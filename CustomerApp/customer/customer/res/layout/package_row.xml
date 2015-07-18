@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/marginLeftRightllFields"
+    android:paddingRight="@dimen/marginLeftRightllFields" >
+
+    <com.wedwiseapp.views.CTextView
+        android:id="@+id/package_tvDescription"
+        style="@style/text_333_14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="@dimen/paddingLeftEditText"
+        android:text="Description"
+        android:textColor="@color/OrangeColorTheme"
+        android:textSize="@dimen/textSizeMedium" />
+
+<!--     <com.wedwiseapp.views.CTextView -->
+<!--         style="@style/text_999_16" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="0.5dp" -->
+<!--         android:layout_marginTop="@dimen/paddingLeftEditText" -->
+<!--         android:background="#999999" /> -->
+
+<!--     <LinearLayout -->
+<!--         android:id="@+id/package_row_key_value" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:orientation="vertical" > -->
+<!--     </LinearLayout> -->
+
+    <ListView
+        android:id="@+id/acodianlistview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none" >
+    </ListView>
+
+</LinearLayout>

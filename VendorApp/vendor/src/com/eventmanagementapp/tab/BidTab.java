@@ -12,6 +12,14 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.eventmanagementapp.R;
+import com.eventmanagementapp.adapter.EnquiryDataAdapter;
+import com.eventmanagementapp.bean.BookingDataBean;
+import com.eventmanagementapp.common.GlobalCommonMethods;
+import com.eventmanagementapp.common.GlobalCommonValues;
+import com.eventmanagementapp.util.PreferenceUtil;
+import com.eventmanagementapp.util.ShowDialog;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,19 +31,10 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView.FindListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.eventmanagementapp.R;
-import com.eventmanagementapp.adapter.EnquiryDataAdapter;
-import com.eventmanagementapp.bean.BookingDataBean;
-import com.eventmanagementapp.common.GlobalCommonMethods;
-import com.eventmanagementapp.common.GlobalCommonValues;
-import com.eventmanagementapp.util.PreferenceUtil;
-import com.eventmanagementapp.util.ShowDialog;
 
 /**
  */
@@ -62,28 +61,9 @@ public class BidTab extends Fragment {
 		lvBid=(ListView) view.findViewById(R.id.lvBid);
 		empty_view = (TextView)view.findViewById(R.id.empty_view);
 		checkInternetConnection();
-		
-		//EnquiryDataBean dataobj=new EnquiryDataBean("Gupta & Sharma", "23-Nov-2015","21-Dec-2015","Pax:350-45 Package: NVS Rev:5-5100 Source:Wedwise");
-		/*listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);
-		listEnquiryDataBean.add(dataobj);*/
 		adapter=new EnquiryDataAdapter(getActivity(),listEnquiryDataBean);
 		lvBid.setAdapter(adapter);
 		lvBid.setOnItemClickListener(new OnItemClickListener() {
-
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {

@@ -76,15 +76,8 @@ public class BidBookCreateActivity extends FragmentActivity{
 		etDate=(EditText) findViewById(R.id.etDate);
 		btnBack=(Button) findViewById(R.id.btnBack);
 
-		deviceId = Secure.getString(this.getContentResolver(),
-				Secure.ANDROID_ID);
-
+		deviceId = Secure.getString(this.getContentResolver(),Secure.ANDROID_ID);
 		final Object obj = (Object) IntentHelper.getObjectForKey("bidDetail");
-
-		//		CustomFonts.setFontOfTextView(mContext,tvTitle,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfButton(mContext,btnBitIt,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext,etDate,"fonts/GothamRnd-Light.otf");
-
 		listAdapter=new ArrayList<String>();
 		listAdapter.add("200");
 		listAdapter.add("300");
@@ -344,8 +337,6 @@ public class BidBookCreateActivity extends FragmentActivity{
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			// Toast.makeText(getBaseContext(), "Data Sent!"+response,
-			// Toast.LENGTH_LONG).show();
 			if (progress != null && progress.isShowing()) {
 				progress.dismiss();
 				progress = null;

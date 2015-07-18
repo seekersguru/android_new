@@ -1,8 +1,11 @@
 package com.wedwise.gsonmodels;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class KeyValueHeader {
+public class KeyValueHeader implements Serializable{
+
+	private static final long serialVersionUID = -1801818956200455042L;
 
 	String header;
 
@@ -12,8 +15,9 @@ public class KeyValueHeader {
 		return keyValues;
 	}
 
-	public static class KeyValue {
+	public static class KeyValue implements Serializable{
 
+		private static final long serialVersionUID = -6000763268922074631L;
 		public KeyValue(String key, String value) {
 			this.key = key;
 			this.value = value;

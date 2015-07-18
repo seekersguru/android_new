@@ -129,8 +129,7 @@
                     android:textColor="#000"
                     android:drawableRight="@drawable/down_arrow_spinner"
                     android:paddingRight="@dimen/marginLeftRightllFields"
-                    android:textSize="@dimen/textSizeNormal" />
-                -->
+                    android:textSize="@dimen/textSizeNormal" /> -->
 
                 <Spinner
                     android:id="@+id/spTimeSlot"
@@ -269,8 +268,7 @@
                     android:layout_marginLeft="@dimen/paddingLeftEditText"
                     android:layout_toRightOf="@+id/spPerPlate"
                     android:background="#fff"
-                    android:spinnerMode="dropdown" />
-                -->
+                    android:spinnerMode="dropdown" /> -->
             </RelativeLayout>
         </LinearLayout>
 

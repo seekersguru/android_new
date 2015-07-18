@@ -6,7 +6,7 @@
 
     <!--
          Per the design guidelines, navigation drawers should be between 240dp and 320dp:
-         https://developer.android.com/design/patterns/navigation-drawer.html
+         https://developer.android.com/design/patterns/navigation-drawer.html
     -->
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="toolbar_elevation">4dp</dimen>
@@ -58,7 +58,7 @@
     <dimen name="buttonMessageWidth">33dp</dimen>
     <dimen name="buttonMessageHeight">35dp</dimen>
     <dimen name="dimenBottomBarIcons">60dp</dimen>
-      <dimen name="heightMenuIcon">27dp</dimen>
+    <dimen name="heightMenuIcon">27dp</dimen>
     <dimen name="bottomBarHeight">90dp</dimen>
     <dimen name="bottomBarDividerHeight">5dp</dimen>
     <dimen name="attachmentIconHeight">48dp</dimen>
@@ -112,7 +112,7 @@
     <dimen name="dimenCustomactionBarSearchIcom">35dp</dimen>
     <dimen name="widthSearchBar">300dp</dimen>
     <dimen name="heightSearchBar">60dp</dimen>
-      <dimen name="marginLeftSearchBar">180dp</dimen>
+    <dimen name="marginLeftSearchBar">180dp</dimen>
 
     <!-- FilterDialog -->
     <dimen name="widthFilterSubmitButton">130dp</dimen>
@@ -120,7 +120,10 @@
 
     <!-- Facilities Dialog -->
     <dimen name="marginTopButtonBtnSubmit">50dp</dimen>
-     <!-- Error Dialog -->
-     <dimen name="buttonHeightOk">50dp</dimen>
+    <!-- Enquiry Details -->
+    <dimen name="rowHeightEnquiryDetails">40dp</dimen>
+    <dimen name="widthBottomBarButtons">100dp</dimen>
+    <!-- Error Dialog -->
+    <dimen name="buttonHeightOk">50dp</dimen>
 
 </resources>

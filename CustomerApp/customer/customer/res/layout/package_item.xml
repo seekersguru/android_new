@@ -1,16 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="55dip"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <LinearLayout
-        android:id="@+id/key_value_layout"
-        android:layout_width="match_parent"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/marginLeftRightllFields"
-        android:paddingRight="@dimen/marginLeftRightllFields" >
+        android:layout_margin="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            style="@style/text_fff_14"
+            android:id="@+id/maintext"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/OrangeColorTheme"/>
+
+        <LinearLayout
+            android:id="@+id/key_value_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/marginLeftRightllFields"
+            android:paddingRight="@dimen/marginLeftRightllFields" >
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

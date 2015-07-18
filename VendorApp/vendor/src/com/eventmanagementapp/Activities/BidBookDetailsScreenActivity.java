@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.eventmanagementapp.R;
-import com.eventmanagementapp.util.CustomFonts;
 
 public class BidBookDetailsScreenActivity extends FragmentActivity{
 

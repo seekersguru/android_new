@@ -13,6 +13,20 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.wedwise.Activities.MessageListActivity;
+import com.wedwise.adapter.AlbumAdapter;
+import com.wedwise.common.GlobalCommonMethods;
+import com.wedwise.common.GlobalCommonValues;
+import com.wedwise.dialogs.ErrorDialog;
+import com.wedwise.dialogs.LogoutConfirmationDialog;
+import com.wedwise.interfaces.INotify;
+import com.wedwise.tab.MessageTabActivity;
+import com.wedwiseapp.FavListActivity;
+import com.wedwiseapp.R;
+import com.wedwiseapp.login.LoginSignUpActivity;
+import com.wedwiseapp.util.PreferenceUtil;
+import com.wedwiseapp.util.ShowDialog;
+
 import android.annotation.SuppressLint;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -29,27 +43,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-
-import com.wedwise.adapter.AlbumAdapter;
-import com.wedwise.common.GlobalCommonMethods;
-import com.wedwise.common.GlobalCommonValues;
-import com.wedwise.dialogs.ErrorDialog;
-import com.wedwise.dialogs.LogoutConfirmationDialog;
-import com.wedwise.interfaces.INotify;
-import com.wedwise.tab.MessageTabActivity;
-import com.wedwiseapp.FavListActivity;
-import com.wedwiseapp.R;
-import com.wedwiseapp.login.LoginSignUpActivity;
-import com.wedwiseapp.util.PreferenceUtil;
-import com.wedwiseapp.util.ShowDialog;
 
 public class VendorCategoryHomeFragment extends Fragment{
 
 	ListView lvAlbums;
 	AlbumAdapter adapterAlbum;
 	ArrayList<HashMap<String,String>> listItems;
-	Button btnHome, btnMenu;
+	LinearLayout llMail,llHome,llLeads,llMenu;
+	Button btnMail,btnHome,btnLeads,btnMenu;
 	Context mContext;
 	String image_type="";
 	String response="",url="";
@@ -68,11 +71,38 @@ public class VendorCategoryHomeFragment extends Fragment{
 	private void idInitialization(View rootView)
 	{
 		lvAlbums = (ListView)rootView.findViewById(R.id.lvAlbums);
-		btnHome = (Button)rootView.findViewById(R.id.btnMail);
+		llMail=(LinearLayout) rootView.findViewById(R.id.llMail);
+		llHome=(LinearLayout) rootView.findViewById(R.id.llHome);
+		llLeads=(LinearLayout) rootView.findViewById(R.id.llLeads);
+		llMenu=(LinearLayout) rootView.findViewById(R.id.llMenu);
+		btnMail = (Button)rootView.findViewById(R.id.btnMail);
+		btnHome=(Button) rootView.findViewById(R.id.btnHome);
+		btnLeads=(Button) rootView.findViewById(R.id.btnLeads);
 		btnMenu = (Button)rootView.findViewById(R.id.btnMenu);
-
 		listItems = new ArrayList<HashMap<String,String>>();
 		checkInternetConnection();
+		llMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				boolean isLogin = PreferenceUtil.getInstance().isLogin();
+				if(isLogin)
+				{
+					LogoutConfirmationDialog dialogLogout=new LogoutConfirmationDialog();
+					dialogLogout.setCancelable(false);
+					dialogLogout.newInstance(getActivity(), "", "You are logged in.Do you want to logout?", iNotifyLogout);
+					dialogLogout.show(getFragmentManager(), "test");
+				}
+				else if (!isLogin)
+				{
+					Intent myIntent = new Intent(getActivity(),
+							LoginSignUpActivity.class);
+					getActivity().startActivity(myIntent);
+					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+				}
+			}
+		});
+
 		btnMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -83,10 +113,6 @@ public class VendorCategoryHomeFragment extends Fragment{
 					dialogLogout.setCancelable(false);
 					dialogLogout.newInstance(getActivity(), "", "You are logged in.Do you want to logout?", iNotifyLogout);
 					dialogLogout.show(getFragmentManager(), "test");
-					/*ErrorDialog dialog=new ErrorDialog();
-					dialog.setCancelable(false);
-					dialog.newInstance(getActivity(),"Alert!", "You are already logged in",null);
-					dialog.show(getFragmentManager(),"tests");*/
 				}
 				else if (!isLogin)
 				{
@@ -95,17 +121,13 @@ public class VendorCategoryHomeFragment extends Fragment{
 					getActivity().startActivity(myIntent);
 					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 				}
-				/*Intent myIntent = new Intent(getActivity(),
-						LoginSignUpActivity.class);
-				getActivity().startActivity(myIntent);
-				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);*/
 			}
 		});
 
-		btnHome.setOnClickListener(new OnClickListener() {
+		llMail.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-
 				if(!PreferenceUtil.getInstance().isRegistered())
 				{
 					ErrorDialog dialog=new ErrorDialog();
@@ -115,10 +137,48 @@ public class VendorCategoryHomeFragment extends Fragment{
 				}
 				else if(PreferenceUtil.getInstance().isRegistered()){
 					Intent myIntent = new Intent(getActivity(),
-							MessageTabActivity.class);
+							MessageListActivity.class);
 					getActivity().startActivity(myIntent);
 					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 				}
+			}
+		});
+
+		btnMail.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(!PreferenceUtil.getInstance().isRegistered())
+				{
+					ErrorDialog dialog=new ErrorDialog();
+					dialog.newInstance(mContext, "Alert!","Please register on Wedwise to use this feature",null);
+					dialog.setCancelable(false);
+					dialog.show(getFragmentManager(), "test");
+				}
+				else if(PreferenceUtil.getInstance().isRegistered()){
+					Intent myIntent = new Intent(getActivity(),
+							MessageListActivity.class);
+					getActivity().startActivity(myIntent);
+					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+				}
+			}
+		});
+
+		llLeads.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent=new Intent(getActivity(),MessageTabActivity.class);
+				getActivity().startActivity(myIntent);	
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+			}
+		});
+		btnLeads.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent=new Intent(getActivity(),MessageTabActivity.class);
+				getActivity().startActivity(myIntent);	
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);					
 			}
 		});
 
@@ -149,7 +209,7 @@ public class VendorCategoryHomeFragment extends Fragment{
 			PreferenceUtil.getInstance().setLogin(false);
 			PreferenceUtil.getInstance().setRegister(false);
 			ErrorDialog dialog=new ErrorDialog();
-			dialog.newInstance(getActivity(), "", "you are logged out successfully",null);
+			dialog.newInstance(getActivity(), "", "You are logged out successfully",null);
 			dialog.setCancelable(false);
 			dialog.show(getFragmentManager(), "test");
 		}
@@ -203,7 +263,6 @@ public class VendorCategoryHomeFragment extends Fragment{
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			//			Toast.makeText(getBaseContext(), "Data Sent!"+response, Toast.LENGTH_LONG).show();
 			if(progress!=null && progress.isShowing())
 			{
 				progress.dismiss();
@@ -235,7 +294,6 @@ public class VendorCategoryHomeFragment extends Fragment{
 				} catch (Exception e) {
 					e.getMessage();
 				}
-
 			}
 		}
 	}

@@ -10,16 +10,16 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="left"
         android:text="Sp. Cuisine" />
 
     <com.wedwiseapp.views.CTextView
         android:id="@+id/value_layout"
-        style="@style/text_999_16"
+        style="@style/text_000_14"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="right"
         android:text="Jain only"
         android:textSize="@dimen/textSizeNormal" />
 

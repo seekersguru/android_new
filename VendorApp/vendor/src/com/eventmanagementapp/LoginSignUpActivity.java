@@ -59,15 +59,7 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-//import com.google.android.gms.common.ConnectionResult;
-//import com.google.android.gms.common.api.GoogleApiClient;
-//import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-//import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-//import com.google.android.gms.plus.Plus;
-//import com.google.android.gms.plus.model.people.Person;
-
-public class LoginSignUpActivity extends FragmentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener  /*implements ConnectionCallbacks,
-OnConnectionFailedListener*/ {
+public class LoginSignUpActivity extends FragmentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener  {
 
 	/*Declaration for facebook connectivity*/
 	AccessToken accessToken;
@@ -80,7 +72,6 @@ OnConnectionFailedListener*/ {
 	public static final String PENDING_ACTION_BUNDLE_KEY ="com.eventmanagementapp:PendingAction";
 	ProgressDialog progress;
 	String response = "";
-
 	// Google client to communicate with Google
 	private GoogleApiClient mGoogleApiClient;
 	private boolean mIntentInProgress;
@@ -98,20 +89,6 @@ OnConnectionFailedListener*/ {
 	Context mContext;
 	public static boolean isLoggedIn=false;
 
-	//	@Override
-	//	public void onWindowFocusChanged(boolean hasFocus) {
-	//		super.onWindowFocusChanged(hasFocus);
-	//		if (hasFocus) {
-	//			getWindow().getDecorView().setSystemUiVisibility(
-	//					View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-	//					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-	//					| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-	//					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-	//					| View.SYSTEM_UI_FLAG_FULLSCREEN
-	//					| View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-	//		}
-	//	}
-
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -124,19 +101,16 @@ OnConnectionFailedListener*/ {
 		btnLogin=(Button) findViewById(R.id.btnLogin);
 		btnFBLogin=(LoginButton) findViewById(R.id.btnFBLogin);
 		btnFBLogin.setBackgroundResource(R.drawable.sign_up_fb);
-		
+
 		btnFBLogin.setReadPermissions(Arrays.asList("user_friends"));		
 		btnGoogleLogin=(Button) findViewById(R.id.btnGoogleLogin);
-		//		etEmailAddress=(EditText) findViewById(R.id.etEmailAddress);
-		//		etPassword=(EditText) findViewById(R.id.etPassword);
-		//		etEmailAddress.setHintTextColor(Color.parseColor("#ffffff"));
-		//		etPassword.setHintTextColor(Color.parseColor("#ffffff"));
 		btnSignUp=(Button) findViewById(R.id.btnSignUp);
 		tvBottomBar=(TextView) findViewById(R.id.tvBottomBar);
 		tvBottomBar.setText(Html.fromHtml("By signing up,I agree to terms of services,privacy policies,guest policies,and host guarantee terms.").toString());
 		toolbar=(Toolbar) findViewById(R.id.toolbar);
 		btnBack=(Button) toolbar.findViewById(R.id.btnBack);
 		tvToolBar=(TextView)toolbar.findViewById(R.id.tvToolBar);
+		toolbar.findViewById(R.id.refresh_button).setVisibility(View.GONE);
 		tvToolBar.setText("Log In or Sign Up");
 		btnBack.setVisibility(View.GONE);
 		//		CustomFonts.setFontOfButton(mContext, btnSignUp,"fonts/GothamRnd-Light.otf");
@@ -227,7 +201,7 @@ OnConnectionFailedListener*/ {
 
 			@Override
 			public void onClick(View v) {
-				
+
 				try {
 					if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
 						Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
@@ -249,8 +223,8 @@ OnConnectionFailedListener*/ {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
-				 
+
+
 				/*Intent myIntent=new Intent(LoginSignUpActivity.this,BidBookDetailsScreenActivity.class);
 				startActivity(myIntent);
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);*/
@@ -437,13 +411,13 @@ OnConnectionFailedListener*/ {
 	}
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
-		
+
 		String url = "";
 
 		public HttpAsyncTask(String email){
 			userEmail = email;
 		}
-		
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -487,7 +461,7 @@ OnConnectionFailedListener*/ {
 						if(message.equals("0")){
 							message="Logged In Successfully";
 						}
-							
+
 						ErrorDialog dialog=new ErrorDialog();
 						dialog.newInstance(mContext, _result.toUpperCase(), message, iActionObj);
 						dialog.setCancelable(false);
@@ -615,7 +589,7 @@ OnConnectionFailedListener*/ {
 	public void logout(View v) {
 		googlePlusLogout();
 	}
-	
+
 
 	private void googlePlusLogin() {
 		if (!mGoogleApiClient.isConnecting()) {
@@ -640,6 +614,6 @@ OnConnectionFailedListener*/ {
 
 	@Override
 	public void onClick(View v) {
-		
+
 	}
 }

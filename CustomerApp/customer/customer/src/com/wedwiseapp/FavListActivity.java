@@ -95,7 +95,6 @@ public class FavListActivity extends FragmentActivity {
 			public void onNothingSelected(AdapterView<?> parent) {
 			}
 		});
-		//		imViewCategoryType=(ImageView) findViewById(R.id.imViewCategoryType);
 		//		btnSpinnerOpen=(Button) findViewById(R.id.btnSpinnerOpen);
 		btnSearch.setVisibility(View.VISIBLE);
 		//		imViewCategoryType.setVisibility(View.VISIBLE);
@@ -117,17 +116,6 @@ public class FavListActivity extends FragmentActivity {
 		listCategory.add("DECORATORS");
 		listCategory.add("OTHERS");
 		adapterSpinner=new SpinnerAdapter(FavListActivity.this, listCategory);
-		//		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-		//				android.R.layout.simple_spinner_item, listCategory);
-		//		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-		//		spSwitchCategory.setAdapter(adapterSpinner);
-		/*btnSpinnerOpen.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				spSwitchCategory.performClick();				
-			}
-		});*/
 		btnSearch.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -208,17 +196,6 @@ public class FavListActivity extends FragmentActivity {
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			}
 		});
-		/*btnMenu.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				Intent myIntent = new Intent(FavListActivity.this,
-						LoginSignUpActivity.class);
-				startActivity(myIntent);
-
-				overridePendingTransition(R.anim.right_in, R.anim.left_out);
-			}
-		});*/
 	}
 
 	@Override
@@ -227,5 +204,4 @@ public class FavListActivity extends FragmentActivity {
 		super.onBackPressed();
 		overridePendingTransition(R.anim.right_in, R.anim.right_out);
 	}
-
 }
