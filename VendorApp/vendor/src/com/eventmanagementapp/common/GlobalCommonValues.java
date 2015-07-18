@@ -2,7 +2,7 @@ package com.eventmanagementapp.common;
 
 public class GlobalCommonValues {
 
-	static String BASEURL="http://wedwise.work/api/";
+	static String BASEURL="http://52.11.207.26/api/";
 	public static String USERREGISTRATION=BASEURL+"vendor_registration"+"/";
 	public static String LOGIN=BASEURL+"vendor_login"+"/";
 	public static String FB_LOGIN = BASEURL+"vendor_registration_login_fb_gm"+"/";

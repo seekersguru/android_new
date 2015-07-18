@@ -2,7 +2,7 @@ package com.wedwise.common;
 
 public class GlobalCommonValues {
 
-	static String BASEURL="http://wedwise.work/api/";
+	static String BASEURL="http://52.11.207.26/api/";
 	public static String USERREGISTRATION=BASEURL+"customer_registration"+"/";
 	public static String LOGIN=BASEURL+"customer_login"+"/";
 	public static String CUSTOMER_VENDOR_CATEGORY_HOME=BASEURL+"customer_vendor_category_or_home"+"/";
