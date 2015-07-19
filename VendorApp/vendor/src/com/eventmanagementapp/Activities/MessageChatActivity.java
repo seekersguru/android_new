@@ -57,6 +57,7 @@ public class MessageChatActivity extends FragmentActivity{
 	String response,url;
 	ProgressDialog progress;
 	String page_count="1";
+	String _receiver_email;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -83,10 +84,13 @@ public class MessageChatActivity extends FragmentActivity{
 		CustomFonts.setFontOfTextView(mContext, tvToolBar, "fonts/GothamRnd-Light.otf");
 		adapterChat=new ChatAdapter(MessageChatActivity.this,listChat);
 		lvChatMessages.setAdapter(adapterChat);
-		
+		if(getIntent()!=null && getIntent().getExtras()!=null)
+		{
+			_receiver_email=getIntent().getExtras().getString("receiver_email");
+		}
 		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
 		new HttpAsyncTask().execute(url);
-		
+
 		btnSendMessage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -240,7 +244,7 @@ public class MessageChatActivity extends FragmentActivity{
 						e.getMessage();
 					}
 				}
-				
+
 				if(adapterChat.getCount()==0){
 					TextView empty_view = (TextView)findViewById(R.id.empty_view);
 					empty_view.setVisibility(View.VISIBLE);
@@ -284,11 +288,11 @@ public class MessageChatActivity extends FragmentActivity{
 		String identifier=PreferenceUtil.getInstance().getIdentifier();
 		// Send POST data request
 		String from_to="v2c";
-		String receiver_email="customer@wedwise.in";
+		String receiver_email=_receiver_email;//"customer@wedwise.in";
 		if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_CREATE))
 		{
 			String message=etMessage.getText().toString();
-
+			// customer@wedwise.in:fRITsf8kb60QSc6r3eAJqz0rqZA
 			data= URLEncoder.encode("identifier", "UTF-8") 
 					+ "=" + URLEncoder.encode(identifier, "UTF-8"); 
 
@@ -299,11 +303,22 @@ public class MessageChatActivity extends FragmentActivity{
 					+ URLEncoder.encode(message, "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("from_to", "UTF-8") 
-					+ "=" + URLEncoder.encode(from_to,"UTF-8");
-			
+			+ "=" + URLEncoder.encode(from_to,"UTF-8");
+
+			data += "&" + URLEncoder.encode("action", "UTF-8") 
+			+ "=" + URLEncoder.encode("customer_vendor_message_create","UTF-8");
+
+			data += "&" + URLEncoder.encode("mode", "UTF-8") 
+			+ "=" + URLEncoder.encode("android","UTF-8");
+
+			data += "&" + URLEncoder.encode("device_id", "UTF-8") 
+			+ "=" + URLEncoder.encode("123456","UTF-8");
+
+			data += "&" + URLEncoder.encode("push_data", "UTF-8") 
+			+ "=" + URLEncoder.encode("message push","UTF-8");
+
 			data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-					+ "=" + URLEncoder.encode("message","UTF-8");
-			
+			+ "=" + URLEncoder.encode("message","UTF-8");
 		}
 		else if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
 		{
@@ -318,10 +333,10 @@ public class MessageChatActivity extends FragmentActivity{
 					+ URLEncoder.encode(page_no, "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("from_to", "UTF-8") 
-					+ "=" + URLEncoder.encode(from_to,"UTF-8");
-			
+			+ "=" + URLEncoder.encode(from_to,"UTF-8");
+
 			data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-					+ "=" + URLEncoder.encode("message","UTF-8");
+			+ "=" + URLEncoder.encode("message","UTF-8");
 
 		}
 		BufferedReader reader=null;

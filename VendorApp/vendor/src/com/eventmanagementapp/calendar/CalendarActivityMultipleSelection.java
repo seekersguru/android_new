@@ -2,10 +2,14 @@ package com.eventmanagementapp.calendar;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import com.eventmanagementapp.R;
+import com.eventmanagementapp.dialogs.DisplayEventDatesDialog;
+import com.eventmanagementapp.dialogs.ErrorDialog;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -16,59 +20,42 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.eventmanagementapp.MessageTabActivity;
-import com.eventmanagementapp.R;
-import com.eventmanagementapp.Activities.MessageListActivity;
-import com.eventmanagementapp.dialogs.FilterDialog;
-import com.eventmanagementapp.interfaces.INotify;
 
 /**
  * Shows off the most basic usage
  */
 public class CalendarActivityMultipleSelection extends FragmentActivity implements OnClickListener
 {
-
-	MFCalendarView mf;
-	Button btnBack,btnSelecteDate,btnFilter,btnCalendar,btnMail,btnLeads,
-	btnChange,btnClearAll;//,btnCalendar,btnMessage,btnBid,btnMenu;
+	MFCalendarViewMultipleSelection mf;
+	Button btnBack,btnSelecteDate,btnShowBookings,btnFilter,btnCalendar,btnMail,btnLeads,btnMenu;//,btnCalendar,btnMessage,btnBid,btnMenu;
 	private Calendar calendar;
 	private int year, month, day;
 	DatePickerDialog dpDialog;
 	Context mContext;
 	TextView tvFilterCriteria,tvFilterFirst;//,tvFilterSecond;
 	LinearLayout llCalendar,llMail,llLeads,llMenu;
+	public static ArrayList<String> listDates = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		//		setTheme(android.R.style.Theme_Holo_Light_NoActionBar_Fullscreen);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.calendar_activity);
+		setContentView(R.layout.calendar_activity_multiple_selection);
 		mContext=CalendarActivityMultipleSelection.this;
-		mf = (MFCalendarView) findViewById(R.id.mFCalendarView);
-
+		mf = (MFCalendarViewMultipleSelection) findViewById(R.id.mFCalendarView);
 		btnBack=(Button) findViewById(R.id.btnBack);
 		btnSelecteDate=(Button) findViewById(R.id.btnSelecteDate);
+		btnShowBookings=(Button) findViewById(R.id.btnShowBookings);
 		btnFilter=(Button) findViewById(R.id.btnFilter);
-		btnChange=(Button) findViewById(R.id.btnChange);
-		btnClearAll=(Button) findViewById(R.id.btnClearAll);
+		btnSelecteDate.setVisibility(View.GONE);
+		btnFilter.setVisibility(View.GONE);
 		tvFilterFirst=(TextView) findViewById(R.id.tvFilterFirst);
-		//		tvFilterSecond=(TextView) findViewById(R.id.tvFilterSecond);
 		tvFilterCriteria=(TextView) findViewById(R.id.tvFilterCriteria);
 		tvFilterFirst.setVisibility(View.GONE);
-		//		tvFilterSecond.setVisibility(View.GONE);
-		btnChange.setVisibility(View.GONE);
-		btnClearAll.setVisibility(View.GONE);
 		tvFilterCriteria.setVisibility(View.GONE);
-		/*btnCalendar=(Button) findViewById(R.id.btnCalendar);
-		btnMessage=(Button) findViewById(R.id.btnMessage);
-		btnBid=(Button) findViewById(R.id.btnBid);
-		btnMenu=(Button) findViewById(R.id.btnMenu);*/
+		tvFilterCriteria.setVisibility(View.GONE);
 		btnBack.setOnClickListener(this);
-		/*btnCalendar.setOnClickListener(this);
-		btnMessage.setOnClickListener(this);
-		btnBid.setOnClickListener(this);
-		btnMenu.setOnClickListener(this);*/
 		//		btnCalendar.performClick();
 		calendar = Calendar.getInstance();
 		year = calendar.get(Calendar.YEAR);
@@ -87,6 +74,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		llMenu.setOnClickListener(this);
 		btnMail.setOnClickListener(this);
 		btnLeads.setOnClickListener(this);
+		btnMenu=(Button) findViewById(R.id.btnMenu);
 		/*btnMail.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -104,7 +92,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);		
 			}
 		});
-*/
+		 */
 		btnSelecteDate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -112,32 +100,23 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 			}
 		});
 
-		btnChange.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				FilterDialog dialog = new FilterDialog();
-				dialog.newInstance(CalendarActivityMultipleSelection.this, iNotify);
-				dialog.show(getSupportFragmentManager(),"Test");
-			}
-		});
 
-		btnClearAll.setOnClickListener(new OnClickListener() {
+		btnShowBookings.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
-				btnChange.setVisibility(View.GONE);
-				btnClearAll.setVisibility(View.GONE);
-				tvFilterFirst.setVisibility(View.GONE);
-				tvFilterCriteria.setVisibility(View.GONE);
-			}
-		});
-		btnFilter.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				FilterDialog dialog = new FilterDialog();
-				//				dialog.getActivity().requestWindowFeature(Window.FEATURE_NO_TITLE);
-				//				dialog.getActivity().setTheme(android.R.style.Theme_Translucent);
-				dialog.newInstance(CalendarActivityMultipleSelection.this, iNotify);
-				dialog.show(getSupportFragmentManager(),"Test");
+				if(listDates!=null && !listDates.isEmpty())
+				{
+					DisplayEventDatesDialog dialog=new DisplayEventDatesDialog();
+					dialog.newInstance(mContext, "Event Dates", listDates);
+					dialog.show(getFragmentManager(), "test");
+				}
+				else if(listDates.isEmpty())
+				{
+					ErrorDialog dialog=new ErrorDialog();
+					dialog.newInstance(mContext,"","No event Dates Selected", null);
+					dialog.show(getFragmentManager(), "test");
+				}
 			}
 		});
 
@@ -146,12 +125,12 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 			public void onDisplayedMonthChanged(int month, int year, String monthStr) {
 
 				StringBuffer bf = new StringBuffer()
-				.append(" month:")
-				.append(month)
-				.append(" year:")
-				.append(year)
-				.append(" monthStr: ")
-				.append(monthStr);
+						.append(" month:")
+						.append(month)
+						.append(" year:")
+						.append(year)
+						.append(" monthStr: ")
+						.append(monthStr);
 			}
 
 			@Override
@@ -172,14 +151,18 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		eventDays.add("2014-02-25");
 		eventDays.add(Util.getTomorrow());
 		eventDays.add(Util.getCurrentDate());
-
-
 		mf.setEvents(eventDays);
-
 		Log.e("","locale:" + Util.getLocale());
 	}
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		CalendarActivityMultipleSelection.listDates.clear();
+		CalendarActivityMultipleSelection.listDates=null;
+	}
 
-	INotify iNotify=new INotify() {
+
+	/*INotify iNotify=new INotify() {
 		@Override
 		public void yes() {
 			tvFilterFirst.setVisibility(View.VISIBLE);
@@ -192,7 +175,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		@Override
 		public void no() {
 		}
-	};
+	};*/
 
 	@Override
 	protected Dialog onCreateDialog(int id) {
@@ -235,7 +218,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 			finish();	
 			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 		}
-		else if (v.getId()==R.id.llMail || v.getId()==R.id.btnMail)
+		/*else if (v.getId()==R.id.llMail || v.getId()==R.id.btnMail)
 		{
 			Intent myIntent=new Intent(CalendarActivityMultipleSelection.this,MessageListActivity.class);
 			startActivity(myIntent);	
@@ -246,6 +229,6 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 			Intent myIntent=new Intent(CalendarActivityMultipleSelection.this,MessageTabActivity.class);
 			startActivity(myIntent);	
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);	
-		}
+		}*/
 	}
 }                                                   

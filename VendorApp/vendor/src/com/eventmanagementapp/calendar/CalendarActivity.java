@@ -3,6 +3,12 @@ package com.eventmanagementapp.calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.eventmanagementapp.MessageTabActivity;
+import com.eventmanagementapp.R;
+import com.eventmanagementapp.Activities.MessageListActivity;
+import com.eventmanagementapp.dialogs.FilterDialog;
+import com.eventmanagementapp.interfaces.INotify;
+
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -18,12 +24,6 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.eventmanagementapp.MessageTabActivity;
-import com.eventmanagementapp.R;
-import com.eventmanagementapp.Activities.MessageListActivity;
-import com.eventmanagementapp.dialogs.FilterDialog;
-import com.eventmanagementapp.interfaces.INotify;
-
 /**
  * Shows off the most basic usage
  */
@@ -32,13 +32,14 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 
 	MFCalendarView mf;
 	Button btnBack,btnSelecteDate,btnFilter,btnCalendar,btnMail,btnLeads,
-	btnChange,btnClearAll;//,btnCalendar,btnMessage,btnBid,btnMenu;
+	btnChange,btnClearAll,btnMenu;//,btnCalendar,btnMessage,btnBid,btnMenu;
 	private Calendar calendar;
 	private int year, month, day;
 	DatePickerDialog dpDialog;
 	Context mContext;
 	TextView tvFilterCriteria,tvFilterFirst;//,tvFilterSecond;
 	LinearLayout llCalendar,llMail,llLeads,llMenu;
+	public static String _filterString="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		setContentView(R.layout.calendar_activity);
 		mContext=CalendarActivity.this;
 		mf = (MFCalendarView) findViewById(R.id.mFCalendarView);
-
+		btnMenu=(Button) findViewById(R.id.btnMenu);
 		btnBack=(Button) findViewById(R.id.btnBack);
 		btnSelecteDate=(Button) findViewById(R.id.btnSelecteDate);
 		btnFilter=(Button) findViewById(R.id.btnFilter);
@@ -79,6 +80,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		btnLeads=(Button) findViewById(R.id.btnLeads);
 		btnCalendar=(Button) findViewById(R.id.btnCalendar);
 		btnMail=(Button)findViewById(R.id.btnMail);
+		btnMenu=(Button)findViewById(R.id.btnMenu);
 		llCalendar=(LinearLayout) findViewById(R.id.llCalendar);
 		llMail=(LinearLayout) findViewById(R.id.llMail);
 		llLeads=(LinearLayout) findViewById(R.id.llLeads);
@@ -89,6 +91,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		llMenu.setOnClickListener(this);
 		btnMail.setOnClickListener(this);
 		btnLeads.setOnClickListener(this);
+		btnMenu.setOnClickListener(this);
 		/*btnMail.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -106,7 +109,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);		
 			}
 		});
-*/
+		 */
 		btnSelecteDate.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -148,12 +151,12 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 			public void onDisplayedMonthChanged(int month, int year, String monthStr) {
 
 				StringBuffer bf = new StringBuffer()
-				.append(" month:")
-				.append(month)
-				.append(" year:")
-				.append(year)
-				.append(" monthStr: ")
-				.append(monthStr);
+						.append(" month:")
+						.append(month)
+						.append(" year:")
+						.append(year)
+						.append(" monthStr: ")
+						.append(monthStr);
 			}
 
 			@Override
@@ -174,8 +177,6 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		eventDays.add("2014-02-25");
 		eventDays.add(Util.getTomorrow());
 		eventDays.add(Util.getCurrentDate());
-
-
 		mf.setEvents(eventDays);
 
 		Log.e("","locale:" + Util.getLocale());
@@ -231,6 +232,12 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 	}
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		_filterString=null;
+	}
+	
+	@Override
 	public void onClick(View v) {
 		if(v.getId()==R.id.btnBack)
 		{
@@ -246,6 +253,12 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		else if (v.getId()==R.id.llLeads || v.getId()==R.id.btnLeads)
 		{
 			Intent myIntent=new Intent(CalendarActivity.this,MessageTabActivity.class);
+			startActivity(myIntent);	
+			overridePendingTransition(R.anim.right_in, R.anim.left_out);	
+		}
+		else if (v.getId()==R.id.llMenu || v.getId()==R.id.btnMenu)
+		{
+			Intent myIntent=new Intent(CalendarActivity.this,CalendarActivityMultipleSelection.class);
 			startActivity(myIntent);	
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);	
 		}

@@ -1,15 +1,33 @@
 package com.eventmanagementapp.calendar;
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.eventmanagementapp.R;
+import com.eventmanagementapp.common.GlobalCommonMethods;
+import com.eventmanagementapp.common.GlobalCommonValues;
+import com.eventmanagementapp.dialogs.ErrorDialog;
+
 import android.annotation.TargetApi;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,8 +38,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eventmanagementapp.R;
 
 public class MFCalendarView extends LinearLayout{
 
@@ -35,24 +51,29 @@ public class MFCalendarView extends LinearLayout{
 	private String initialDate;
 	private View view;
 	private Locale locale;
-
 	onMFCalendarViewListener calendarListener;
+	String response="",url;
+	ProgressDialog progress;
+	Context mContext;
 
 	public MFCalendarView(Context context) {
 		super(context);
 		init(context);
+		mContext=context;
 	}
 
-	
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public MFCalendarView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
+		mContext=context;
 	}
-	
+
 	public MFCalendarView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
+		mContext=context;
 	}
 
 	void init(Context context){
@@ -123,10 +144,10 @@ public class MFCalendarView extends LinearLayout{
 	protected void setNextMonth() {
 		if (month.get(Calendar.MONTH) == 
 				month.getActualMaximum(Calendar.MONTH)) {
-			
+
 			month.set((month.get(Calendar.YEAR) + 1),
 					month.getActualMinimum(Calendar.MONTH), 1);
-			
+
 		} else {
 			month.set(Calendar.MONTH,
 					month.get(Calendar.MONTH) + 1);
@@ -146,7 +167,7 @@ public class MFCalendarView extends LinearLayout{
 	}
 
 	protected void showToast(String string) {
-//		Toast.makeText(getContext(), string, Toast.LENGTH_SHORT).show();
+		//		Toast.makeText(getContext(), string, Toast.LENGTH_SHORT).show();
 	}
 
 	public int getSelectedMonth(){
@@ -181,8 +202,10 @@ public class MFCalendarView extends LinearLayout{
 			gridview.setExpanded(true);
 			Log.d("", "month:"+ (month.get(Calendar.MONTH)+1) + 
 					" year:" + month.get(Calendar.YEAR));
-
 			calendaradapter.notifyDataSetChanged();
+			//Call Web Service
+			url=GlobalCommonValues.VENDOR_CALENDAR_HOME;
+			new HttpAsyncTask().execute(url);
 		}
 	};
 
@@ -226,4 +249,145 @@ public class MFCalendarView extends LinearLayout{
 		calendaradapter.setItems(dates);
 		handler.post(calendarUpdater);
 	}
+
+
+	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(progress==null)
+			{
+				progress=new ProgressDialog(mContext);
+				progress.show();		
+			}
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			try {
+				// Calling method for setting to be sent to the server
+				SetData();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// onPostExecute displays the results of the AsyncTask.
+		@Override
+		protected void onPostExecute(Void result) {
+			if(progress!=null && progress.isShowing())
+			{
+				progress.dismiss();
+				progress=null;
+			}
+			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
+			{
+				// In case of fetching message listing
+				try {   
+					JSONObject jsonObj = new JSONObject(response);
+					//new JSONObject(jsonObj.getString("json")).getString("data")
+					//new JSONObject(jsonObj.getString("json")).getJSONArray("available_years")
+					
+					/*if(mContext instanceof CalendarActivity)
+					{
+						ErrorDialog dialog=new ErrorDialog();
+						dialog.newInstance(mContext, "Test","Test_",null);
+						dialog.setCancelable(false);
+						dialog.show(((CalendarActivity)mContext).getFragmentManager(), "test");
+					}*/
+					/*String _result = jsonObj.getString("result");
+					if(_result.equalsIgnoreCase("error"))
+					{
+						String errorMessage=jsonObj.getString("message");
+						ErrorDialog dialog=new ErrorDialog();
+						dialog.newInstance(mContext, _result.toUpperCase(), errorMessage,null);
+						dialog.setCancelable(false);
+						dialog.show(getFragmentManager(), "test");
+					}
+					else if(_result.equalsIgnoreCase("success")){
+						JSONArray jsonArray = jsonObj.getJSONArray("json");
+						for(int i=0;i<jsonArray.length();i++)
+						{
+							String receiver_name=new JSONObject(jsonArray.getString(i)).getString("receiver_name");
+							String message=new JSONObject(jsonArray.getString(i)).getString("message");
+							String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
+							String receiver_email=new JSONObject(jsonArray.getString(i)).getString("receiver_email");
+							HashMap<String, String> hashMap=new HashMap<String,String>();
+							hashMap.put("receiver_name",receiver_name);
+							hashMap.put("message",message);
+							hashMap.put("msg_time", msg_time);
+							hashMap.put("receiver_email", receiver_email);
+							adapterMessageList.listChat.add(hashMap);
+							adapterMessageList.notifyDataSetChanged();
+						}
+					}*/
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+		}
+	}
+
+	// Create GetData Method
+	public  void  SetData()  throws  UnsupportedEncodingException
+	{
+		// Create data variable for sent values to server
+		//		yyyy-MM-dd
+		String date=Util.getCurrentDate();
+		String[] arrayDate=date.split("-");
+		String data="";
+		String year=arrayDate[0];
+		String month=arrayDate[1];
+		String filter_string=CalendarActivity._filterString;
+
+		data= URLEncoder.encode("year", "UTF-8") 
+				+ "=" + URLEncoder.encode(year, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("month", "UTF-8") + "="
+				+ URLEncoder.encode(month, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("filter_string", "UTF-8") 
+		+ "=" + URLEncoder.encode(filter_string,"UTF-8");
+
+		BufferedReader reader=null;
+		// Send data 
+		try
+		{ 
+			URL _url=null;
+			// Defined URL  where to send data
+			_url= new URL(GlobalCommonValues.VENDOR_CALENDAR_HOME);
+			// Send POST data request
+
+			URLConnection conn = _url.openConnection(); 
+			conn.setDoOutput(true); 
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+			wr.write( data ); 
+			wr.flush(); 
+
+			// Get the server response 
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+
+			// Read Server Response
+			while((line = reader.readLine()) != null)
+			{
+				// Append server response in string
+				sb.append(line + "\n");
+			}
+			response = sb.toString();
+		}
+		catch(Exception ex)
+		{
+		}
+		finally
+		{
+			try
+			{
+				reader.close();
+			}
+			catch(Exception ex) {}
+		}
+	}
+
 }

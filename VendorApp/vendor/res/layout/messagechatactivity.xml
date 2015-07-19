@@ -56,7 +56,7 @@
                         android:layout_width="@dimen/circleSendButtonBg"
                         android:layout_height="@dimen/circleSendButtonBg"
                         android:layout_gravity="center"
-                        android:background="@drawable/circle_oval" />
+                        android:background="@drawable/send_message" />
                 </LinearLayout>
         </LinearLayout>
     

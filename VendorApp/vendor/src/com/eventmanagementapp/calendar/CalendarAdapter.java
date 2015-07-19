@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.eventmanagementapp.R;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -16,9 +18,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eventmanagementapp.R;
-import com.eventmanagementapp.util.CustomFonts;
 
 public class CalendarAdapter extends BaseAdapter {
 	private Context mContext;
@@ -42,7 +41,7 @@ public class CalendarAdapter extends BaseAdapter {
 
 	private ArrayList<String> items;
 	public static List<String> dayString;
-	private View previousView;
+	//	private View previousView;
 
 	Calendar a;
 	TextView dayView,tvCount,tvPeekDate;

@@ -11,4 +11,5 @@ public class GlobalCommonValues {
 	public static String CUSTOMER_VENDOR_MESSAGE_DETAIL=BASEURL+"customer_vendor_message_detail"+"/";
 	public static String VENDOR_BID_BOOK_DETAIL=BASEURL+"vendor_bid_book_detail"+"/";
 	public static String VENDOR_BID_BOOK_RESPONSE = BASEURL+"vendor_bid_book_response"+"/";
+	public static String VENDOR_CALENDAR_HOME = BASEURL+"vendor_calendar_home"+"/";
 }

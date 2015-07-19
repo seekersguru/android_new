@@ -51,13 +51,17 @@
             android:name="com.eventmanagementapp.calendar.CalendarActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.eventmanagementapp.calendar.CalendarActivityMultipleSelection"
+            android:screenOrientation="portrait" >
+        </activity>
         <!--
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullBleedTheme"
             android:windowSoftInputMode="adjustResize" >
-        </activity>
+        </activity>
         -->
         <activity
             android:name=".ForgotPasswordActivity"
@@ -98,14 +102,14 @@
         <activity
             android:name="com.eventmanagementapp.Activities.VendorDetailsPageMapPopup"
             android:screenOrientation="portrait" >
-        </activity>
+        </activity>
         -->
 
 
         <!--
              <meta-data
             android:name="com.google.android.gms.version"
-            android:value="7327000" />
+            android:value="7327000" />
         -->
 
         <provider

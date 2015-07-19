@@ -95,10 +95,7 @@
             android:text="Message"
             android:textColor="#000"
             android:textSize="15sp" />
-    </LinearLayout>
-
-
-
+    </LinearLayout>
     -->
 
     <LinearLayout
@@ -178,8 +175,10 @@
                         android:layout_gravity="center"
                         android:background="@drawable/mail_unselected" />
                 </LinearLayout>
-                <!--  android:layout_width="@dimen/buttonMessageWidth"
-                        android:layout_height="@dimen/dimenBottomBarIcons" -->
+                <!--
+                      android:layout_width="@dimen/buttonMessageWidth"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
+                -->
             </LinearLayout>
 
             <LinearLayout
@@ -263,11 +262,11 @@
                 android:background="#ffffffff"
                 android:orientation="vertical" >
 
-                <com.eventmanagementapp.calendar.MFCalendarView
+                <com.eventmanagementapp.calendar.MFCalendarViewMultipleSelection
                     android:id="@+id/mFCalendarView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
-                </com.eventmanagementapp.calendar.MFCalendarView>
+                </com.eventmanagementapp.calendar.MFCalendarViewMultipleSelection>
                 <!-- android:layout_marginTop="30dp" -->
             </LinearLayout>
 
@@ -319,16 +318,16 @@
                     android:gravity="center" >
 
                     <Button
-                        android:id="@+id/btnClearAll"
+                        android:id="@+id/btnShowBookings"
                         android:layout_width="95dp"
                         android:layout_height="33dp"
                         android:background="@color/calendarThemeOrangeColor"
                         android:gravity="center"
-                        android:text="Clear All"
+                        android:text="Show Bookings"
                         android:textColor="#fff"
                         android:textSize="@dimen/textSizeSmall" />
 
-                    <Button
+                   <!--  <Button
                         android:id="@+id/btnChange"
                         android:layout_width="95dp"
                         android:layout_height="33dp"
@@ -337,7 +336,7 @@
                         android:gravity="center"
                         android:text="Change"
                         android:textColor="#fff"
-                        android:textSize="@dimen/textSizeSmall" />
+                        android:textSize="@dimen/textSizeSmall" /> -->
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
