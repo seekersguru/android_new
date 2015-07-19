@@ -58,7 +58,7 @@ public class MessageChatActivity extends FragmentActivity{
 	String response,url,responseMessageList;
 	ProgressDialog progress;
 	String page_count="1";
-	String receiver_email="";
+	String _receiver_email="";
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -88,7 +88,7 @@ public class MessageChatActivity extends FragmentActivity{
 
 		if(getIntent()!=null && getIntent().getExtras()!=null)
 		{
-			receiver_email=getIntent().getExtras().getString("receiver_email");
+			_receiver_email=getIntent().getExtras().getString("receiver_email");
 		}
 
 		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
@@ -245,7 +245,7 @@ public class MessageChatActivity extends FragmentActivity{
 		String data="";
 		String identifier=PreferenceUtil.getInstance().getIdentifier();
 		String from_to="c2v";
-		String receiver_email="banquet_homotel@wedwise.in";//banquet_novotel@wedwise.in	
+		String receiver_email=_receiver_email;//banquet_novotel@wedwise.in	
 		if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_CREATE))
 		{
 			String message=etMessage.getText().toString();
@@ -261,6 +261,18 @@ public class MessageChatActivity extends FragmentActivity{
 
 			data += "&" + URLEncoder.encode("from_to", "UTF-8") 
 			+ "=" + URLEncoder.encode(from_to,"UTF-8");
+
+			data += "&" + URLEncoder.encode("action", "UTF-8") 
+			+ "=" + URLEncoder.encode("customer_vendor_message_create","UTF-8");
+
+			data += "&" + URLEncoder.encode("mode", "UTF-8") 
+			+ "=" + URLEncoder.encode("android","UTF-8");
+
+			data += "&" + URLEncoder.encode("device_id", "UTF-8") 
+			+ "=" + URLEncoder.encode("123456","UTF-8");
+
+			data += "&" + URLEncoder.encode("push_data", "UTF-8") 
+			+ "=" + URLEncoder.encode("message push","UTF-8");
 
 			data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
 			+ "=" + URLEncoder.encode("message","UTF-8");

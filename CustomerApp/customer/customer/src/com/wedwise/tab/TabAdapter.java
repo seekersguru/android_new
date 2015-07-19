@@ -31,16 +31,16 @@ public class TabAdapter extends FragmentStatePagerAdapter {
             BidTab bidTab = new BidTab();
             return bidTab;
         }
-        else if(position == 1) // if the position is 0 we are returning the First tab
+        else /*if(position == 1)*/ // if the position is 0 we are returning the First tab
         {
             BookTab bookTab = new BookTab();
             return bookTab;
         }
-        else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
+        /*else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
         {
             MessageTab messageTab = new MessageTab();
             return messageTab;
-        }
+        }*/
 
     }
 

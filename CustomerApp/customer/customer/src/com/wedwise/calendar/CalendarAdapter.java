@@ -84,8 +84,6 @@ public class CalendarAdapter extends BaseAdapter {
 		this.items = items;
 	}
 
-
-
 	public int getCount() {
 		return dayString.size();
 	}

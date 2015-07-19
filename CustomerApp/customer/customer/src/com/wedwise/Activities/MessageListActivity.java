@@ -49,7 +49,7 @@ public class MessageListActivity extends FragmentActivity{
 	String response,url,responseMessageList;
 	ProgressDialog progress;
 	String page_count="1";
-	
+
 	@Override
 	protected void onCreate(Bundle arg0) {
 		super.onCreate(arg0);
@@ -72,24 +72,25 @@ public class MessageListActivity extends FragmentActivity{
 		listMessages=new ArrayList<HashMap<String, String>>();
 		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST;
 		new HttpAsyncTask().execute(url);
-//		listMessages.add("Andy Lau");
-//		listMessages.add("James Moore");
-//		listMessages.add("Jorgen Flood");
-//		listMessages.add("Claude");
-//		listMessages.add("Stefanos Fanidis");
-//		listMessages.add("James Moore");
-//		listMessages.add("James Moore");
-//		listMessages.add("James Moore");
-//		listMessages.add("James Moore");
-//		listMessages.add("James Moore");
+		//		listMessages.add("Andy Lau");
+		//		listMessages.add("James Moore");
+		//		listMessages.add("Jorgen Flood");
+		//		listMessages.add("Claude");
+		//		listMessages.add("Stefanos Fanidis");
+		//		listMessages.add("James Moore");
+		//		listMessages.add("James Moore");
+		//		listMessages.add("James Moore");
+		//		listMessages.add("James Moore");
+		//		listMessages.add("James Moore");
 		adapterMessageList=new MessagesListAdapter(mContext, listMessages);
 		lvMessages.setAdapter(adapterMessageList);
 		lvMessages.setOnItemClickListener(new OnItemClickListener() {
-			
+
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Intent myIntent=new Intent(mContext,MessageChatActivity.class);
+				myIntent.putExtra("receiver_email", listMessages.get(position).get("receiver_email"));
 				startActivity(myIntent);
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			}
@@ -101,7 +102,7 @@ public class MessageListActivity extends FragmentActivity{
 				overridePendingTransition(R.anim.right_in, R.anim.right_out);				
 			}
 		});
-		
+
 		Button refreshButton = (Button)findViewById(R.id.refresh_button);
 		refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -111,7 +112,7 @@ public class MessageListActivity extends FragmentActivity{
 			}
 		});
 	}
-	
+
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected void onPreExecute() {
@@ -149,111 +150,112 @@ public class MessageListActivity extends FragmentActivity{
 			}
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
-					// In case of fetching message listing
-					try {
-						JSONObject jsonObj = new JSONObject(response);
-						String _result = jsonObj.getString("result");
-						if(_result.equalsIgnoreCase("error"))
+				// In case of fetching message listing
+				try {
+					JSONObject jsonObj = new JSONObject(response);
+					String _result = jsonObj.getString("result");
+					if(_result.equalsIgnoreCase("error"))
+					{
+						String errorMessage=jsonObj.getString("message");
+						ErrorDialog dialog=new ErrorDialog();
+						dialog.newInstance(mContext, _result.toUpperCase(), errorMessage,null);
+						dialog.setCancelable(false);
+						dialog.show(getFragmentManager(), "test");
+					}
+					else if(_result.equalsIgnoreCase("success")){
+						JSONArray jsonArray = jsonObj.getJSONArray("json");
+						adapterMessageList.listChat.clear();
+						for(int i=0;i<jsonArray.length();i++)
 						{
-							String errorMessage=jsonObj.getString("message");
-							ErrorDialog dialog=new ErrorDialog();
-							dialog.newInstance(mContext, _result.toUpperCase(), errorMessage,null);
-							dialog.setCancelable(false);
-							dialog.show(getFragmentManager(), "test");
+							String receiver_name=new JSONObject(jsonArray.getString(i)).getString("receiver_name");
+							String message=new JSONObject(jsonArray.getString(i)).getString("message");
+							String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
+							String receiver_email=new JSONObject(jsonArray.getString(i)).getString("receiver_email");
+							HashMap<String, String> hashMap=new HashMap<String,String>();
+							hashMap.put("receiver_name",receiver_name);
+							hashMap.put("message",message);
+							hashMap.put("msg_time", msg_time);
+							hashMap.put("receiver_email", receiver_email);
+							adapterMessageList.listChat.add(hashMap);
+							adapterMessageList.notifyDataSetChanged();
 						}
-						else if(_result.equalsIgnoreCase("success")){
-							JSONArray jsonArray = jsonObj.getJSONArray("json");
-							adapterMessageList.listChat.clear();
-							for(int i=0;i<jsonArray.length();i++)
-							{
-								String receiver_name=new JSONObject(jsonArray.getString(i)).getString("receiver_name");
-								String message=new JSONObject(jsonArray.getString(i)).getString("message");
-								String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
-								HashMap<String, String> hashMap=new HashMap<String,String>();
-								hashMap.put("receiver_name",receiver_name);
-								hashMap.put("message",message);
-								hashMap.put("msg_time", msg_time);
-								adapterMessageList.listChat.add(hashMap);
-								adapterMessageList.notifyDataSetChanged();
-							}
-						}
-					} catch (Exception e) {
-						e.getMessage();
 					}
-					
-					if(adapterMessageList.getCount()==0){
-						TextView empty_view = (TextView)findViewById(R.id.empty_view);
-						empty_view.setVisibility(View.VISIBLE);
-					}
-					
+				} catch (Exception e) {
+					e.getMessage();
+				}
+
+				if(adapterMessageList.getCount()==0){
+					TextView empty_view = (TextView)findViewById(R.id.empty_view);
+					empty_view.setVisibility(View.VISIBLE);
+				}
 			}
 		}
 	}
-	
+
 	// Create GetData Method
-		public  void  SetData()  throws  UnsupportedEncodingException
+	public  void  SetData()  throws  UnsupportedEncodingException
+	{
+		// Create data variable for sent values to server  
+		String data="";
+		String identifier=PreferenceUtil.getInstance().getIdentifier();
+		String from_to="c2v";
+		if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
 		{
-			// Create data variable for sent values to server  
-			String data="";
-			String identifier=PreferenceUtil.getInstance().getIdentifier();
-			String from_to="v2c";
-			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
-			{
-				String page_no=page_count;
-				data= URLEncoder.encode("identifier", "UTF-8") 
-						+ "=" + URLEncoder.encode(identifier, "UTF-8"); 
+			String page_no=page_count;
+			data= URLEncoder.encode("identifier", "UTF-8") 
+					+ "=" + URLEncoder.encode(identifier, "UTF-8"); 
 
-				data += "&" + URLEncoder.encode("page_no", "UTF-8") + "="
-						+ URLEncoder.encode(page_no, "UTF-8"); 
+			data += "&" + URLEncoder.encode("page_no", "UTF-8") + "="
+					+ URLEncoder.encode(page_no, "UTF-8"); 
 
-				data += "&" + URLEncoder.encode("from_to", "UTF-8") 
-						+ "=" + URLEncoder.encode(from_to,"UTF-8");
-				
-				data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-						+ "=" + URLEncoder.encode("message","UTF-8");
+			data += "&" + URLEncoder.encode("from_to", "UTF-8") 
+			+ "=" + URLEncoder.encode(from_to,"UTF-8");
 
-			}
-			BufferedReader reader=null;
-			// Send data 
-			try
-			{ 
-				URL _url=null;
-				// Defined URL  where to send data
-				_url= new URL(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST);
-				// Send POST data request
+			data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
+			+ "=" + URLEncoder.encode("message","UTF-8");
 
-				URLConnection conn = _url.openConnection(); 
-				conn.setDoOutput(true); 
-				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
-				wr.write( data ); 
-				wr.flush(); 
-
-				// Get the server response 
-				reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-				StringBuilder sb = new StringBuilder();
-				String line = null;
-
-				// Read Server Response
-				while((line = reader.readLine()) != null)
-				{
-					// Append server response in string
-					sb.append(line + "\n");
-				}
-				response = sb.toString();
-			}
-			catch(Exception ex)
-			{
-			}
-			finally
-			{
-				try
-				{
-					reader.close();
-				}
-				catch(Exception ex) {}
-			}
 		}
-	
+		BufferedReader reader=null;
+		// Send data 
+		try
+		{ 
+			URL _url=null;
+			// Defined URL  where to send data
+			_url= new URL(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST);
+			// Send POST data request
+
+			URLConnection conn = _url.openConnection(); 
+			conn.setDoOutput(true); 
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+			wr.write( data ); 
+			wr.flush(); 
+
+			// Get the server response 
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+
+			// Read Server Response
+			while((line = reader.readLine()) != null)
+			{
+				// Append server response in string
+				sb.append(line + "\n");
+			}
+			response = sb.toString();
+		}
+		catch(Exception ex)
+		{
+		}
+		finally
+		{
+			try
+			{
+				reader.close();
+			}
+			catch(Exception ex) {}
+		}
+	}
+
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();

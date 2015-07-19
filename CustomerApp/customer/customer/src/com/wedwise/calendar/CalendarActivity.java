@@ -3,6 +3,9 @@ package com.wedwise.calendar;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
+import com.wedwiseapp.R;
+
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -18,8 +21,6 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.wedwiseapp.R;
-
 /**
  * Shows off the most basic usage
  */
@@ -33,6 +34,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 	Resources system;
 	int hour_numberpicker_id,minute_numberpicker_id,ampm_numberpicker_id;
 	NumberPicker hour_numberpicker,minute_numberpicker,ampm_numberpicker;
+	Context mContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +51,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		tvScheduledDate.setText("Visit scheduled at 2/05/2104 09:40 am");
 		btnBack.setOnClickListener(this);
 		btnSchedule.setOnClickListener(this);
-
+		mContext=CalendarActivity.this;
 		//		CustomFonts.setFontOfTextView(CalendarActivity.this,tvTitle,"fonts/GothamRnd-Book_0.otf");
 		//		CustomFonts.setFontOfButton(CalendarActivity.this,btnSchedule,"fonts/GothamRnd-Light.otf");
 		//		CustomFonts.setFontOfTextView(CalendarActivity.this,tvScheduledDate,"fonts/GothamRnd-Light.otf");
@@ -65,12 +67,12 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 			public void onDisplayedMonthChanged(int month, int year, String monthStr) {
 
 				StringBuffer bf = new StringBuffer()
-				.append(" month:")
-				.append(month)
-				.append(" year:")
-				.append(year)
-				.append(" monthStr: ")
-				.append(monthStr);
+						.append(" month:")
+						.append(month)
+						.append(" year:")
+						.append(year)
+						.append(" monthStr: ")
+						.append(monthStr);
 				//				
 				//				Toast.makeText(CalendarActivity.this,  bf.toString(),
 				//						Toast.LENGTH_SHORT).show();
@@ -89,19 +91,14 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		 * you can set calendar date anytime
 		 * */
 		//mf.setDate("2014-02-19");
-
-
 		/**
 		 * calendar events samples 
 		 * */
 		ArrayList<String> eventDays = new ArrayList<String>();
-		eventDays.add("2014-02-25");
+		/*eventDays.add("2014-02-25");
 		eventDays.add(Util.getTomorrow());
 		eventDays.add(Util.getCurrentDate());
-
-
-		mf.setEvents(eventDays);
-
+		mf.setEvents(eventDays);*/
 		Log.e("","locale:" + Util.getLocale());
 	}
 

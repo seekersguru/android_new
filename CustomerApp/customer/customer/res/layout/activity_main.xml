@@ -9,7 +9,7 @@
         android:id="@+id/rlMain"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottomBarHeight"
-        android:background="#ffffff">
+        android:background="#ffffff" >
 
         <Button
             android:id="@+id/btnBack"
@@ -47,51 +47,8 @@
         android:layout_above="@+id/button_layout"
         android:layout_below="@+id/rlMain" />
 
-    <!-- <LinearLayout -->
-    <!-- android:id="@+id/button_layout" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:layout_alignParentBottom="true" -->
-    <!-- android:layout_gravity="center_horizontal" -->
-    <!-- android:weightSum="2" -->
-    <!-- android:padding="10dp" -->
-    <!-- android:layout_marginTop="@dimen/marginLeftRightllFields" > -->
-
-
-    <!-- <com.wedwiseapp.views.CTextView -->
-    <!-- android:id="@+id/bid_button" -->
-    <!-- style="@style/text_333_14" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:layout_gravity="left|bottom" -->
-    <!-- android:background="@drawable/red_border" -->
-    <!-- android:gravity="center" -->
-    <!-- android:layout_weight="1" -->
-    <!-- android:padding="@dimen/paddingLeftEditText" -->
-    <!-- android:text="BID" -->
-    <!-- android:textColor="@color/OrangeColorTheme" -->
-    <!-- android:textSize="@dimen/textSizeMedium" /> -->
-
-
-    <!-- <com.wedwiseapp.views.CTextView -->
-    <!-- android:id="@+id/book_button" -->
-    <!-- style="@style/text_333_14" -->
-    <!-- android:layout_width="match_parent" -->
-    <!-- android:layout_height="wrap_content" -->
-    <!-- android:layout_gravity="left|bottom" -->
-    <!-- android:layout_marginLeft="@dimen/marginLeftRightllFields" -->
-    <!-- android:background="@drawable/red_border" -->
-    <!-- android:gravity="center" -->
-    <!-- android:layout_weight="1" -->
-    <!-- android:padding="@dimen/paddingLeftEditText" -->
-    <!-- android:text="BOOK" -->
-    <!-- android:textColor="@color/OrangeColorTheme" -->
-    <!-- android:textSize="@dimen/textSizeMedium" /> -->
-    <!-- </LinearLayout> -->
-
-
     <LinearLayout
-         android:id="@+id/button_layout"
+        android:id="@+id/llBottomBarParent"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottomBarHeight"
         android:layout_alignParentBottom="true"
@@ -100,8 +57,8 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/bottomBarDividerHeight"
-            android:background="@drawable/divider_bottom_bar" />
+            android:layout_height="2dp"
+            android:background="#9c9c9c" />
 
         <LinearLayout
             android:id="@+id/llBottomBar"
@@ -110,51 +67,122 @@
             android:background="#00000000"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:weightSum="3" >
+            android:weightSum="1" >
 
             <LinearLayout
+                android:id="@+id/llMail"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center" >
+                android:layout_weight=".25"
+                android:orientation="vertical" >
 
-                <Button
-                    android:id="@+id/btnMail"
-                    android:layout_width="@dimen/dimenBottomBarIcons"
-                    android:layout_height="@dimen/dimenBottomBarIcons"
-                    android:layout_gravity="center"
-                    android:background="@drawable/mail_unselected" />
+                <View
+                    android:id="@+id/viewSeparatorOrangeFirst"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/divider_orange" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btnMail"
+                        android:layout_width="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
+                        android:layout_gravity="center"
+                        android:background="@drawable/mail_unselected" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llCreateBid"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center" >
+                android:layout_weight=".25"
+                android:orientation="vertical" >
 
-                <Button
-                    android:id="@+id/btnHome"
-                    android:layout_width="@dimen/dimenBottomBarIcons"
-                    android:layout_height="@dimen/dimenBottomBarIcons"
-                    android:layout_gravity="center"
-                    android:background="@drawable/home_unselected" />
+                <View
+                    android:id="@+id/viewSeparatorOrangeSecond"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/divider_orange"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btnCreateBid"
+                        android:layout_width="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
+                        android:layout_gravity="center"
+                        android:background="@drawable/leads_icon" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llBook"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center" >
+                android:layout_weight=".25"
+                android:orientation="vertical" >
 
-                <Button
-                    android:id="@+id/btnLike"
-                    android:layout_width="@dimen/dimenBottomBarIcons"
-                    android:layout_height="@dimen/dimenBottomBarIcons"
-                    android:layout_gravity="center"
-                    android:background="@drawable/like_unselected" />
+                <View
+                    android:id="@+id/viewSeparatorOrangeFourth"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/divider_orange"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btnBook"
+                        android:layout_width="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
+                        android:layout_gravity="center"
+                        android:background="@drawable/book_unselected" />
+                </LinearLayout>
             </LinearLayout>
 
-           
+            <LinearLayout
+                android:id="@+id/llSchedule"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".25"
+                android:orientation="vertical" >
+
+                <View
+                    android:id="@+id/viewSeparatorOrangeThird"
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@drawable/divider_orange"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <Button
+                        android:id="@+id/btnSchedule"
+                        android:layout_width="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
+                        android:layout_gravity="center"
+                        android:background="@drawable/cal_unselected" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

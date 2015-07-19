@@ -31,7 +31,6 @@ public class VendorDetailsActivity2 extends FragmentActivity{
 	private final String TAG = "VendorDetailsActivity2";
 	
 	
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

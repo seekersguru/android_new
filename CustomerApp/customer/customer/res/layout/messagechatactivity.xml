@@ -56,7 +56,7 @@
                         android:layout_width="@dimen/circleSendButtonBg"
                         android:layout_height="@dimen/circleSendButtonBg"
                         android:layout_gravity="center"
-                        android:background="@drawable/circle_oval" />
+                        android:background="@drawable/send_message" />
                 </LinearLayout>
         </LinearLayout>
     
@@ -75,78 +75,5 @@
         android:dividerHeight="0dp"
         android:scrollbars="none" >
     </ListView>
-
-    <!--
-    <LinearLayout
-        android:id="@+id/llListContainer"
-        android:layout_below="@+id/viewTopbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#F1EFF0"
-        android:orientation="vertical"
-        android:weightSum="1" >
-
-        <ListView
-            android:id="@+id/lvChatMessages"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".86"
-            android:background="#F1EFF0"
-            android:cacheColorHint="#00000000"
-            android:divider="#00000000"
-            android:dividerHeight="0dp"
-            android:scrollbars="none" >
-        </ListView>
-
-        <LinearLayout
-            android:id="@+id/lvBottomBar"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight=".14"
-            android:background="#00000000"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="8dp"
-            android:weightSum="1" >
-
-            <EditText
-                android:id="@+id/etMessage"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".85"
-                android:background="@drawable/rounded_border_edittext"
-                android:gravity="fill_vertical"
-                android:hint="Type a message"
-                android:minHeight="45dp"
-                android:paddingLeft="@dimen/paddingLeftEditText"
-                android:singleLine="false"
-                android:textColor="#000"
-                android:textSize="@dimen/textSizeMedium" />
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight=".15"
-                android:gravity="center" >
-
-                <LinearLayout
-                    android:layout_width="@dimen/circleSendButtonBg"
-                    android:layout_height="@dimen/circleSendButtonBg"
-                    android:layout_marginLeft="@dimen/paddingLeftEditText"
-                    android:background="@drawable/circle_oval"
-                    android:gravity="center" >
-
-                    <Button
-                        android:id="@+id/btnSendMessage"
-                        android:layout_width="@dimen/sendmessageIconWidth"
-                        android:layout_height="@dimen/sendmessageIconHeight"
-                        android:layout_gravity="center"
-                        android:background="@drawable/send_message" />
-                </LinearLayout>
-            </FrameLayout>
-        </LinearLayout>
-    </LinearLayout>
-
-    -->
 
 </RelativeLayout>

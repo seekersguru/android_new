@@ -72,7 +72,7 @@ public class AlbumAdapter extends BaseAdapter
 		ImageView imViewMenuImage=(ImageView)albumView.findViewById(R.id.imViewMenuImage);
 		TextView tvCategoryName=(TextView)albumView.findViewById(R.id.tvCategoryName);
 		tvCategoryName.setText(listItems.get(position).get("name"));
-		String imagePath="http://wedwise.work"+listItems.get(position).get("image_path"); //"http://0.tqn.com/d/webclipart/1/0/5/l/4/floral-icon-5.jpg";
+		String imagePath="http://52.11.207.26"+listItems.get(position).get("image_path"); //"http://0.tqn.com/d/webclipart/1/0/5/l/4/floral-icon-5.jpg";
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
 		.defaultDisplayImageOptions(options)
 		.build();

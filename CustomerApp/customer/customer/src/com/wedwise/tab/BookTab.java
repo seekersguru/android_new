@@ -59,7 +59,6 @@ public class BookTab extends Fragment {
 	{
 		lvBook=(ListView) view.findViewById(R.id.lvBook);
 		empty_view = (TextView)view.findViewById(R.id.empty_view);
-		
 		listMessages=new ArrayList<BookingDataBean>();
 		checkInternetConnection();
 		adapterMessageList=new BookListAdapter(getActivity(), listMessages);

@@ -189,16 +189,14 @@ public class MFCalendarView extends LinearLayout{
 	}
 
 	public Runnable calendarUpdater = new Runnable() {
-
 		@Override
 		public void run() {
-
 			gridview.setExpanded(true);
-
 			Log.d("", "month:"+ (month.get(Calendar.MONTH)+1) + 
 					" year:" + month.get(Calendar.YEAR));
-
 			calendaradapter.notifyDataSetChanged();
+			
+			//call web service here
 		}
 	};
 

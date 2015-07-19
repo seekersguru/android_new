@@ -9,30 +9,13 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.google.gson.Gson;
 import com.wedwise.adapter.ViewPagerAdapter;
+import com.wedwise.calendar.CalendarActivity;
+import com.wedwise.chat.MessageChatActivity;
 import com.wedwise.common.GlobalCommonMethods;
 import com.wedwise.common.GlobalCommonValues;
 import com.wedwise.common.WidgetsType;
@@ -50,13 +33,37 @@ import com.wedwise.tab.BidBookCreateActivity;
 import com.wedwiseapp.R;
 import com.wedwiseapp.util.IntentHelper;
 
-public class MainActivity extends Activity {
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+
+public class MainActivity extends Activity implements OnClickListener{
 
 	Context mContext;
 	String response = "", url = "";
 	private final String TAG = "VendorDetailsActivity2";
 	ArrayList<SectionModel> sectionModels = new ArrayList<SectionModel>();
 	ListView listView;
+	LinearLayout llMail,llCreateBid,llBook,llSchedule;
+	Button btnMail,btnCreateBid,btnBook,btnSchedule;
+	String vendorEmail;
+	Bid bidDetail;
+	Book bookDetail;
+	String receiver_email="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +71,24 @@ public class MainActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main);
 		mContext = this;
+
+		llMail=(LinearLayout) findViewById(R.id.llMail);
+		llCreateBid=(LinearLayout) findViewById(R.id.llCreateBid);	
+		llSchedule=(LinearLayout) findViewById(R.id.llSchedule);
+		llBook=(LinearLayout) findViewById(R.id.llBook);
+		btnBook=(Button) findViewById(R.id.btnBook);
+		btnMail=(Button) findViewById(R.id.btnMail);
+		btnCreateBid=(Button) findViewById(R.id.btnCreateBid);
+		btnSchedule=(Button) findViewById(R.id.btnSchedule);
+		llMail.setOnClickListener(this);
+		llCreateBid.setOnClickListener(this);
+		llSchedule.setOnClickListener(this);
+		llBook.setOnClickListener(this);
+		btnBook.setOnClickListener(this);
+		btnMail.setOnClickListener(this);
+		btnCreateBid.setOnClickListener(this);
+		btnSchedule.setOnClickListener(this);
+
 		listView = (ListView) findViewById(R.id.listView);
 		findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
 
@@ -74,6 +99,13 @@ public class MainActivity extends Activity {
 			}
 		});
 		new HttpAsyncTask().execute();
+	}
+
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		super.onBackPressed();
+		overridePendingTransition(R.anim.right_in, R.anim.right_out);
 	}
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
@@ -104,16 +136,13 @@ public class MainActivity extends Activity {
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			// Toast.makeText(getBaseContext(), "Data Sent!"+response,
-			// Toast.LENGTH_LONG).show();
 
 			if (progress != null && progress.isShowing()) {
 				progress.dismiss();
 				progress = null;
 			}
 
-			if (!TextUtils.isEmpty(response)
-					&& GlobalCommonMethods.isJSONValid(response)) {
+			if (!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response)) {
 				// Log.d(TAG, "response= "+response);
 				Gson gson = new Gson();
 				VendorDetail vendorDetail = null;
@@ -122,14 +151,7 @@ public class MainActivity extends Activity {
 				} catch (Exception e) {
 					e.printStackTrace();
 					try {
-						Toast.makeText(
-								mContext,
-								" "
-										+ new JSONObject(response)
-								.getString("result"),
-								Toast.LENGTH_SHORT).show();
-					} catch (JSONException e1) {
-						// TODO Auto-generated catch block
+					} catch (Exception e1) {
 						e1.printStackTrace();
 						finish();
 						return;
@@ -137,7 +159,8 @@ public class MainActivity extends Activity {
 					finish();
 					return;
 				}
-				Log.d(TAG, "vendorDetail= " + vendorDetail);
+				receiver_email=vendorDetail.getJson().getData().getInfo().getEmail();
+						Log.d(TAG, "vendorDetail= " + vendorDetail);
 				Log.d(TAG, "getVendorEmail= "
 						+ vendorDetail.getRequestData().getVendorEmail());
 				Log.d(TAG, "vendorDetail= " + vendorDetail);
@@ -195,7 +218,6 @@ public class MainActivity extends Activity {
 									sectionModel.setExtraTypeModel(extra_typeModel);
 									sectionModel.setExtraWidgetsType(extra_widgetsType);
 								}
-
 								sectionModels.add(sectionModel);
 					}
 				} catch (Exception e) {
@@ -227,14 +249,13 @@ public class MainActivity extends Activity {
 				sectionManager.initSections(sectionModels, mergeAdapter);
 				listView.setAdapter(mergeAdapter);
 
-
 				// Bid & Book Button
-				final String vendorEmail = vendorDetail.getRequestData().getVendorEmail();
+				vendorEmail = vendorDetail.getRequestData().getVendorEmail();
 
 				//				TextView bid_button = (TextView)findViewById(R.id.bid_button);
 				//				bid_button.setText(vendorDetail.getJson().getData().getBid().getButton());
-				final Bid bidDetail = vendorDetail.getJson().getData().getBid();
-				final Book bookDetail = vendorDetail.getJson().getData().getBook();
+				bidDetail = vendorDetail.getJson().getData().getBid();
+				bookDetail = vendorDetail.getJson().getData().getBook();
 				//				bid_button.setOnClickListener(new OnClickListener() {
 				//					@Override
 				//					public void onClick(View v) {
@@ -370,4 +391,46 @@ public class MainActivity extends Activity {
 		return null;
 	}
 
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+
+		case R.id.llMail:
+		case R.id.btnMail:
+			Intent myIntent1=new Intent(MainActivity.this,MessageChatActivity.class);
+			myIntent1.putExtra("receiver_email",receiver_email);
+			startActivity(myIntent1);	
+			overridePendingTransition(R.anim.right_in, R.anim.left_out);
+			break;
+
+		case R.id.llCreateBid:
+		case R.id.btnCreateBid:
+			IntentHelper.addObjectForKey(bidDetail, "bidDetail");
+			Intent myIntent=new Intent(getApplicationContext(),BidBookCreateActivity.class);
+			myIntent.putExtra("type","bid");
+			myIntent.putExtra("vendorEmail",vendorEmail);
+			startActivity(myIntent);
+			overridePendingTransition(R.anim.right_in, R.anim.left_out);
+			break;
+
+		case R.id.llBook:
+		case R.id.btnBook:
+			IntentHelper.addObjectForKey(bookDetail, "bookDetail");
+			Intent myIntent2=new Intent(getApplicationContext(),BidBookCreateActivity.class);
+			myIntent2.putExtra("type","book");
+			myIntent2.putExtra("vendorEmail",vendorEmail);
+			startActivity(myIntent2);
+			overridePendingTransition(R.anim.right_in, R.anim.left_out);
+			break;
+		case R.id.llSchedule:
+		case R.id.btnSchedule:
+			Intent myIntent3=new Intent(MainActivity.this,CalendarActivity.class);
+			startActivity(myIntent3);	
+			overridePendingTransition(R.anim.right_in, R.anim.left_out);
+			break;
+		default:
+			break;
+		}
+
+	}
 }
