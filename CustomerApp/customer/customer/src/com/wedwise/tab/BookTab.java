@@ -46,8 +46,8 @@ public class BookTab extends Fragment {
 	ProgressDialog progress;
 	private String response;
 	TextView empty_view;
-	
-	
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.booktab,container,false);
@@ -68,12 +68,12 @@ public class BookTab extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				BookingDataBean	bidDetail = listMessages.get(position);
+				/*BookingDataBean	bidDetail = listMessages.get(position);
 				Intent myIntent=new Intent(getActivity(),EnquiryDetailsActivity.class);
 				myIntent.putExtra("id", bidDetail.id);
 				myIntent.putExtra("type","book");
 				startActivity(myIntent);
-				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);	
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);*/	
 			}
 		});
 	}
@@ -142,10 +142,11 @@ public class BookTab extends Fragment {
 							bean.event_date= jArray.getJSONObject(i).getString("event_date");
 							bean.receiver_name= jArray.getJSONObject(i).getString("receiver_name");
 							bean.identifier= jArray.getJSONObject(i).getString("identifier");
-							
+
 							listMessages.add(bean);
 						}
 					}
+					adapterMessageList.listMessages=listMessages;
 					adapterMessageList.notifyDataSetChanged();
 					if(listMessages.size()==0){
 						empty_view.setVisibility(View.VISIBLE);
@@ -169,10 +170,10 @@ public class BookTab extends Fragment {
 				+ URLEncoder.encode("1", "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("from_to", "UTF-8") + "="
-				+ URLEncoder.encode("v2c", "UTF-8"); 
+				+ URLEncoder.encode("c2v", "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-				+ "=" + URLEncoder.encode("book", "UTF-8");
+		+ "=" + URLEncoder.encode("book", "UTF-8");
 
 		BufferedReader reader=null;
 

@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 import org.json.JSONArray;
@@ -287,7 +288,23 @@ public class MFCalendarView extends LinearLayout{
 					JSONObject jsonObj = new JSONObject(response);
 					//new JSONObject(jsonObj.getString("json")).getString("data")
 					//new JSONObject(jsonObj.getString("json")).getJSONArray("available_years")
-					
+					//{"15":25,"1":5,"16":7}
+					JSONArray datesJsonArray=new JSONArray(new JSONObject(jsonObj.getString("json")).getString("data"));
+					ArrayList<HashMap<String,String>> listDates = new ArrayList<HashMap<String,String>>();
+					HashMap<String,String> hashMap=new HashMap<String,String>();
+					String count="",day="";
+					for(int i=0;i<datesJsonArray.length();i++)
+					{
+						JSONObject jobj=new JSONObject(datesJsonArray.get(i).toString());
+						hashMap=new HashMap<String,String>();
+						hashMap.put("count",count);
+						hashMap.put("day",day);
+						listDates.add(hashMap);
+					}
+
+					/*HashMap<String,String> hashMap=new HashMap<String,String>();
+					hashMap.put("","");*/
+
 					/*if(mContext instanceof CalendarActivity)
 					{
 						ErrorDialog dialog=new ErrorDialog();

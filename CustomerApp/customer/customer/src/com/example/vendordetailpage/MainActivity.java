@@ -63,7 +63,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	String vendorEmail;
 	Bid bidDetail;
 	Book bookDetail;
-	String receiver_email="";
+	String receiver_email="",_receiveremail="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +88,11 @@ public class MainActivity extends Activity implements OnClickListener{
 		btnMail.setOnClickListener(this);
 		btnCreateBid.setOnClickListener(this);
 		btnSchedule.setOnClickListener(this);
+
+		if(getIntent()!=null && getIntent().getExtras()!=null)
+		{
+			_receiveremail=getIntent().getExtras().getString("_receiveremail");
+		}
 
 		listView = (ListView) findViewById(R.id.listView);
 		findViewById(R.id.btnBack).setOnClickListener(new OnClickListener() {
@@ -160,7 +165,7 @@ public class MainActivity extends Activity implements OnClickListener{
 					return;
 				}
 				receiver_email=vendorDetail.getJson().getData().getInfo().getEmail();
-						Log.d(TAG, "vendorDetail= " + vendorDetail);
+				Log.d(TAG, "vendorDetail= " + vendorDetail);
 				Log.d(TAG, "getVendorEmail= "
 						+ vendorDetail.getRequestData().getVendorEmail());
 				Log.d(TAG, "vendorDetail= " + vendorDetail);
@@ -398,7 +403,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		case R.id.llMail:
 		case R.id.btnMail:
 			Intent myIntent1=new Intent(MainActivity.this,MessageChatActivity.class);
-			myIntent1.putExtra("receiver_email",receiver_email);
+			myIntent1.putExtra("receiver_email",_receiveremail);
 			startActivity(myIntent1);	
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			break;
@@ -408,7 +413,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			IntentHelper.addObjectForKey(bidDetail, "bidDetail");
 			Intent myIntent=new Intent(getApplicationContext(),BidBookCreateActivity.class);
 			myIntent.putExtra("type","bid");
-			myIntent.putExtra("vendorEmail",vendorEmail);
+			myIntent.putExtra("vendorEmail",_receiveremail);
 			startActivity(myIntent);
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			break;
@@ -418,7 +423,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			IntentHelper.addObjectForKey(bookDetail, "bookDetail");
 			Intent myIntent2=new Intent(getApplicationContext(),BidBookCreateActivity.class);
 			myIntent2.putExtra("type","book");
-			myIntent2.putExtra("vendorEmail",vendorEmail);
+			myIntent2.putExtra("vendorEmail",_receiveremail);
 			startActivity(myIntent2);
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			break;

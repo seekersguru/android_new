@@ -16,7 +16,7 @@ import android.widget.TextView;
 public class BookListAdapter extends BaseAdapter{
 
 	Context mContext;
-	ArrayList<BookingDataBean> listMessages;
+	public ArrayList<BookingDataBean> listMessages;
 
 	public BookListAdapter(Context mContext,ArrayList<BookingDataBean> listMessages)
 	{
@@ -44,7 +44,7 @@ public class BookListAdapter extends BaseAdapter{
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View listItem = convertView;
 		LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-		listItem = inflater.inflate(R.layout.booklistadapter, parent, false);
+		listItem = inflater.inflate(R.layout.enquiryactivityviewadapter, parent, false);
 		TextView tvName=(TextView) listItem.findViewById(R.id.tvName);
 		TextView tvDateFirst=(TextView) listItem.findViewById(R.id.tvDateFirst);
 		TextView tvDateSecond=(TextView) listItem.findViewById(R.id.tvDateSecond);

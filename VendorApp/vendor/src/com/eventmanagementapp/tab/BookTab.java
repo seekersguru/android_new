@@ -46,8 +46,8 @@ public class BookTab extends Fragment {
 	ProgressDialog progress;
 	private String response;
 	TextView empty_view;
-	
-	
+
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.booktab,container,false);
@@ -59,9 +59,9 @@ public class BookTab extends Fragment {
 	{
 		lvBook=(ListView) view.findViewById(R.id.lvBook);
 		empty_view = (TextView)view.findViewById(R.id.empty_view);
-		
+
 		listMessages=new ArrayList<BookingDataBean>();
-		checkInternetConnection();
+		//		checkInternetConnection();
 		adapterMessageList=new BookListAdapter(getActivity(), listMessages);
 		lvBook.setAdapter(adapterMessageList);
 		lvBook.setOnItemClickListener(new OnItemClickListener() {
@@ -77,6 +77,13 @@ public class BookTab extends Fragment {
 				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);	
 			}
 		});
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		checkInternetConnection();
 	}
 
 	private void checkInternetConnection()
@@ -143,10 +150,13 @@ public class BookTab extends Fragment {
 							bean.event_date= jArray.getJSONObject(i).getString("event_date");
 							bean.receiver_name= jArray.getJSONObject(i).getString("receiver_name");
 							bean.identifier= jArray.getJSONObject(i).getString("identifier");
-							
+							bean.status= jArray.getJSONObject(i).getString("status");
 							listMessages.add(bean);
 						}
 					}
+					if(adapterMessageList.listMessages!=null)
+						adapterMessageList.listMessages.clear();
+					adapterMessageList.listMessages=listMessages;
 					adapterMessageList.notifyDataSetChanged();
 					if(listMessages.size()==0){
 						empty_view.setVisibility(View.VISIBLE);
@@ -173,7 +183,7 @@ public class BookTab extends Fragment {
 				+ URLEncoder.encode("v2c", "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-				+ "=" + URLEncoder.encode("book", "UTF-8");
+		+ "=" + URLEncoder.encode("book", "UTF-8");
 
 		BufferedReader reader=null;
 

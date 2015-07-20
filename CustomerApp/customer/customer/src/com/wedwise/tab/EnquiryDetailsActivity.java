@@ -17,6 +17,8 @@ import com.wedwise.bean.ButtonBean;
 import com.wedwise.bean.EnquiryDetailsDataBean;
 import com.wedwise.common.GlobalCommonMethods;
 import com.wedwise.common.GlobalCommonValues;
+import com.wedwise.dialogs.SuccessDialog;
+import com.wedwise.interfaces.IAction;
 import com.wedwiseapp.R;
 import com.wedwiseapp.util.PreferenceUtil;
 import com.wedwiseapp.util.ShowDialog;
@@ -117,7 +119,7 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 				String url=GlobalCommonValues.VENDOR_BID_BOOK_RESPONSE;
 				new HttpAsyncTask(id,"button").execute(url);
 			}
-			
+
 		}
 		else{
 			ShowDialog.displayDialog(EnquiryDetailsActivity.this,"Connection error:","No Internet Connection");
@@ -166,61 +168,74 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 			{
 				try {
 					if(type.equalsIgnoreCase("data")){
-					JSONObject jsonObj = new JSONObject(response);
-					String _result = jsonObj.getString("result");
-					if(_result.equalsIgnoreCase("success")){
-						JSONObject jObject = jsonObj.getJSONObject("json");
-						tvTitle.setText(jObject.getString("label"));
+						JSONObject jsonObj = new JSONObject(response);
+						String _result = jsonObj.getString("result");
+						if(_result.equalsIgnoreCase("success")){
+							JSONObject jObject = jsonObj.getJSONObject("json");
+							tvTitle.setText(jObject.getString("label"));
 
-						LinearLayout parent_layout = (LinearLayout)findViewById(R.id.parent_layout);
-						JSONArray jArray = jObject.getJSONArray("table");
-						for(int i=0;i<jArray.length();i++){
-							View child = getLayoutInflater().inflate(R.layout.enquiry_item_layout, null);
-							String key = jArray.getJSONObject(i).keys().next().trim();
-							((TextView)child.findViewById(R.id.key_label)).setText(key);
-							((TextView)child.findViewById(R.id.value_label)).setText(jArray.getJSONObject(i).getString(key));
-							parent_layout.addView(child);
-						}
-						
-						//get buttons here
-						JSONArray buttonArray = jObject.getJSONArray("buttons");
-						if(buttonArray.length()==0){
-						 ((LinearLayout)findViewById(R.id.button_layout)).setVisibility(View.GONE);
-						}
-						for(int i=0;i<buttonArray.length();i++){
-							ButtonBean buttonDetail = new ButtonBean();
-							buttonDetail.buttonCode = Integer.parseInt(buttonArray.getJSONArray(i).getString(0));
-							buttonDetail.buttonName = buttonArray.getJSONArray(i).getString(1);
-							
-							if(buttonDetail.buttonName.equalsIgnoreCase("accept")){
-								btnAccept.setVisibility(View.VISIBLE);
-								btnAccept.setTag(buttonDetail.buttonCode);
-							}else if(buttonDetail.buttonName.equalsIgnoreCase("reject")){
-								btnReject.setVisibility(View.VISIBLE);
-								btnReject.setTag(buttonDetail.buttonCode);
+							LinearLayout parent_layout = (LinearLayout)findViewById(R.id.parent_layout);
+							JSONArray jArray = jObject.getJSONArray("table");
+							for(int i=0;i<jArray.length();i++){
+								View child = getLayoutInflater().inflate(R.layout.enquiry_item_layout, null);
+								String key = jArray.getJSONObject(i).keys().next().trim();
+								((TextView)child.findViewById(R.id.key_label)).setText(key);
+								((TextView)child.findViewById(R.id.value_label)).setText(jArray.getJSONObject(i).getString(key));
+								parent_layout.addView(child);
 							}
-							
-							//buttonList.add(buttonDetail);
+
+							//get buttons here
+							JSONArray buttonArray = jObject.getJSONArray("buttons");
+							if(buttonArray.length()==0){
+								((LinearLayout)findViewById(R.id.button_layout)).setVisibility(View.GONE);
+							}
+							for(int i=0;i<buttonArray.length();i++){
+								ButtonBean buttonDetail = new ButtonBean();
+								buttonDetail.buttonCode = Integer.parseInt(buttonArray.getJSONArray(i).getString(0));
+								buttonDetail.buttonName = buttonArray.getJSONArray(i).getString(1);
+
+								if(buttonDetail.buttonName.equalsIgnoreCase("accept")){
+									btnAccept.setVisibility(View.VISIBLE);
+									btnAccept.setTag(buttonDetail.buttonCode);
+								}else if(buttonDetail.buttonName.equalsIgnoreCase("reject")){
+									btnReject.setVisibility(View.VISIBLE);
+									btnReject.setTag(buttonDetail.buttonCode);
+								}
+
+								//buttonList.add(buttonDetail);
+							}
+
+
 						}
-						
-						
-					}
 					}else{
 						// parsing response of Accept/Reject button
 						JSONObject jsonObj = new JSONObject(response);
 						String _result = jsonObj.getString("result");
 						if(_result.equalsIgnoreCase("success")){
 							String message = jsonObj.getJSONObject("json").getString("label");
-							ShowDialog.displayDialog(EnquiryDetailsActivity.this,"Status",message);
+							SuccessDialog dialog =new SuccessDialog();
+							dialog.setCancelable(false);
+							dialog.newInstance(EnquiryDetailsActivity.this, "STATUS", message, iNotify);
+							dialog.show(getFragmentManager(), "test");
+							//							ShowDialog.displayDialog(EnquiryDetailsActivity.this,"Status",message);
 						}
 					}
 				} catch (Exception e) {
 					e.getMessage();
 				}
 			}
-				
+
 		}
 	}
+
+	IAction iNotify=new IAction() {
+
+		@Override
+		public void setAction(String action) {
+			if(action.equals("navigatetobidbook"))
+				finish();			
+		}
+	};
 
 	// Create GetData Metod
 	public  void  SetData(int id,String requestType)  throws  UnsupportedEncodingException
@@ -235,7 +250,7 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 					+ URLEncoder.encode(""+id, "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-					+ "=" + URLEncoder.encode(getIntent().getStringExtra("type"), "UTF-8");
+			+ "=" + URLEncoder.encode(getIntent().getStringExtra("type"), "UTF-8");
 		}else{
 			data= URLEncoder.encode("identifier", "UTF-8") 
 					+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(), "UTF-8"); 
@@ -244,9 +259,9 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 					+ URLEncoder.encode(""+getIntent().getIntExtra("id", 0), "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("status", "UTF-8") 
-					+ "=" + URLEncoder.encode(""+id, "UTF-8");
+			+ "=" + URLEncoder.encode(""+id, "UTF-8");
 		}
-		
+
 
 		BufferedReader reader=null;
 

@@ -65,16 +65,13 @@ public class ErrorDialog extends DialogFragment{
 				dismiss();
 				if(iNotify!=null)
 				{
-					//					if(message.contains("email already exists") || message.contains("mobile number should be of 10/11 digits") ||
-					//							message.contains("invalid email"))
-					//					{
-					//						iNotify.setAction("dismiss");
-					//					}           //Logged In Successfully
 					if (message.toLowerCase().contains("registered successfully") || 
 							message.toLowerCase().contains("logged in successfully"))
 					{
 						iNotify.setAction("navigate");
 					}
+					else if(title.equals("STATUS"))
+						iNotify.setAction("navigatetobidbook");
 				}
 			}
 		});

@@ -18,6 +18,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings.Secure;
@@ -42,6 +43,8 @@ import com.wedwise.common.GlobalCommonValues;
 import com.wedwise.dialogs.ErrorDialog;
 import com.wedwise.gson.Bid;
 import com.wedwise.gson.Book;
+import com.wedwise.interfaces.IAction;
+import com.wedwise.interfaces.INotify;
 import com.wedwiseapp.R;
 import com.wedwiseapp.util.IntentHelper;
 import com.wedwiseapp.util.PreferenceUtil;
@@ -150,7 +153,7 @@ public class BidBookCreateActivity extends FragmentActivity{
 							.getMin()
 							|| Integer.parseInt(per_plate_value.getText()
 									.toString().trim()) > ((Bid) obj)
-									.getBidOptions().getItem().getMax()) {
+							.getBidOptions().getItem().getMax()) {
 						per_plate_value.setError("Value must be between "+((Bid)obj).getBidOptions().getItem().getMin()+" to "+((Bid)obj).getBidOptions().getItem().getMax());
 					}else if(Integer.parseInt(min_person_value.getText().toString().trim())<((Bid)obj).getBidOptions().getQuantity().getMin().getValue()){
 						min_person_value.setError(((Bid)obj).getBidOptions().getQuantity().getMin().getMessage());
@@ -348,7 +351,7 @@ public class BidBookCreateActivity extends FragmentActivity{
 					JSONObject jobject = new JSONObject(response);
 					String message = jobject.getString("result");
 					ErrorDialog dialog=new ErrorDialog();
-					dialog.newInstance(mContext, "STATUS", message, null);
+					dialog.newInstance(mContext, "STATUS", message, iNotify);
 					dialog.setCancelable(false);
 					dialog.show(getFragmentManager(), "test");
 				} catch (JSONException e) {
@@ -357,6 +360,15 @@ public class BidBookCreateActivity extends FragmentActivity{
 			}
 		}
 	}
+
+	IAction iNotify = new IAction() {
+
+		@Override
+		public void setAction(String action) {
+			if(action.equals("navigatetobidbook"))
+				startActivity(new Intent(BidBookCreateActivity.this,MessageTabActivity.class));
+		}
+	};
 
 	// Create GetData Metod
 	public void SetData(String pushData,String message,String msgType,String bidJSON,String eventDate,String timeSlot,String bidPrice,String bidQuantity) throws UnsupportedEncodingException {

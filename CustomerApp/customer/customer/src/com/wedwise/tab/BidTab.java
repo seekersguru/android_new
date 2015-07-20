@@ -48,7 +48,7 @@ public class BidTab extends Fragment {
 	ProgressDialog progress;
 	private String response;
 	TextView empty_view;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.bidtab,container,false);
@@ -67,16 +67,16 @@ public class BidTab extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				BookingDataBean	bidDetail = listEnquiryDataBean.get(position);
+				/*BookingDataBean	bidDetail = listEnquiryDataBean.get(position);
 				Intent myIntent=new Intent(getActivity(),EnquiryDetailsActivity.class);
 				myIntent.putExtra("id", bidDetail.id);
 				myIntent.putExtra("type","bid");
 				startActivity(myIntent);
-				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);			
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);*/			
 			}
 		});		
 	}
-	
+
 	private void checkInternetConnection()
 	{
 		if(GlobalCommonMethods.isNetworkAvailable(getActivity().getApplicationContext()))
@@ -88,7 +88,7 @@ public class BidTab extends Fragment {
 			ShowDialog.displayDialog(getActivity().getApplicationContext(),"Connection error:","No Internet Connection");
 		}
 	}
-	
+
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected void onPreExecute() {
@@ -144,6 +144,7 @@ public class BidTab extends Fragment {
 							listEnquiryDataBean.add(bean);
 						}
 					}
+					adapter.listEnquiryDataBean=listEnquiryDataBean;
 					adapter.notifyDataSetChanged();
 					if(listEnquiryDataBean.size()==0){
 						empty_view.setVisibility(View.VISIBLE);
@@ -167,10 +168,10 @@ public class BidTab extends Fragment {
 				+ URLEncoder.encode("1", "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("from_to", "UTF-8") + "="
-				+ URLEncoder.encode("v2c", "UTF-8"); 
+				+ URLEncoder.encode("c2v", "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-				+ "=" + URLEncoder.encode("bid", "UTF-8");
+		+ "=" + URLEncoder.encode("bid", "UTF-8");
 
 		BufferedReader reader=null;
 
@@ -214,6 +215,6 @@ public class BidTab extends Fragment {
 			catch(Exception ex) {}
 		}
 	}
-	
-	
+
+
 }

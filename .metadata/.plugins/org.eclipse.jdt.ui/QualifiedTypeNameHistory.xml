@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.wedwise.bean.ButtonBean"/>
+<fullyQualifiedTypeName name="com.wedwise.bean.EnquiryDetailsDataBean"/>
+<fullyQualifiedTypeName name="com.wedwise.adapter.EnquiryDetailsAdapter"/>
+<fullyQualifiedTypeName name="com.wedwise.Activities.MessageListActivity"/>
+<fullyQualifiedTypeName name="android.graphics.LinearGradient"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="com.example.vendordetailpage.MainActivity"/>
+<fullyQualifiedTypeName name="com.wedwise.chat.MessageChatActivity"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.calendar.MFCalendarViewMultipleSelection"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.calendar.CalendarAdapterMultipleSelection"/>
+<fullyQualifiedTypeName name="android.view.View.OnClickListener"/>
+<fullyQualifiedTypeName name="android.widget.ListView"/>
+<fullyQualifiedTypeName name="android.widget.BaseAdapter"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.adapter.EventsDateAdapter"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.dialogs.DisplayEventDatesDialog"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.dialogs.ErrorDialog"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.calendar.CalendarActivityMultipleSelection"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.R.id"/>
+<fullyQualifiedTypeName name="com.wedwiseapp.R.id"/>
+<fullyQualifiedTypeName name="android.app.ProgressDialog"/>
+<fullyQualifiedTypeName name="com.wedwise.calendar.CalendarActivity"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.calendar.CalendarActivity"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
+<fullyQualifiedTypeName name="android.widget.ArrayAdapter"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="com.wedwise.interfaces.INotify"/>
+<fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="com.wedwise.tab.BidBookCreateActivity"/>
+<fullyQualifiedTypeName name="com.wedwise.tab.MessageTabActivity"/>
+<fullyQualifiedTypeName name="com.wedwise.interfaces.IAction"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.dialogs.SuccessDialog"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.interfaces.IAction"/>
+<fullyQualifiedTypeName name="com.eventmanagementapp.tab.EnquiryDetailsActivity"/>
+<fullyQualifiedTypeName name="com.wedwiseapp.R"/>
+</qualifiedTypeNameHistroy>

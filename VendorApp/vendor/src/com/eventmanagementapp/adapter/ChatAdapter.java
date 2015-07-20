@@ -63,7 +63,7 @@ public class ChatAdapter extends BaseAdapter {
 		//		CustomFonts.setFontOfTextView(mContext,tvDateLeft,"fonts/GothamRnd-Light.otf");
 		//		CustomFonts.setFontOfTextView(mContext,tvDateRight,"fonts/GothamRnd-Light.otf");
 
-		if (position % 2 == 0) {
+		if (listChat.get(position).get("from_to").equalsIgnoreCase("c2v")) {
 			rlRight.setVisibility(View.GONE);
 			rlLeft.setVisibility(View.VISIBLE);
 			tvMessageLeft.setText(listChat.get(position).get("message"));

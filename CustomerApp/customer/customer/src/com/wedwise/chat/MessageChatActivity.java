@@ -130,12 +130,12 @@ public class MessageChatActivity extends FragmentActivity{
 			}
 		});
 	}
-
+	ArrayList<HashMap<String, String>> _listChat=new ArrayList<HashMap<String,String>>();
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
+			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
 			{
 				if(progress==null)
 				{
@@ -159,7 +159,7 @@ public class MessageChatActivity extends FragmentActivity{
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
+			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
 			{
 				if(progress!=null && progress.isShowing())
 				{
@@ -171,6 +171,7 @@ public class MessageChatActivity extends FragmentActivity{
 			{
 				if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_CREATE))
 				{
+					
 					// In case of sending message
 					try {
 						JSONObject jsonObj = new JSONObject(response);
@@ -188,13 +189,20 @@ public class MessageChatActivity extends FragmentActivity{
 							etMessage.setText("");
 							String message=new JSONObject(json).getString("message");
 							String msg_time=new JSONObject(json).getString("msg_time");
+							String from_to=new JSONObject(response).getJSONObject("request_data").getString("from_to");
 							tvToolBar.setText(new JSONObject(json).getString("receiver_name"));
 							HashMap<String, String> hashMap=new HashMap<String,String>();
 							hashMap.put("message",message);
 							hashMap.put("msg_time", msg_time);
-							adapterChat.listChat.add(hashMap);
-							adapterChat.notifyDataSetChanged();
+							hashMap.put("from_to",from_to);
+							_listChat.add(hashMap);
 						}
+						for(int i=0;i<_listChat.size();i++)
+						{
+							adapterChat.listChat.add(_listChat.get(i));	
+						}
+						adapterChat.notifyDataSetChanged();
+						lvChatMessages.setSelection(adapterChat.listChat.size()-1);
 					}
 					catch(Exception e)
 					{
@@ -223,9 +231,11 @@ public class MessageChatActivity extends FragmentActivity{
 								tvToolBar.setText(new JSONObject(jsonArray.getString(i)).getString("vendor_name"));
 								String message=new JSONObject(jsonArray.getString(i)).getString("message");
 								String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
+								String from_to=new JSONObject(jsonArray.getString(i)).getString("from_to");
 								HashMap<String, String> hashMap=new HashMap<String,String>();
 								hashMap.put("message",message);
 								hashMap.put("msg_time", msg_time);
+								hashMap.put("from_to",from_to);
 								adapterChat.listChat.add(hashMap);
 								adapterChat.notifyDataSetChanged();
 							}

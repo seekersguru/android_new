@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical" >
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heigthCreateButton"
+        android:layout_marginLeft="@dimen/marginLeftRightButton"
+        android:layout_marginRight="@dimen/marginLeftRightButton"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:background="@color/OrangeColorTheme"
+        android:text="Create a New Bid"
+        android:textColor="#fff"
+        android:textSize="@dimen/textSizeMedium"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/llTimeSlot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:orientation="horizontal"
+        android:padding="@dimen/marginLeftRightllFields"
+        android:weightSum="1" >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Type:"
+                android:textColor="#999999"
+                android:textSize="@dimen/textSizeNormal" />
+
+            <TextView
+                android:layout_width="@dimen/spinnerTimeWidth"
+                android:layout_height="@dimen/heightSpinnerperplate"
+                android:layout_marginLeft="@dimen/paddingLeftEditText"
+                android:background="@drawable/dropdown_long"
+                android:drawableRight="@drawable/down_arrow_spinner"
+                android:gravity="center"
+                android:paddingRight="@dimen/paddingLeftEditText"
+                android:text="Enquiry"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:gravity="center" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Slot:"
+                android:textColor="#999999"
+                android:textSize="@dimen/textSizeNormal" />
+
+            <TextView
+                android:layout_width="@dimen/spinnerTimeWidth"
+                android:layout_height="@dimen/heightSpinnerperplate"
+                android:layout_marginLeft="@dimen/paddingLeftEditText"
+                android:background="@drawable/dropdown_long"
+                android:drawableRight="@drawable/down_arrow_spinner"
+                android:gravity="center"
+                android:paddingRight="@dimen/paddingLeftEditText"
+                android:text="Morning"
+                android:textColor="#000"
+                android:textSize="@dimen/textSizeNormal" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider1"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9c9c9c" />
+
+    <LinearLayout
+        android:id="@+id/llFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:orientation="horizontal"
+        android:padding="@dimen/marginLeftRightllFields"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Client Name :"
+            android:textColor="#999999"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".35"
+            android:drawableRight="@drawable/arrow_down_orange"
+            android:gravity="center"
+            android:paddingRight="@dimen/paddingLeftEditText"
+            android:text="Event Date"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeNormal" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".35"
+            android:drawableRight="@drawable/arrow_down_orange"
+            android:gravity="center"
+            android:paddingRight="@dimen/paddingLeftEditText"
+            android:text="Enquiry Date"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeNormal" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#9c9c9c" />
+
+    <LinearLayout
+        android:id="@+id/llFieldsSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Gupta &amp; Sharma"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="23-Nov-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="21-Dec-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:singleLine="false"
+        android:text="Pax:350-45 Package: NVS Rev:5-5100 Source:Wedwise"
+        android:textColor="#000"
+        android:textSize="@dimen/textSizeSmall" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:background="#000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Gupta &amp; Sharma"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="23-Nov-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="21-Dec-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:singleLine="false"
+        android:text="Pax:350-45 Package: NVS Rev:5-5100 Source:Wedwise"
+        android:textColor="#000"
+        android:textSize="@dimen/textSizeSmall" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:background="#000" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Gupta &amp; Sharma"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="23-Nov-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="21-Dec-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:singleLine="false"
+        android:text="Pax:350-45 Package: NVS Rev:5-5100 Source:Wedwise"
+        android:textColor="#000"
+        android:textSize="@dimen/textSizeSmall" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:background="#000" />
+
+   <!--  <LinearLayout
+        android:id="@+id/llFieldsSecond"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:orientation="horizontal"
+        android:weightSum="1" >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="Gupta &amp; Sharma"
+            android:textColor="#000"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="23-Nov-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="@dimen/heightSpinnerperplate"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:layout_weight=".3"
+            android:gravity="center"
+            android:text="21-Dec-2015"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeSmall" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:singleLine="false"
+        android:text="Pax:350-45 Package: NVS Rev:5-5100 Source:Wedwise"
+        android:textColor="#000"
+        android:textSize="@dimen/textSizeSmall" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="@dimen/paddingLeftEditText"
+        android:background="#000" /> -->
+
+    <ListView
+        android:id="@+id/lvBid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/marginTopListView"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#f1f1f1"
+        android:dividerHeight="1dp"
+        android:visibility="gone" >
+    </ListView>
+
+</LinearLayout>

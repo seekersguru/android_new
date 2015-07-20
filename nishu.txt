@@ -1,0 +1,16 @@
+CustomerApp/customer/customer/bin/res/crunch/drawable-hdpi/refresh_button.png
+	
+	CustomerApp/customer/customer/res/layout/bidtab.xml
+	CustomerApp/customer/customer/res/layout/enquiry_item_layout.xml
+	CustomerApp/customer/customer/res/layout/enquiryactivityviewadapter.xml
+	CustomerApp/customer/customer/res/layout/enquirydetails.xml
+	CustomerApp/customer/customer/res/layout/enquirydetailsadapter.xml
+	CustomerApp/customer/customer/res/layout/messagetab.xml
+	CustomerApp/customer/customer/src/com/wedwise/Activities/
+	CustomerApp/customer/customer/src/com/wedwise/adapter/EnquiryDataAdapter.java
+	CustomerApp/customer/customer/src/com/wedwise/adapter/EnquiryDetailsAdapter.java
+	CustomerApp/customer/customer/src/com/wedwise/bean/BookingDataBean.java
+	CustomerApp/customer/customer/src/com/wedwise/bean/ButtonBean.java
+	CustomerApp/customer/customer/src/com/wedwise/bean/EnquiryDetailsDataBean.java
+	CustomerApp/customer/customer/src/com/wedwise/tab/EnquiryDetailsActivity.java
+	

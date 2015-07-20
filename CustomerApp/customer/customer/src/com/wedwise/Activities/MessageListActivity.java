@@ -70,8 +70,7 @@ public class MessageListActivity extends FragmentActivity{
 		btnBack=(Button) findViewById(R.id.btnBack);
 		lvMessages=(ListView)findViewById(R.id.lvMessages);
 		listMessages=new ArrayList<HashMap<String, String>>();
-		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST;
-		new HttpAsyncTask().execute(url);
+
 		//		listMessages.add("Andy Lau");
 		//		listMessages.add("James Moore");
 		//		listMessages.add("Jorgen Flood");
@@ -111,6 +110,14 @@ public class MessageListActivity extends FragmentActivity{
 				new HttpAsyncTask().execute(url);
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST;
+		new HttpAsyncTask().execute(url);
 	}
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {

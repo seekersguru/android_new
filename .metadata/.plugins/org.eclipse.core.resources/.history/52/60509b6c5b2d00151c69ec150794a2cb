@@ -1,0 +1,19 @@
+package com.eventmanagementapp.adapter;
+
+import java.util.ArrayList;
+
+import android.content.Context;
+import android.widget.BaseAdapter;
+
+public class EventsDateAdapter extends BaseAdapter{
+
+	Context mContext;
+	ArrayList<String> listDates = new ArrayList<String>();
+	
+	public EventsDateAdapter(Context mContext,ArrayList<String> listDates)
+	{
+		this.mContext=mContext;
+		this.listDates=listDates;
+	}
+	
+}

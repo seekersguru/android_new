@@ -53,7 +53,7 @@ public class EnquiryDataAdapter extends BaseAdapter{
 		tvDateFirst.setText(listEnquiryDataBean.get(position).event_date);
 		String msg_time = (listEnquiryDataBean.get(position).msg_time).substring(0,listEnquiryDataBean.get(position).msg_time.indexOf(" "));
 		tvDateSecond.setText(msg_time);
-		tvPackageDedtails.setText(listEnquiryDataBean.get(position).line1+"\n"+listEnquiryDataBean.get(position).line2);
+		tvPackageDedtails.setText(listEnquiryDataBean.get(position).line1+"\n"+listEnquiryDataBean.get(position).line2+"--"+listEnquiryDataBean.get(position).status);
 		return listItem;
 	}
 }

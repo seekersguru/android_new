@@ -118,5 +118,4 @@ public class AlbumAdapter extends BaseAdapter
 			}
 		}
 	}
-
 }

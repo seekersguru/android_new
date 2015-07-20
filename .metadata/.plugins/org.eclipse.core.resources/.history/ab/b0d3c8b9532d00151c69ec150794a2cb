@@ -1,0 +1,5 @@
+package com.eventmanagementapp.calendar;
+
+public class CalendarAdapterMultipleSelection {
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Copy element &apos;SuccessDialog.java&apos; to &apos;Splash_Customer/src/com.wedwise.dialogs&apos;&#x0D;&#x0A;- Original project: &apos;EventManagementApp&apos;&#x0D;&#x0A;- Destination element: &apos;Splash_Customer/src/com.wedwise.dialogs&apos;&#x0D;&#x0A;- Original element: &apos;com.eventmanagementapp.dialogs.SuccessDialog.java&apos;" description="Copy compilation unit" destination="=Splash_Customer/src&lt;com.wedwise.dialogs" element1="/src&lt;com.eventmanagementapp.dialogs{SuccessDialog.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.copy" policy="org.eclipse.jdt.ui.copyResources" stamp="1437327778643" units="1" version="1.0"/>
+</session>

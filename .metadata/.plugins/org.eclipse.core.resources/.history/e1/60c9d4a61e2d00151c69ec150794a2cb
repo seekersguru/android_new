@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff" >
+
+    <Button
+        android:id="@+id/btnCreate"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/heigthCreateButton"
+        android:layout_marginLeft="@dimen/marginLeftRightButton"
+        android:layout_marginRight="@dimen/marginLeftRightButton"
+        android:layout_marginTop="@dimen/marginTopCreateButton"
+        android:background="@color/OrangeColorTheme"
+        android:text="Create a New Bid"
+        android:textColor="#fff"
+        android:textSize="@dimen/textSizeMedium"
+        android:visibility="gone" />
+
+    <ListView
+        android:id="@+id/lvMessages"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/btnCreate"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="#f1f1f1"
+        android:dividerHeight="1dp"
+        android:scrollbars="none" >
+    </ListView>
+    <!-- android:layout_marginTop="@dimen/marginTopListView" -->
+
+</RelativeLayout>

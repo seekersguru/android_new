@@ -1,13 +1,36 @@
 package com.wedwiseapp;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import com.example.vendordetailpage.MainActivity;
+import com.wedwise.adapter.FavAdapter;
+import com.wedwise.adapter.SpinnerAdapter;
+import com.wedwise.common.GlobalCommonMethods;
+import com.wedwise.common.GlobalCommonValues;
+import com.wedwise.dialogs.ErrorDialog;
+import com.wedwise.fragments.VendorCategoryHomeFragment;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -22,11 +45,6 @@ import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.example.vendordetailpage.MainActivity;
-import com.wedwise.adapter.FavAdapter;
-import com.wedwise.adapter.SpinnerAdapter;
-import com.wedwise.fragments.VendorCategoryHomeFragment;
 
 @SuppressLint("InflateParams")
 public class FavListActivity extends FragmentActivity {
@@ -45,6 +63,9 @@ public class FavListActivity extends FragmentActivity {
 	String category="";
 	Button btnCategory;
 	Spinner spSwitchCategory;
+	String response,url;
+	ProgressDialog progress;
+	String vendor_type;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +81,7 @@ public class FavListActivity extends FragmentActivity {
 		favList = (ListView) findViewById(R.id.favList);
 		listCategory=new ArrayList<String>();
 		data=new ArrayList<FavData>();
-		adapterSubList = new FavAdapter(mContext,data);
+		adapterSubList = new FavAdapter(mContext,listData);
 		favList.setAdapter(adapterSubList);
 		btnBack=(Button) findViewById(R.id.btnBack);
 		viewTopbar=findViewById(R.id.viewTopbar);
@@ -77,6 +98,11 @@ public class FavListActivity extends FragmentActivity {
 				spSwitchCategory.performClick();
 			}
 		});
+
+		if(getIntent()!=null && getIntent().getExtras()!=null)
+		{
+			vendor_type=getIntent().getExtras().getString("category_type");
+		}
 
 		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, VendorCategoryHomeFragment.listItemsCategory);
@@ -192,10 +218,165 @@ public class FavListActivity extends FragmentActivity {
 
 				Intent myIntent = new Intent(FavListActivity.this,
 						MainActivity.class);
+				myIntent.putExtra("_receiveremail",listData.get(position).get("email"));
 				startActivity(myIntent);
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			}
 		});
+	}
+
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		url=GlobalCommonValues.CUSTOMER_VENDOR_LIST_AND_SEARCH;
+		new HttpAsyncTask().execute(url);
+	}
+
+	ArrayList<HashMap<String,String>> listData = new ArrayList<HashMap<String,String>>();
+
+	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(progress==null)
+			{
+				progress=new ProgressDialog(mContext);
+				progress.show();		
+			}
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			try {
+				// Calling method for setting to be sent to the server
+				SetData();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// onPostExecute displays the results of the AsyncTask.
+		@SuppressLint("DefaultLocale")
+		@Override
+		protected void onPostExecute(Void result) {
+			if(progress!=null && progress.isShowing())
+			{
+				progress.dismiss();
+				progress=null;
+			}
+			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
+			{
+				try {
+					JSONArray jsonArray = new JSONObject(response).getJSONObject("json").getJSONArray("vendor_list");	
+					HashMap<String,String> hashMap;
+					for (int i=0;i<jsonArray.length();i++)
+					{
+						String email=new JSONObject(String.valueOf(jsonArray.get(i))).get("vendor_email").toString();
+						String name=new JSONObject(String.valueOf(jsonArray.get(i))).get("name").toString();
+						String image=new JSONObject(String.valueOf(jsonArray.get(i))).get("image").toString();
+						//						String name=new JSONObject(String.valueOf(jsonArray.get(i)))
+						hashMap=new HashMap<String, String>();
+						hashMap.put("name",name);
+						hashMap.put("email",email);
+						hashMap.put("image",image);
+						listData.add(hashMap);
+					}
+					adapterSubList.listData=listData;
+					adapterSubList.notifyDataSetChanged();
+
+				} catch (Exception e) {
+				}
+			}
+		}
+	}
+
+	// Create GetData Method
+	public  void  SetData()  throws  UnsupportedEncodingException
+	{
+		// Create data variable for sent values to server  
+		String data="";
+		String page_no="1";
+
+		int density = getResources().getDisplayMetrics().densityDpi;
+		String image_type="",search_string="";
+
+		if(density==DisplayMetrics.DENSITY_MEDIUM)
+		{
+			image_type="drawable-hdpi";
+		}
+		else if(density==DisplayMetrics.DENSITY_HIGH)
+		{
+			image_type="drawable-xhdpi";
+		}
+		else if(density==DisplayMetrics.DENSITY_XHIGH)
+		{
+			image_type="drawable-xhdpi";
+		}
+		else if(density==DisplayMetrics.DENSITY_XXHIGH)
+		{
+			image_type="drawable-xxhdpi";
+		}
+		else if(density==DisplayMetrics.DENSITY_XXXHIGH)
+		{
+			image_type="drawable-xxxhdpi";
+		}
+
+		data= URLEncoder.encode("mode", "UTF-8") 
+				+ "=" + URLEncoder.encode("android", "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("image_type", "UTF-8") + "="
+				+ URLEncoder.encode(image_type, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("vendor_type", "UTF-8") + "="
+				+ URLEncoder.encode(vendor_type,"UTF-8"); 
+
+		data += "&" + URLEncoder.encode("page_no", "UTF-8") + "="
+				+ URLEncoder.encode(page_no, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("search_string", "UTF-8") + "="
+				+ URLEncoder.encode(search_string, "UTF-8"); 
+
+
+		BufferedReader reader=null;
+		// Send data 
+		try
+		{ 
+			URL _url=null;
+			// Defined URL  where to send data
+			_url= new URL(GlobalCommonValues.CUSTOMER_VENDOR_LIST_AND_SEARCH);
+			// Send POST data request
+
+			URLConnection conn = _url.openConnection(); 
+			conn.setDoOutput(true); 
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+			wr.write( data ); 
+			wr.flush(); 
+
+			// Get the server response 
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+
+			// Read Server Response
+			while((line = reader.readLine()) != null)
+			{
+				// Append server response in string
+				sb.append(line + "\n");
+			}
+			response = sb.toString();
+		}
+		catch(Exception ex)
+		{
+		}
+		finally
+		{
+			try
+			{
+				reader.close();
+			}
+			catch(Exception ex) {}
+		}
 	}
 
 	@Override

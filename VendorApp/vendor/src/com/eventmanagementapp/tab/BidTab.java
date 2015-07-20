@@ -48,7 +48,7 @@ public class BidTab extends Fragment {
 	ProgressDialog progress;
 	private String response;
 	TextView empty_view;
-	
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.bidtab,container,false);
@@ -60,7 +60,7 @@ public class BidTab extends Fragment {
 	{
 		lvBid=(ListView) view.findViewById(R.id.lvBid);
 		empty_view = (TextView)view.findViewById(R.id.empty_view);
-		checkInternetConnection();
+		//		checkInternetConnection();
 		adapter=new EnquiryDataAdapter(getActivity(),listEnquiryDataBean);
 		lvBid.setAdapter(adapter);
 		lvBid.setOnItemClickListener(new OnItemClickListener() {
@@ -76,7 +76,14 @@ public class BidTab extends Fragment {
 			}
 		});		
 	}
-	
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		checkInternetConnection();
+	}
+
 	private void checkInternetConnection()
 	{
 		if(GlobalCommonMethods.isNetworkAvailable(getActivity().getApplicationContext()))
@@ -88,7 +95,7 @@ public class BidTab extends Fragment {
 			ShowDialog.displayDialog(getActivity().getApplicationContext(),"Connection error:","No Internet Connection");
 		}
 	}
-	
+
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected void onPreExecute() {
@@ -141,10 +148,13 @@ public class BidTab extends Fragment {
 							bean.event_date= jArray.getJSONObject(i).getString("event_date");
 							bean.receiver_name= jArray.getJSONObject(i).getString("receiver_name");
 							bean.identifier= jArray.getJSONObject(i).getString("identifier");
-							
+							bean.status= jArray.getJSONObject(i).getString("status");
 							listEnquiryDataBean.add(bean);
 						}
 					}
+					if(adapter.listEnquiryDataBean!=null)
+						adapter.listEnquiryDataBean.clear();
+					adapter.listEnquiryDataBean=listEnquiryDataBean;
 					adapter.notifyDataSetChanged();
 					if(listEnquiryDataBean.size()==0){
 						empty_view.setVisibility(View.VISIBLE);
@@ -171,7 +181,7 @@ public class BidTab extends Fragment {
 				+ URLEncoder.encode("v2c", "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("msg_type", "UTF-8") 
-				+ "=" + URLEncoder.encode("bid", "UTF-8");
+		+ "=" + URLEncoder.encode("bid", "UTF-8");
 
 		BufferedReader reader=null;
 
@@ -215,6 +225,6 @@ public class BidTab extends Fragment {
 			catch(Exception ex) {}
 		}
 	}
-	
-	
+
+
 }
