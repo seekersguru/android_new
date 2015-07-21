@@ -1,17 +1,34 @@
 package com.eventmanagementapp.calendar;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import org.json.JSONObject;
+
 import com.eventmanagementapp.R;
+import com.eventmanagementapp.common.GlobalCommonMethods;
+import com.eventmanagementapp.common.GlobalCommonValues;
 import com.eventmanagementapp.dialogs.DisplayEventDatesDialog;
 import com.eventmanagementapp.dialogs.ErrorDialog;
+import com.eventmanagementapp.interfaces.IAction;
+import com.eventmanagementapp.util.PreferenceUtil;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,6 +52,8 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 	TextView tvFilterCriteria,tvFilterFirst;//,tvFilterSecond;
 	LinearLayout llCalendar,llMail,llLeads,llMenu;
 	public static ArrayList<String> listDates = new ArrayList<String>();
+	String response,url;
+	ProgressDialog progress;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +119,6 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 			}
 		});
 
-
 		btnShowBookings.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -108,7 +126,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 				if(listDates!=null && !listDates.isEmpty())
 				{
 					DisplayEventDatesDialog dialog=new DisplayEventDatesDialog();
-					dialog.newInstance(mContext, "Event Dates", listDates);
+					dialog.newInstance(mContext, "Event Dates", listDates,iNotifyAction);
 					dialog.show(getFragmentManager(), "test");
 				}
 				else if(listDates.isEmpty())
@@ -154,11 +172,130 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		mf.setEvents(eventDays);
 		Log.e("","locale:" + Util.getLocale());
 	}
+
+	IAction iNotifyAction = new IAction() {
+		@Override
+		public void setAction(String action) {
+			if(action.equals("senddata"))	
+			{
+				ArrayList<String> listDates = new ArrayList<String>();
+				listDates.add("2015-07-25");
+				listDates.add("2015-07-26");
+				listDates.add("2015-07-30");
+				listDates.add("2015-07-31");
+				mf.refreshCalendarDates(listDates);
+//				url=GlobalCommonValues.VENDOR_CALENDAR_MULTISELECTIONDATES;
+//				new HttpAsyncTask().execute(url);
+			}
+		}
+	};
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		CalendarActivityMultipleSelection.listDates.clear();
 		CalendarActivityMultipleSelection.listDates=null;
+	}
+
+	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(progress==null)
+			{
+				progress=new ProgressDialog(mContext);
+				progress.show();		
+			}
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			try {
+				// Calling method for setting to be sent to the server
+				SetData();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// onPostExecute displays the results of the AsyncTask.
+		@SuppressLint("DefaultLocale")
+		@Override
+		protected void onPostExecute(Void result) {
+			if(progress!=null && progress.isShowing())
+			{
+				progress.dismiss();
+				progress=null;
+			}
+			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
+			{
+				if(url.equals(GlobalCommonValues.VENDOR_CALENDAR_MULTISELECTIONDATES))
+				{
+					try {
+						JSONObject jsonObj = new JSONObject(response);
+					} catch (Exception e) {
+						e.getMessage();
+					}
+				}
+			}
+		}
+	}
+
+	// Create GetData Metod
+	public  void  SetData()  throws  UnsupportedEncodingException
+	{
+		// Create data variable for sent values to server  
+		String data="";
+		// Send POST data request
+		String dates=CalendarActivityMultipleSelection.listDates.toString();
+		String _package="";
+		String rate="";
+		data= URLEncoder.encode("dates", "UTF-8") 
+				+ "=" + URLEncoder.encode(dates, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("package", "UTF-8") + "="
+				+ URLEncoder.encode(_package, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("rate", "UTF-8") + "="
+				+ URLEncoder.encode(rate, "UTF-8"); 
+
+		BufferedReader reader=null;
+		// Send data 
+		try
+		{ 
+			URL _url=null;
+			// Defined URL  where to send data
+			_url= new URL(GlobalCommonValues.VENDOR_CALENDAR_MULTISELECTIONDATES);
+			URLConnection conn = _url.openConnection(); 
+			conn.setDoOutput(true); 
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+			wr.write( data ); 
+			wr.flush(); 
+
+			// Get the server response 
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+
+			// Read Server Response
+			while((line = reader.readLine()) != null)
+			{
+				// Append server response in string
+				sb.append(line + "\n");
+			}
+			response = sb.toString();
+		}
+		catch(Exception ex)
+		{
+		}
+		finally
+		{
+			try
+			{
+				reader.close();
+			}
+			catch(Exception ex) {}
+		}
 	}
 
 

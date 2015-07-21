@@ -48,6 +48,7 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 	Button btnDisableOverlay;
 	RelativeLayout rlContainer;
 	LinearLayout llSelectedDateBorder;
+	ArrayList<String> listSelectedDates = new ArrayList<String>();
 
 	public CalendarAdapterMultipleSelection(Context c, Calendar monthCalendar) {
 
@@ -67,7 +68,6 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 	}
 
 	public void setItems(ArrayList<String> items) {
-
 		if (items == null) 
 			return;
 
@@ -79,7 +79,11 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 		this.items = items;
 	}
 
-
+	public void setSelectedDays(ArrayList<String> listSelectedDates)
+	{
+		this.listSelectedDates = listSelectedDates;
+		notifyDataSetInvalidated();
+	}
 
 	public int getCount() {
 		return dayString.size();
@@ -116,7 +120,7 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 		//		CustomFonts.setFontOfTextView(mContext, dayView, "fonts/GothamRnd-Light.otf");
 		//		CustomFonts.setFontOfTextView(mContext, tvCount, "fonts/GothamRnd-Light.otf");
 		dayView.setTextColor(Color.BLACK);
-		tvCount.setText("19");
+		//		tvCount.setText("19");
 		tvCount.setVisibility(View.GONE);
 		tvPeekDate.setVisibility(View.GONE);
 		//		tvCount.setTextColor(Color.parseColor("#ffffff"));
@@ -148,21 +152,42 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 			monthStr = "0" + monthStr;
 		}
 
-		if(date.equals("2015-06-25") || date.equals("2015-06-28") || date.equals("2015-06-30") || date.equals("2015-07-01") || date.equals("2015-07-05"))
+		if(listSelectedDates!=null && ! !listSelectedDates.isEmpty())
+		{
+			String[] arrayDate=date.split("-");
+			String year=arrayDate[0];
+			String month=arrayDate[1];
+			String day=arrayDate[2];
+			
+			tagloop:for(int i=0;i<listDates.size();i++)
+			{
+				if(year.equals(listDates.get(i).get("year")) && month.equals(listDates.get(i).get("month")))
+				{
+					if(day.equals(listDates.get(i).get("day")))
+					{
+						rlContainer.setBackgroundColor(Color.parseColor("#BDBDBD"));//#00796B
+						tvCount.setVisibility(View.VISIBLE);
+						tvCount.setText(listDates.get(i).get("count"));
+						break tagloop;
+					}
+				}
+			}
+		}
+			/*if(date.equals("2015-06-25") || date.equals("2015-06-28") || date.equals("2015-06-30") || date.equals("2015-07-01") || date.equals("2015-07-05"))
 		{
 			rlContainer.setBackgroundColor(Color.parseColor("#BDBDBD"));//#00796B
 			tvCount.setVisibility(View.VISIBLE);
 			tvPeekDate.setVisibility(View.VISIBLE);
-		}
+		}*/
 
-		// show icon if date is not empty and it exists in the items array
-		//		ImageView iw = (ImageView) v.findViewById(R.id.date_icon);
-		//		if (date.length() > 0 && items != null && items.contains(date)) {
-		//			iw.setVisibility(View.VISIBLE);
-		//		} else {
-		//			iw.setVisibility(View.INVISIBLE);
-		//		}
-		return v;
+			// show icon if date is not empty and it exists in the items array
+			//		ImageView iw = (ImageView) v.findViewById(R.id.date_icon);
+			//		if (date.length() > 0 && items != null && items.contains(date)) {
+			//			iw.setVisibility(View.VISIBLE);
+			//		} else {
+			//			iw.setVisibility(View.INVISIBLE);
+			//		}
+			return v;
 	}
 
 	View prev=null;

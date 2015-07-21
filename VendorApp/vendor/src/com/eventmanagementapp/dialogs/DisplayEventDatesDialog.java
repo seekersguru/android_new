@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.adapter.EventsDateAdapter;
 import com.eventmanagementapp.interfaces.IAction;
+import com.eventmanagementapp.interfaces.INotify;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -30,12 +31,14 @@ public class DisplayEventDatesDialog extends DialogFragment{
 	ListView lvDates;
 	EventsDateAdapter adapter;
 	ArrayList<String> listDates;
+	IAction iNotifyAction;
 
-	public void newInstance(Context mContext,String title,ArrayList<String> listDates)
+	public void newInstance(Context mContext,String title,ArrayList<String> listDates,IAction iNotifyAction)
 	{
 		this.mContext=mContext;
 		this.title=title;
 		this.listDates=listDates;
+		this.iNotifyAction=iNotifyAction;
 	}
 
 	@Override
@@ -71,6 +74,8 @@ public class DisplayEventDatesDialog extends DialogFragment{
 			@Override
 			public void onClick(View v) {
 				dismiss();
+				if(iNotifyAction!=null)
+					iNotifyAction.setAction("senddata");
 			}
 		});
 		return view;

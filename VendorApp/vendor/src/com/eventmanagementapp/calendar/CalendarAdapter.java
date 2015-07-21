@@ -52,22 +52,17 @@ public class CalendarAdapter extends BaseAdapter {
 	LinearLayout llSelectedDateBorder;
 
 	public CalendarAdapter(Context c, Calendar monthCalendar) {
-
 		mContext = c;
 		initCalendarAdapter(monthCalendar, null);
-
 	}
 
 	public void initCalendarAdapter(Calendar monthCalendar,
 			onMFCalendarViewListener calendarListener){
 		CalendarAdapter.dayString = new ArrayList<String>();
 		month = monthCalendar;
-
 		selectedDate = (Calendar) monthCalendar.clone();
-
 		month.set(Calendar.DAY_OF_MONTH, 1);
 		this.items = new ArrayList<String>();
-
 		adaptersetDate(selectedDate, calendarListener);
 		refreshDays();
 	}
@@ -179,10 +174,6 @@ public class CalendarAdapter extends BaseAdapter {
 						tvCount.setText(listDates.get(i).get("count"));
 						break tagloop;
 					}
-					/*else{
-						rlContainer.setBackgroundColor(Color.parseColor("#FFFFFF"));
-						tvCount.setVisibility(View.GONE);	
-					}*/
 				}
 			}
 		}

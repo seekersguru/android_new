@@ -226,4 +226,9 @@ public class MFCalendarViewMultipleSelection extends LinearLayout{
 		calendaradapter.setItems(dates);
 		handler.post(calendarUpdater);
 	}
+	
+	public void refreshCalendarDates(ArrayList<String> listDates)
+	{
+		calendaradapter.setSelectedDays(listDates);
+	}
 }
