@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import com.eventmanagementapp.R;
@@ -38,6 +39,7 @@ public class CalendarAdapter extends BaseAdapter {
 	private int mnthlength;
 	private String itemvalue, curentDateString;
 	DateFormat df;
+	ArrayList<HashMap<String,String>> listDates = new ArrayList<HashMap<String,String>>();
 
 	private ArrayList<String> items;
 	public static List<String> dayString;
@@ -71,7 +73,6 @@ public class CalendarAdapter extends BaseAdapter {
 	}
 
 	public void setItems(ArrayList<String> items) {
-
 		if (items == null) 
 			return;
 
@@ -83,7 +84,11 @@ public class CalendarAdapter extends BaseAdapter {
 		this.items = items;
 	}
 
-
+	public void setEventCountsList(ArrayList<HashMap<String,String>> listDates)
+	{
+		this.listDates=listDates;	
+		notifyDataSetInvalidated();
+	}
 
 	public int getCount() {
 		return dayString.size();
@@ -120,7 +125,6 @@ public class CalendarAdapter extends BaseAdapter {
 		//		CustomFonts.setFontOfTextView(mContext, dayView, "fonts/GothamRnd-Light.otf");
 		//		CustomFonts.setFontOfTextView(mContext, tvCount, "fonts/GothamRnd-Light.otf");
 		dayView.setTextColor(Color.BLACK);
-		tvCount.setText("19");
 		tvCount.setVisibility(View.GONE);
 		tvPeekDate.setVisibility(View.GONE);
 		//		tvCount.setTextColor(Color.parseColor("#ffffff"));
@@ -152,12 +156,43 @@ public class CalendarAdapter extends BaseAdapter {
 			monthStr = "0" + monthStr;
 		}
 
-		if(date.equals("2015-06-25") || date.equals("2015-06-28") || date.equals("2015-06-30") || date.equals("2015-07-01") || date.equals("2015-07-05"))
+		if(date.equals("2015-07-01") || date.equals("2015-07-1"))
+		{
+			System.out.println(date);
+		}
+
+		if(listDates!=null && !listDates.isEmpty())
+		{
+			String[] arrayDate=date.split("-");
+			String year=arrayDate[0];
+			String month=arrayDate[1];
+			String day=arrayDate[2];
+
+			tagloop:for(int i=0;i<listDates.size();i++)
+			{
+				if(year.equals(listDates.get(i).get("year")) && month.equals(listDates.get(i).get("month")))
+				{
+					if(day.equals(listDates.get(i).get("day")))
+					{
+						rlContainer.setBackgroundColor(Color.parseColor("#BDBDBD"));//#00796B
+						tvCount.setVisibility(View.VISIBLE);
+						tvCount.setText(listDates.get(i).get("count"));
+						break tagloop;
+					}
+					/*else{
+						rlContainer.setBackgroundColor(Color.parseColor("#FFFFFF"));
+						tvCount.setVisibility(View.GONE);	
+					}*/
+				}
+			}
+		}
+
+		/*if(date.equals("2015-06-25") || date.equals("2015-06-28") || date.equals("2015-06-30") || date.equals("2015-07-01") || date.equals("2015-07-05"))
 		{
 			rlContainer.setBackgroundColor(Color.parseColor("#BDBDBD"));//#00796B
 			tvCount.setVisibility(View.VISIBLE);
-			tvPeekDate.setVisibility(View.VISIBLE);
-		}
+			tvPeekDate.setVisibility(View.GONE);
+		}*/
 
 		// show icon if date is not empty and it exists in the items array
 		//		ImageView iw = (ImageView) v.findViewById(R.id.date_icon);

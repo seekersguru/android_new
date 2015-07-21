@@ -20,7 +20,6 @@ import org.json.JSONObject;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
-import com.eventmanagementapp.dialogs.ErrorDialog;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
@@ -289,18 +288,30 @@ public class MFCalendarView extends LinearLayout{
 					//new JSONObject(jsonObj.getString("json")).getString("data")
 					//new JSONObject(jsonObj.getString("json")).getJSONArray("available_years")
 					//{"15":25,"1":5,"16":7}
+					String year=new JSONObject(response).getJSONObject("request_data").getString("year");
+					String month=new JSONObject(response).getJSONObject("request_data").getString("month");
 					JSONArray datesJsonArray=new JSONArray(new JSONObject(jsonObj.getString("json")).getString("data"));
 					ArrayList<HashMap<String,String>> listDates = new ArrayList<HashMap<String,String>>();
 					HashMap<String,String> hashMap=new HashMap<String,String>();
+					@SuppressWarnings("unused")
 					String count="",day="";
 					for(int i=0;i<datesJsonArray.length();i++)
 					{
 						JSONObject jobj=new JSONObject(datesJsonArray.get(i).toString());
+						day=jobj.getString("day");
+						if(day.length()==1)
+						{
+							day="0"+day;
+						}
 						hashMap=new HashMap<String,String>();
-						hashMap.put("count",count);
+						hashMap.put("year",year);
+						hashMap.put("month",month);
+						hashMap.put("count",jobj.getString("count"));
 						hashMap.put("day",day);
 						listDates.add(hashMap);
 					}
+					calendaradapter.setEventCountsList(listDates);
+
 
 					/*HashMap<String,String> hashMap=new HashMap<String,String>();
 					hashMap.put("","");*/

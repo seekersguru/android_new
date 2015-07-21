@@ -111,6 +111,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		});
 		 */
 		btnSelecteDate.setOnClickListener(new OnClickListener() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) {
 				showDialog(999);
@@ -150,6 +151,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 			@Override
 			public void onDisplayedMonthChanged(int month, int year, String monthStr) {
 
+				@SuppressWarnings("unused")
 				StringBuffer bf = new StringBuffer()
 						.append(" month:")
 						.append(month)
