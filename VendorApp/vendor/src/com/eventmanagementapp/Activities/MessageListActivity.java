@@ -13,6 +13,13 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.eventmanagementapp.R;
+import com.eventmanagementapp.adapter.MessagesListAdapter;
+import com.eventmanagementapp.common.GlobalCommonMethods;
+import com.eventmanagementapp.common.GlobalCommonValues;
+import com.eventmanagementapp.dialogs.ErrorDialog;
+import com.eventmanagementapp.util.PreferenceUtil;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -23,18 +30,13 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.eventmanagementapp.R;
-import com.eventmanagementapp.adapter.MessagesListAdapter;
-import com.eventmanagementapp.common.GlobalCommonMethods;
-import com.eventmanagementapp.common.GlobalCommonValues;
-import com.eventmanagementapp.dialogs.ErrorDialog;
-import com.eventmanagementapp.util.PreferenceUtil;
 
 public class MessageListActivity extends FragmentActivity{
 
@@ -48,6 +50,11 @@ public class MessageListActivity extends FragmentActivity{
 	String response,url,responseMessageList;
 	ProgressDialog progress;
 	String page_count="1";
+	boolean isMinId=false,isMaxId=false;
+	String min="0",max="-1";
+	boolean isWebServiceCalled=true;
+	ArrayList<HashMap<String, String>> listData= new ArrayList<HashMap<String, String>>();
+	static boolean isFirstTime=true;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -70,16 +77,6 @@ public class MessageListActivity extends FragmentActivity{
 		lvMessages=(ListView)findViewById(R.id.lvMessages);
 		listMessages=new ArrayList<HashMap<String, String>>();
 
-		//		listMessages.add("Andy Lau");
-		//		listMessages.add("James Moore");
-		//		listMessages.add("Jorgen Flood");
-		//		listMessages.add("Claude");
-		//		listMessages.add("Stefanos Fanidis");
-		//		listMessages.add("James Moore");
-		//		listMessages.add("James Moore");
-		//		listMessages.add("James Moore");
-		//		listMessages.add("James Moore");
-		//		listMessages.add("James Moore");
 		adapterMessageList=new MessagesListAdapter(mContext, listMessages);
 		lvMessages.setAdapter(adapterMessageList);
 		lvMessages.setOnItemClickListener(new OnItemClickListener() {
@@ -101,6 +98,57 @@ public class MessageListActivity extends FragmentActivity{
 			}
 		});
 
+		lvMessages.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				isWebServiceCalled=true;
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				//				Toast.makeText(getApplicationContext(), "2", 1000).show();
+				if(isWebServiceCalled)
+				{
+					isWebServiceCalled=false;
+					if (firstVisibleItem == 0) {
+						// check if we reached the top or bottom of the list
+						View v = lvMessages.getChildAt(0);
+						int offset = (v == null) ? 0 : v.getTop();
+						if (offset == 0) {
+							isMinId=true;
+							isMaxId=false;
+
+							if(adapterMessageList.listChat!=null && !adapterMessageList.listChat.isEmpty())
+							{
+								min = String.valueOf(adapterMessageList.listChat.get(0).get("id"));
+								max="-1";
+							}
+							url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST;
+							new HttpAsyncTask().execute(url);
+							// reached the top:
+							return;
+						} 
+					} else if (totalItemCount - visibleItemCount == firstVisibleItem){
+						View v =  lvMessages.getChildAt(totalItemCount-1);
+						int offset = (v == null) ? 0 : v.getTop();
+						if (offset == 0) {
+							isMinId=false;
+							isMaxId=true;
+							if(adapterMessageList.listChat!=null && !adapterMessageList.listChat.isEmpty())
+							{
+								max = String.valueOf(adapterMessageList.listChat.get(adapterMessageList.listChat.size()-1).get("id"));
+								min = "-1";
+							}
+							url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST;
+							new HttpAsyncTask().execute(url);
+							// reached the top:
+							return;
+						}
+					}
+				}
+			}
+		});
+
 		Button refreshButton = (Button)findViewById(R.id.refresh_button);
 		refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
@@ -110,25 +158,42 @@ public class MessageListActivity extends FragmentActivity{
 			}
 		});
 	}
+
 	@Override
-	protected void onResume() {
+	protected void onDestroy() {
 		// TODO Auto-generated method stub
-		super.onResume();
-		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST;
-		new HttpAsyncTask().execute(url);
+		super.onDestroy();
+		isFirstTime=false;
 	}
+
+	//	@Override
+	//	protected void onResume() {
+	//		// TODO Auto-generated method stub
+	//		super.onResume();
+	//		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST;
+	//		new HttpAsyncTask().execute(url);
+	//		isWebServiceCalled=false;
+	//	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		isWebServiceCalled=true;
+	}
+
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
+			/*if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
 			{
 				if(progress==null)
 				{
 					progress=new ProgressDialog(mContext);
 					progress.show();		
 				}
-			}
+			}*/
 		}
 
 		@Override
@@ -146,14 +211,14 @@ public class MessageListActivity extends FragmentActivity{
 		protected void onPostExecute(Void result) {
 			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
 			{
-				if(progress!=null && progress.isShowing())
+				/*if(progress!=null && progress.isShowing())
 				{
 					progress.dismiss();
 					progress=null;
-				}
+				}*/
 			}
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
-			{
+			{  //{"request_data":{"msg_type":"message","min":"0","max":"-1","from_to
 				// In case of fetching message listing
 				try {
 					JSONObject jsonObj = new JSONObject(response);
@@ -168,20 +233,59 @@ public class MessageListActivity extends FragmentActivity{
 					}
 					else if(_result.equalsIgnoreCase("success")){
 						JSONArray jsonArray = jsonObj.getJSONArray("json");
-						adapterMessageList.listChat.clear();
+						//						adapterMessageList.listChat.clear();
 						for(int i=0;i<jsonArray.length();i++)
 						{
 							String receiver_name=new JSONObject(jsonArray.getString(i)).getString("receiver_name");
 							String message=new JSONObject(jsonArray.getString(i)).getString("message");
 							String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
 							String receiver_email=new JSONObject(jsonArray.getString(i)).getString("receiver_email");
+							String id=new JSONObject(jsonArray.getString(i)).getString("id");
 							HashMap<String, String> hashMap=new HashMap<String,String>();
 							hashMap.put("receiver_name",receiver_name);
 							hashMap.put("message",message);
 							hashMap.put("msg_time", msg_time);
 							hashMap.put("receiver_email", receiver_email);
-							adapterMessageList.listChat.add(hashMap);
-							adapterMessageList.notifyDataSetChanged();
+							hashMap.put("id", id);
+							listData.add(hashMap);
+							if(isFirstTime)
+							{
+								isFirstTime=false;
+								adapterMessageList.listChat.add(hashMap);
+								adapterMessageList.notifyDataSetChanged();
+							}
+						}
+						if(!isFirstTime)
+						{
+							if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
+							{
+								//Post Append
+								for(int i=0;i<listData.size();i++)
+									adapterMessageList.listChat.add(listData.get(i));
+								adapterMessageList.notifyDataSetChanged();
+							}
+							else if(new JSONObject(response).getJSONObject("request_data").getString("max").equals("-1"))
+							{
+								ArrayList<HashMap<String, String>> listDataTemp= new ArrayList<>();
+								//Pre Append
+								if(adapterMessageList.listChat!=null && !adapterMessageList.listChat.isEmpty())
+								{
+									for(int i=0;i<adapterMessageList.listChat.size();i++)
+									{
+										listDataTemp.add(adapterMessageList.listChat.get(i));
+									}
+									adapterMessageList.listChat.clear();
+									for(int i=0;i<listData.size();i++)
+									{
+										adapterMessageList.listChat.add(listData.get(i));
+									}
+									for(int i=0;i<listDataTemp.size();i++)
+									{
+										adapterMessageList.listChat.add(listDataTemp.get(i));
+									}
+								}
+								adapterMessageList.notifyDataSetChanged();
+							}
 						}
 					}
 				} catch (Exception e) {
@@ -192,7 +296,6 @@ public class MessageListActivity extends FragmentActivity{
 					TextView empty_view = (TextView)findViewById(R.id.empty_view);
 					empty_view.setVisibility(View.VISIBLE);
 				}
-
 			}
 		}
 	}
@@ -208,7 +311,14 @@ public class MessageListActivity extends FragmentActivity{
 		{
 			String page_no=page_count;
 			data= URLEncoder.encode("identifier", "UTF-8") //customer@wedwise.in:fRITsf8kb60QSc6r3eAJqz0rqZA
-					+ "=" + URLEncoder.encode("customer@wedwise.in:fRITsf8kb60QSc6r3eAJqz0rqZA", "UTF-8"); 
+					+ "=" + URLEncoder.encode(identifier, "UTF-8"); 
+
+			data += "&" + URLEncoder.encode("min", "UTF-8") + "="
+					+ URLEncoder.encode(min, "UTF-8");
+
+			data += "&" + URLEncoder.encode("max", "UTF-8") + "="
+					+ URLEncoder.encode(max, "UTF-8"); 
+
 
 			data += "&" + URLEncoder.encode("page_no", "UTF-8") + "="
 					+ URLEncoder.encode(page_no, "UTF-8"); 

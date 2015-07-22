@@ -13,6 +13,13 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.eventmanagementapp.R;
+import com.eventmanagementapp.adapter.ChatAdapter;
+import com.eventmanagementapp.common.GlobalCommonMethods;
+import com.eventmanagementapp.common.GlobalCommonValues;
+import com.eventmanagementapp.dialogs.ErrorDialog;
+import com.eventmanagementapp.util.PreferenceUtil;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -29,19 +36,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.eventmanagementapp.R;
-import com.eventmanagementapp.adapter.ChatAdapter;
-import com.eventmanagementapp.common.GlobalCommonMethods;
-import com.eventmanagementapp.common.GlobalCommonValues;
-import com.eventmanagementapp.dialogs.ErrorDialog;
-import com.eventmanagementapp.util.CustomFonts;
-import com.eventmanagementapp.util.PreferenceUtil;
+import android.widget.Toast;
 
 public class MessageChatActivity extends FragmentActivity{
 
@@ -58,6 +60,11 @@ public class MessageChatActivity extends FragmentActivity{
 	ProgressDialog progress;
 	String page_count="1";
 	String _receiver_email;
+	boolean isMinId=false,isMaxId=false;
+	String min="0",max="-1";
+	boolean isWebServiceCalled=true;
+	ArrayList<HashMap<String, String>> listData= new ArrayList<HashMap<String, String>>();
+	static boolean isFirstTime=true;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -81,21 +88,74 @@ public class MessageChatActivity extends FragmentActivity{
 		tvToolBar.setTextColor(Color.parseColor("#555555"));
 		btnBack.setBackground(MessageChatActivity.this.getResources().getDrawable(R.drawable.back_orange));
 		listChat=new ArrayList<HashMap<String, String>>();
-		CustomFonts.setFontOfTextView(mContext, tvToolBar, "fonts/GothamRnd-Light.otf");
+		//		CustomFonts.setFontOfTextView(mContext, tvToolBar, "fonts/GothamRnd-Light.otf");
 		adapterChat=new ChatAdapter(MessageChatActivity.this,listChat);
 		lvChatMessages.setAdapter(adapterChat);
 		if(getIntent()!=null && getIntent().getExtras()!=null)
 		{
 			_receiver_email=getIntent().getExtras().getString("receiver_email");
 		}
-		url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
+		/*url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
 		new HttpAsyncTask().execute(url);
+		isWebServiceCalled=false;*/
 
 		btnSendMessage.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_CREATE;
 				new HttpAsyncTask().execute(url);
+			}
+		});
+
+		lvChatMessages.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				isWebServiceCalled=true;
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+				//				Toast.makeText(getApplicationContext(), "2", 1000).show();
+				if(isWebServiceCalled)
+				{
+					isWebServiceCalled=false;
+					if (firstVisibleItem == 0) {
+						// check if we reached the top or bottom of the list
+						View v = lvChatMessages.getChildAt(0);
+						int offset = (v == null) ? 0 : v.getTop();
+						if (offset == 0) {
+							isMinId=true;
+							isMaxId=false;
+
+							if(adapterChat.listChat!=null && !adapterChat.listChat.isEmpty())
+							{
+								min = String.valueOf(adapterChat.listChat.get(0).get("id"));
+								max="-1";
+							}
+							url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
+							new HttpAsyncTask().execute(url);
+							// reached the top:
+							return;
+						} 
+					} else if (totalItemCount - visibleItemCount == firstVisibleItem){
+						View v =  lvChatMessages.getChildAt(totalItemCount-1);
+						int offset = (v == null) ? 0 : v.getTop();
+						if (offset == 0) {
+							isMinId=false;
+							isMaxId=true;
+							if(adapterChat.listChat!=null && !adapterChat.listChat.isEmpty())
+							{
+								max = String.valueOf(adapterChat.listChat.get(adapterChat.listChat.size()-1).get("id"));
+								min = "-1";
+							}
+							url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
+							new HttpAsyncTask().execute(url);
+							// reached the top:
+							return;
+						}
+					}
+				}
 			}
 		});
 
@@ -115,7 +175,6 @@ public class MessageChatActivity extends FragmentActivity{
 			}
 		});
 		etMessage.addTextChangedListener(new TextWatcher() {
-
 			@Override
 			public void onTextChanged(CharSequence s, int start, int before, int count) {
 				if(s.length()==0)
@@ -139,6 +198,12 @@ public class MessageChatActivity extends FragmentActivity{
 			}
 		});
 	}
+
+	protected void onDestroy() {
+		super.onDestroy();
+		isFirstTime=false;
+	};
+
 	ArrayList<HashMap<String, String>> _listChat=new ArrayList<HashMap<String,String>>();
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
@@ -197,12 +262,14 @@ public class MessageChatActivity extends FragmentActivity{
 							etMessage.setText("");
 							String message=new JSONObject(json).getString("message");
 							String msg_time=new JSONObject(json).getString("msg_time");
+							//							String id=new JSONObject(json).getString("id");
 							tvToolBar.setText(new JSONObject(json).getString("receiver_name"));
 							String from_to=new JSONObject(response).getJSONObject("request_data").getString("from_to");
 							HashMap<String, String> hashMap=new HashMap<String,String>();
 							hashMap.put("message",message);
 							hashMap.put("msg_time", msg_time);
 							hashMap.put("from_to", from_to);
+							//							hashMap.put("id", id);
 							_listChat.add(hashMap);
 						}
 						for(int i=0;i<_listChat.size();i++)
@@ -234,19 +301,59 @@ public class MessageChatActivity extends FragmentActivity{
 						else if(_result.equalsIgnoreCase("success")){
 							etMessage.setText("");
 							JSONArray jsonArray = jsonObj.getJSONArray("json");
-							adapterChat.listChat.clear();
+							//							adapterChat.listChat.clear();
 							for(int i=0;i<jsonArray.length();i++)
 							{
 								tvToolBar.setText(new JSONObject(jsonArray.getString(i)).getString("vendor_name"));
 								String message=new JSONObject(jsonArray.getString(i)).getString("message");
 								String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
+								String id=new JSONObject(jsonArray.getString(i)).getString("id");
 								String from_to=new JSONObject(jsonArray.getString(i)).getString("from_to");
 								HashMap<String, String> hashMap=new HashMap<String,String>();
 								hashMap.put("message",message);
 								hashMap.put("msg_time", msg_time);
 								hashMap.put("from_to",from_to);
-								adapterChat.listChat.add(hashMap);
-								adapterChat.notifyDataSetChanged();
+								hashMap.put("id", id);
+								listData.add(hashMap);
+								if(isFirstTime)
+								{
+									isFirstTime=false;
+									adapterChat.listChat.add(hashMap);
+									adapterChat.notifyDataSetChanged();
+								}
+							}
+
+							if(!isFirstTime)
+							{
+								if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
+								{
+									//Post Append
+									for(int i=0;i<listData.size();i++)
+										adapterChat.listChat.add(listData.get(i));
+									adapterChat.notifyDataSetChanged();
+								}
+								else if(new JSONObject(response).getJSONObject("request_data").getString("max").equals("-1"))
+								{
+									ArrayList<HashMap<String, String>> listDataTemp= new ArrayList<>();
+									//Pre Append
+									if(adapterChat.listChat!=null && !adapterChat.listChat.isEmpty())
+									{
+										for(int i=0;i<adapterChat.listChat.size();i++)
+										{
+											listDataTemp.add(adapterChat.listChat.get(i));
+										}
+										adapterChat.listChat.clear();
+										for(int i=0;i<listData.size();i++)
+										{
+											adapterChat.listChat.add(listData.get(i));
+										}
+										for(int i=0;i<listDataTemp.size();i++)
+										{
+											adapterChat.listChat.add(listDataTemp.get(i));
+										}
+									}
+									adapterChat.notifyDataSetChanged();
+								}
 							}
 						}
 					} catch (Exception e) {
@@ -258,35 +365,15 @@ public class MessageChatActivity extends FragmentActivity{
 					TextView empty_view = (TextView)findViewById(R.id.empty_view);
 					empty_view.setVisibility(View.VISIBLE);
 				}
-				/*
-				try {
-					JSONObject jsonObj = new JSONObject(response);
-					String _result = jsonObj.getString("result");
-					String json = jsonObj.getString("json");
-					if(_result.equalsIgnoreCase("error"))
-					{
-						String errorMessage=jsonObj.getString("code_string");
-						ErrorDialog dialog=new ErrorDialog();
-						dialog.newInstance(mContext, _result.toUpperCase(), errorMessage,null);
-						dialog.setCancelable(false);
-						dialog.show(getFragmentManager(), "test");
-					}
-					else if(_result.equalsIgnoreCase("success")){
-						etMessage.setText("");
-						String message=new JSONObject(json).getString("message");
-						String msg_time=new JSONObject(json).getString("msg_time");
-						tvToolBar.setText(new JSONObject(json).getString("receiver_name"));
-						HashMap<String, String> hashMap=new HashMap<String,String>();
-						hashMap.put("message",message);
-						hashMap.put("msg_time", msg_time);
-						adapterChat.listChat.add(hashMap);
-						adapterChat.notifyDataSetChanged();
-					}
-				} catch (Exception e) {
-					e.getMessage();
-				}*/
 			}
 		}
+	}
+
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		isWebServiceCalled=true;
 	}
 
 	// Create GetData Metod
@@ -334,6 +421,14 @@ public class MessageChatActivity extends FragmentActivity{
 			String page_no=page_count;
 			data= URLEncoder.encode("identifier", "UTF-8") 
 					+ "=" + URLEncoder.encode(identifier, "UTF-8"); 
+
+
+			data += "&" + URLEncoder.encode("min", "UTF-8") + "="
+					+ URLEncoder.encode(min, "UTF-8");
+
+			data += "&" + URLEncoder.encode("max", "UTF-8") + "="
+					+ URLEncoder.encode(max, "UTF-8"); 
+
 
 			data += "&" + URLEncoder.encode("receiver_email", "UTF-8") + "="
 					+ URLEncoder.encode(receiver_email, "UTF-8"); 

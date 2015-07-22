@@ -9,7 +9,9 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.eventmanagementapp.R;
@@ -18,9 +20,7 @@ import com.eventmanagementapp.common.GlobalCommonValues;
 import com.eventmanagementapp.dialogs.DisplayEventDatesDialog;
 import com.eventmanagementapp.dialogs.ErrorDialog;
 import com.eventmanagementapp.interfaces.IAction;
-import com.eventmanagementapp.util.PreferenceUtil;
 
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -178,14 +178,8 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		public void setAction(String action) {
 			if(action.equals("senddata"))	
 			{
-				ArrayList<String> listDates = new ArrayList<String>();
-				listDates.add("2015-07-25");
-				listDates.add("2015-07-26");
-				listDates.add("2015-07-30");
-				listDates.add("2015-07-31");
-				mf.refreshCalendarDates(listDates);
-//				url=GlobalCommonValues.VENDOR_CALENDAR_MULTISELECTIONDATES;
-//				new HttpAsyncTask().execute(url);
+				url=GlobalCommonValues.VENDOR_CALENDAR_HOME;
+				new HttpAsyncTask().execute(url);
 			}
 		}
 	};
@@ -198,6 +192,139 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 	}
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(progress==null)
+			{
+				progress=new ProgressDialog(mContext);
+				progress.show();		
+			}
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			try {
+				// Calling method for setting to be sent to the server
+				SetData();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// onPostExecute displays the results of the AsyncTask.
+		@Override
+		protected void onPostExecute(Void result) {
+			if(progress!=null && progress.isShowing())
+			{
+				progress.dismiss();
+				progress=null;
+			}
+			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
+			{
+				// In case of fetching message listing
+				try {   
+					JSONObject jsonObj = new JSONObject(response);
+					//new JSONObject(jsonObj.getString("json")).getString("data")
+					//new JSONObject(jsonObj.getString("json")).getJSONArray("available_years")
+					//{"15":25,"1":5,"16":7}
+					String year=new JSONObject(response).getJSONObject("request_data").getString("year");
+					String month=new JSONObject(response).getJSONObject("request_data").getString("month");
+					JSONArray datesJsonArray=new JSONArray(new JSONObject(jsonObj.getString("json")).getString("data"));
+					ArrayList<HashMap<String,String>> listDates = new ArrayList<HashMap<String,String>>();
+					HashMap<String,String> hashMap=new HashMap<String,String>();
+					@SuppressWarnings("unused")
+					String count="",day="";
+					for(int i=0;i<datesJsonArray.length();i++)
+					{
+						JSONObject jobj=new JSONObject(datesJsonArray.get(i).toString());
+						day=jobj.getString("day");
+						if(day.length()==1)
+						{
+							day="0"+day;
+						}
+						hashMap=new HashMap<String,String>();
+						hashMap.put("year",year);
+						hashMap.put("month",month);
+						hashMap.put("count",jobj.getString("count"));
+						hashMap.put("day",day);
+						listDates.add(hashMap);
+					}
+					mf.refreshCalendarDates(listDates);
+					//					calendaradapter.setEventCountsList(listDates);
+				} catch (Exception e) {
+					e.getMessage();
+				}
+			}
+		}
+	}
+
+	// Create GetData Method
+	public  void  SetData()  throws  UnsupportedEncodingException
+	{
+		// Create data variable for sent values to server
+		//		yyyy-MM-dd
+		String date=Util.getCurrentDate();
+		String[] arrayDate=date.split("-");
+		String data="";
+		String year=arrayDate[0];
+		String month=arrayDate[1];
+		String filter_string=CalendarActivity._filterString;
+
+//		data= URLEncoder.encode("availability", "UTF-8") 
+//				+ "=" + URLEncoder.encode("0", "UTF-8"); 
+
+		data= URLEncoder.encode("year", "UTF-8") 
+				+ "=" + URLEncoder.encode(year, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("month", "UTF-8") + "="
+				+ URLEncoder.encode(month, "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("filter_string", "UTF-8") 
+		+ "=" + URLEncoder.encode(filter_string,"UTF-8");
+
+		BufferedReader reader=null;
+		// Send data 
+		try
+		{ 
+			URL _url=null;
+			// Defined URL  where to send data
+			_url= new URL(GlobalCommonValues.VENDOR_CALENDAR_HOME);
+			// Send POST data request
+
+			URLConnection conn = _url.openConnection(); 
+			conn.setDoOutput(true); 
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+			wr.write( data ); 
+			wr.flush(); 
+
+			// Get the server response 
+			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+
+			// Read Server Response
+			while((line = reader.readLine()) != null)
+			{
+				// Append server response in string
+				sb.append(line + "\n");
+			}
+			response = sb.toString();
+		}
+		catch(Exception ex)
+		{
+		}
+		finally
+		{
+			try
+			{
+				reader.close();
+			}
+			catch(Exception ex) {}
+		}
+	}
+
+	/*private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -250,6 +377,8 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		String dates=CalendarActivityMultipleSelection.listDates.toString();
 		String _package="";
 		String rate="";
+		data= URLEncoder.encode("availability", "UTF-8") 
+				+ "=" + URLEncoder.encode("1", "UTF-8"); 
 		data= URLEncoder.encode("dates", "UTF-8") 
 				+ "=" + URLEncoder.encode(dates, "UTF-8"); 
 
@@ -296,11 +425,11 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 			}
 			catch(Exception ex) {}
 		}
-	}
+	}*/
 
 
 	/*INotify iNotify=new INotify() {
-		@Override
+		@Override	
 		public void yes() {
 			tvFilterFirst.setVisibility(View.VISIBLE);
 			//			tvFilterSecond.setVisibility(View.VISIBLE);

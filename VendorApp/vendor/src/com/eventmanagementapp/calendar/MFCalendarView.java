@@ -313,42 +313,6 @@ public class MFCalendarView extends LinearLayout{
 					calendaradapter.setEventCountsList(listDates);
 
 
-					/*HashMap<String,String> hashMap=new HashMap<String,String>();
-					hashMap.put("","");*/
-
-					/*if(mContext instanceof CalendarActivity)
-					{
-						ErrorDialog dialog=new ErrorDialog();
-						dialog.newInstance(mContext, "Test","Test_",null);
-						dialog.setCancelable(false);
-						dialog.show(((CalendarActivity)mContext).getFragmentManager(), "test");
-					}*/
-					/*String _result = jsonObj.getString("result");
-					if(_result.equalsIgnoreCase("error"))
-					{
-						String errorMessage=jsonObj.getString("message");
-						ErrorDialog dialog=new ErrorDialog();
-						dialog.newInstance(mContext, _result.toUpperCase(), errorMessage,null);
-						dialog.setCancelable(false);
-						dialog.show(getFragmentManager(), "test");
-					}
-					else if(_result.equalsIgnoreCase("success")){
-						JSONArray jsonArray = jsonObj.getJSONArray("json");
-						for(int i=0;i<jsonArray.length();i++)
-						{
-							String receiver_name=new JSONObject(jsonArray.getString(i)).getString("receiver_name");
-							String message=new JSONObject(jsonArray.getString(i)).getString("message");
-							String msg_time=new JSONObject(jsonArray.getString(i)).getString("msg_time");	
-							String receiver_email=new JSONObject(jsonArray.getString(i)).getString("receiver_email");
-							HashMap<String, String> hashMap=new HashMap<String,String>();
-							hashMap.put("receiver_name",receiver_name);
-							hashMap.put("message",message);
-							hashMap.put("msg_time", msg_time);
-							hashMap.put("receiver_email", receiver_email);
-							adapterMessageList.listChat.add(hashMap);
-							adapterMessageList.notifyDataSetChanged();
-						}
-					}*/
 				} catch (Exception e) {
 					e.getMessage();
 				}
@@ -368,6 +332,9 @@ public class MFCalendarView extends LinearLayout{
 		String month=arrayDate[1];
 		String filter_string=CalendarActivity._filterString;
 
+		data= URLEncoder.encode("availability", "UTF-8") 
+				+ "=" + URLEncoder.encode("0", "UTF-8"); 
+		
 		data= URLEncoder.encode("year", "UTF-8") 
 				+ "=" + URLEncoder.encode(year, "UTF-8"); 
 
@@ -417,5 +384,4 @@ public class MFCalendarView extends LinearLayout{
 			catch(Exception ex) {}
 		}
 	}
-
 }

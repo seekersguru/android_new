@@ -20,7 +20,7 @@ import com.eventmanagementapp.R;
 public class MessagesListAdapter extends BaseAdapter{
 
 	Context mContext;
-	public ArrayList<HashMap<String, String>> listChat;
+	public ArrayList<HashMap<String, String>> listChat= new ArrayList<>();
 
 	public MessagesListAdapter(Context mContext,ArrayList<HashMap<String, String>> listChat)
 	{

@@ -11,29 +11,12 @@ import java.util.Arrays;
 
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.eventmanagementapp.calendar.CalendarActivity;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
 import com.eventmanagementapp.dialogs.ErrorDialog;
 import com.eventmanagementapp.interfaces.IAction;
+import com.eventmanagementapp.util.CustomFonts;
 import com.eventmanagementapp.util.PreferenceUtil;
 import com.eventmanagementapp.util.ShowDialog;
 import com.facebook.AccessToken;
@@ -58,6 +41,24 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.text.TextUtils;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginSignUpActivity extends FragmentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener  {
 
@@ -113,10 +114,10 @@ public class LoginSignUpActivity extends FragmentActivity implements OnClickList
 		toolbar.findViewById(R.id.refresh_button).setVisibility(View.GONE);
 		tvToolBar.setText("Log In or Sign Up");
 		btnBack.setVisibility(View.GONE);
-		//		CustomFonts.setFontOfButton(mContext, btnSignUp,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfButton(mContext, btnLogin,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext, tvToolBar,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext, tvBottomBar,"fonts/GothamRnd-Light.otf");
+		CustomFonts.setFontOfButton(mContext, btnSignUp,"fonts/GothamRoundedBook.ttf");
+//		CustomFonts.setFontOfButton(mContext, btnLogin,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext, tvToolBar,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext, tvBottomBar,"fonts/GothamRoundedBook.ttf");
 		btnBack.setOnClickListener(new OnClickListener() {
 
 			@Override

@@ -151,11 +151,6 @@ public class CalendarAdapter extends BaseAdapter {
 			monthStr = "0" + monthStr;
 		}
 
-		if(date.equals("2015-07-01") || date.equals("2015-07-1"))
-		{
-			System.out.println(date);
-		}
-
 		if(listDates!=null && !listDates.isEmpty())
 		{
 			String[] arrayDate=date.split("-");
