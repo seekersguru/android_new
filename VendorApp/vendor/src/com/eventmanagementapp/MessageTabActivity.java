@@ -1,22 +1,21 @@
 package com.eventmanagementapp;
 
+import com.eventmanagementapp.tab.BidBookCreateActivity;
+import com.eventmanagementapp.tab.SlidingTabLayout;
+import com.eventmanagementapp.tab.TabAdapter;
+
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
-
-import com.eventmanagementapp.tab.BidBookCreateActivity;
-import com.eventmanagementapp.tab.SlidingTabLayout;
-import com.eventmanagementapp.tab.TabAdapter;
 
 /**
  * Created by Edwin on 15/02/2015.
@@ -37,37 +36,38 @@ public class MessageTabActivity extends FragmentActivity {
 	@SuppressLint("NewApi") @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.messagetabactivity);
 		// Creating The Toolbar and setting it as the Toolbar for the activity
-
-		toolbar = (Toolbar) findViewById(R.id.tool_bar);
+		btnBack=(Button)findViewById(R.id.btnBack);
+		btnAddBidBook=(Button)findViewById(R.id.btnAddBidBook);
+		btnAddBidBook.setVisibility(View.VISIBLE);
+		/*toolbar = (Toolbar) findViewById(R.id.tool_bar);
 		toolbar.setVisibility(View.GONE);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayShowHomeEnabled(false);
 		actionBar.setDisplayShowTitleEnabled(false);
 		LayoutInflater mInflater = LayoutInflater.from(this);
-
 		View mCustomView = mInflater.inflate(R.layout.customactionbarview, null);
 		actionBar.setCustomView(mCustomView);
 		btnBack=(Button) mCustomView.findViewById(R.id.btnBack);
 		actionBar.setDisplayShowCustomEnabled(true);
 		btnAddBidBook=(Button) mCustomView.findViewById(R.id.btnAddBidBook);
-		btnAddBidBook.setVisibility(View.VISIBLE);
+		btnAddBidBook.setVisibility(View.VISIBLE);*/
 		btnAddBidBook.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent myIntent=new Intent(MessageTabActivity.this,BidBookCreateActivity.class);
-			if(pager.getCurrentItem()==0)
-				myIntent.putExtra("type","bid");
-			else
-				myIntent.putExtra("type","book");
-			
-			startActivity(myIntent);
+				if(pager.getCurrentItem()==0)
+					myIntent.putExtra("type","bid");
+				else
+					myIntent.putExtra("type","book");
+
+				startActivity(myIntent);
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);	
 			}
 		});
-		
+
 		btnBack.setOnClickListener(new OnClickListener() {
 
 			@Override

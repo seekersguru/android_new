@@ -42,6 +42,7 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
+import android.R.color;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -102,7 +103,6 @@ public class LoginSignUpActivity extends FragmentActivity implements OnClickList
 		btnLogin=(Button) findViewById(R.id.btnLogin);
 		btnFBLogin=(LoginButton) findViewById(R.id.btnFBLogin);
 		btnFBLogin.setBackgroundResource(R.drawable.sign_up_fb);
-
 		btnFBLogin.setReadPermissions(Arrays.asList("user_friends"));		
 		btnGoogleLogin=(Button) findViewById(R.id.btnGoogleLogin);
 		btnSignUp=(Button) findViewById(R.id.btnSignUp);
@@ -115,7 +115,7 @@ public class LoginSignUpActivity extends FragmentActivity implements OnClickList
 		tvToolBar.setText("Log In or Sign Up");
 		btnBack.setVisibility(View.GONE);
 		CustomFonts.setFontOfButton(mContext, btnSignUp,"fonts/GothamRoundedBook.ttf");
-//		CustomFonts.setFontOfButton(mContext, btnLogin,"fonts/GothamRoundedBook.ttf");
+		//		CustomFonts.setFontOfButton(mContext, btnLogin,"fonts/GothamRoundedBook.ttf");
 		CustomFonts.setFontOfTextView(mContext, tvToolBar,"fonts/GothamRoundedBook.ttf");
 		CustomFonts.setFontOfTextView(mContext, tvBottomBar,"fonts/GothamRoundedBook.ttf");
 		btnBack.setOnClickListener(new OnClickListener() {

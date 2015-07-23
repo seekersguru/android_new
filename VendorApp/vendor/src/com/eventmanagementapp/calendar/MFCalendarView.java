@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
+import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
@@ -55,6 +56,7 @@ public class MFCalendarView extends LinearLayout{
 	String response="",url;
 	ProgressDialog progress;
 	Context mContext;
+	String strYear="",strMonth="",minYear="",maxYear="";
 
 	public MFCalendarView(Context context) {
 		super(context);
@@ -86,13 +88,20 @@ public class MFCalendarView extends LinearLayout{
 		calendaradapter = new CalendarAdapter(context, month);
 		gridview = (ExpandableHeightGridView) view.findViewById(R.id.gridview);
 		gridview.setAdapter(calendaradapter);
-
 		handler = new Handler();
 		handler.post(calendarUpdater);
-
 		TextView title = (TextView) view.findViewById(R.id.title);
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
 		RelativeLayout previous = (RelativeLayout) view.findViewById(R.id.previous);
+		//		yyyy-MM-dd
+		String date=Util.getCurrentDate();
+		String[] arrayDate=date.split("-");
+		strYear=arrayDate[0];
+		strMonth=arrayDate[1];
+		if(arrayDate[1].startsWith("0") && arrayDate[1].length()==2)
+		{
+			strMonth=arrayDate[1].substring(1,2);
+		}
 		previous.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -137,37 +146,53 @@ public class MFCalendarView extends LinearLayout{
 					calendarListener.onDateChanged(currentSelectedDate);
 			}
 		});
-
 		addView(view);
 	}
 
 	protected void setNextMonth() {
-		if (month.get(Calendar.MONTH) == 
-				month.getActualMaximum(Calendar.MONTH)) {
-
-			month.set((month.get(Calendar.YEAR) + 1),
-					month.getActualMinimum(Calendar.MONTH), 1);
-
+		//		if(month.get(Calendar.YEAR) + 1<Integer.parseInt(maxYear))
+		if (month.get(Calendar.MONTH) == month.getActualMaximum(Calendar.MONTH)) {
+			if((month.get(Calendar.YEAR) + 1)<=Integer.parseInt(maxYear))
+			{
+				month.set((month.get(Calendar.YEAR) + 1),month.getActualMinimum(Calendar.MONTH), 1);
+				strMonth="1";
+				strYear=String.valueOf(month.get(Calendar.YEAR));
+			}
 		} else {
-			month.set(Calendar.MONTH,
-					month.get(Calendar.MONTH) + 1);
+			month.set(Calendar.MONTH,month.get(Calendar.MONTH) + 1);
+			strMonth=String.valueOf(month.get(Calendar.MONTH)+1);
+			strYear=String.valueOf(month.get(Calendar.YEAR));
 		}
 	}
 
 	protected void setPreviousMonth() {
-		if (month.get(Calendar.MONTH) == month
-				.getActualMinimum(Calendar.MONTH)) {
-			month.set((month.get(Calendar.YEAR) - 1),
-					month.getActualMaximum(Calendar.MONTH), 1);
+		if (month.get(Calendar.MONTH) == month.getActualMinimum(Calendar.MONTH)) {
+			if(Integer.parseInt(minYear)<(month.get(Calendar.YEAR)))
+			{
+				month.set((month.get(Calendar.YEAR) - 1),month.getActualMaximum(Calendar.MONTH), 1);
+				strMonth="12";
+				strYear=String.valueOf(month.get(Calendar.YEAR));
+			}
 		} else {
-			month.set(Calendar.MONTH,
-					month.get(Calendar.MONTH) - 1);
+			month.set(Calendar.MONTH,month.get(Calendar.MONTH) - 1);
+			strMonth=String.valueOf(month.get(Calendar.MONTH)+1);
+			strYear=String.valueOf(month.get(Calendar.YEAR));
 		}
+	}
 
+	//set date on the base of date selected from datepickerdialog
+	public void setSelectedDate(final int _month,final int year,final int day)
+	{
+		if(Integer.parseInt(minYear)<=year && year<=Integer.parseInt(maxYear))
+		{
+			month.set(year,_month-1, 1);
+			strMonth=String.valueOf(_month);
+			strYear=String.valueOf(year);
+			refreshCalendar();
+		}
 	}
 
 	protected void showToast(String string) {
-		//		Toast.makeText(getContext(), string, Toast.LENGTH_SHORT).show();
 	}
 
 	public int getSelectedMonth(){
@@ -179,15 +204,11 @@ public class MFCalendarView extends LinearLayout{
 	}
 
 	public void refreshCalendar() {
-
 		TextView title = (TextView) view.findViewById(R.id.title);
-
 		calendaradapter.refreshDays();
 		//calendaradapter.notifyDataSetChanged();
 		handler.post(calendarUpdater); 
-
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
-
 		if (calendarListener != null) {
 			calendarListener.onDisplayedMonthChanged(
 					month.get(Calendar.MONTH) + 1, 
@@ -286,7 +307,10 @@ public class MFCalendarView extends LinearLayout{
 				try {   
 					JSONObject jsonObj = new JSONObject(response);
 					//new JSONObject(jsonObj.getString("json")).getString("data")
-					//new JSONObject(jsonObj.getString("json")).getJSONArray("available_years")
+					JSONArray yearArray=new JSONObject(jsonObj.getString("json")).getJSONArray("available_years");
+					minYear=yearArray.getString(0);
+					maxYear=yearArray.getString(1);
+
 					//{"15":25,"1":5,"16":7}
 					String year=new JSONObject(response).getJSONObject("request_data").getString("year");
 					String month=new JSONObject(response).getJSONObject("request_data").getString("month");
@@ -324,25 +348,22 @@ public class MFCalendarView extends LinearLayout{
 	public  void  SetData()  throws  UnsupportedEncodingException
 	{
 		// Create data variable for sent values to server
-		//		yyyy-MM-dd
-		String date=Util.getCurrentDate();
-		String[] arrayDate=date.split("-");
-		String data="";
-		String year=arrayDate[0];
-		String month=arrayDate[1];
 		String filter_string=CalendarActivity._filterString;
-
+		String data="";
 		data= URLEncoder.encode("availability", "UTF-8") 
 				+ "=" + URLEncoder.encode("0", "UTF-8"); 
-		
+
 		data= URLEncoder.encode("year", "UTF-8") 
-				+ "=" + URLEncoder.encode(year, "UTF-8"); 
+				+ "=" + URLEncoder.encode(strYear, "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("month", "UTF-8") + "="
-				+ URLEncoder.encode(month, "UTF-8"); 
+				+ URLEncoder.encode(strMonth, "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("filter_string", "UTF-8") 
 		+ "=" + URLEncoder.encode(filter_string,"UTF-8");
+
+		data += "&" + URLEncoder.encode("identifier", "UTF-8") 
+		+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(),"UTF-8");
 
 		BufferedReader reader=null;
 		// Send data 

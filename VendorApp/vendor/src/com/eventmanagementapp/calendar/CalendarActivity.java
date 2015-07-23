@@ -153,12 +153,12 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 
 				@SuppressWarnings("unused")
 				StringBuffer bf = new StringBuffer()
-						.append(" month:")
-						.append(month)
-						.append(" year:")
-						.append(year)
-						.append(" monthStr: ")
-						.append(monthStr);
+				.append(" month:")
+				.append(month)
+				.append(" year:")
+				.append(year)
+				.append(" monthStr: ")
+				.append(monthStr);
 			}
 
 			@Override
@@ -219,9 +219,8 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 	};
 
 	private void showDate(int year, int month, int day) {
-		StringBuilder dateString=new StringBuilder().append(year).append("-")
-				.append(month).append("-").append(day);
-		mf.setDate(dateString.toString());
+		StringBuilder dateString=new StringBuilder().append(year).append("-").append(month).append("-").append(day);
+		mf.setSelectedDate(month, year,day);
 		//		Toast.makeText(getApplicationContext(), dateString.toString(),1000).show();
 		//		etDate.setText(new StringBuilder().append(day).append("/")
 		//				.append(month).append("/").append(year));
@@ -238,7 +237,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		super.onDestroy();
 		_filterString=null;
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		if(v.getId()==R.id.btnBack)
