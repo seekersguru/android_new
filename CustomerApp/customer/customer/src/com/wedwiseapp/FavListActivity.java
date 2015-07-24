@@ -14,12 +14,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.example.vendordetailpage.MainActivity;
+import com.wedwise.Activities.MenuListActivity;
+import com.wedwise.Activities.MessageListActivity;
 import com.wedwise.adapter.FavAdapter;
 import com.wedwise.adapter.SpinnerAdapter;
 import com.wedwise.common.GlobalCommonMethods;
 import com.wedwise.common.GlobalCommonValues;
 import com.wedwise.dialogs.ErrorDialog;
-import com.wedwise.fragments.VendorCategoryHomeFragment;
+import com.wedwise.tab.MessageTabActivity;
+import com.wedwiseapp.util.PreferenceUtil;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -36,14 +39,12 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 @SuppressLint("InflateParams")
@@ -51,21 +52,22 @@ public class FavListActivity extends FragmentActivity {
 	ListView favList;
 	FavAdapter adapterSubList;
 	Context mContext;
-	Button btnBack,btnMenu,btnSearch;//,btnSpinnerOpen;
+	Button btnBack, btnMenu, btnSearch;// ,btnSpinnerOpen;
 	ArrayList<FavData> data;
 	SearchView searchView;
-	//	Spinner spSwitchCategory;
+	// Spinner spSwitchCategory;
 	ArrayList<String> listCategory;
-	SpinnerAdapter  adapterSpinner;
-	//	ImageView imViewCategoryType;
+	SpinnerAdapter adapterSpinner;
+	// ImageView imViewCategoryType;
 	TextView tvCategoryType;
 	View viewTopbar;
-	String category="";
-	Button btnCategory;
-	Spinner spSwitchCategory;
-	String response,url;
+	String category = "";
+	// Button btnCategory;
+	// Spinner spSwitchCategory;
+	String response, url;
 	ProgressDialog progress;
 	String vendor_type;
+	LinearLayout llMail, llHome, llLeads, llMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,95 +79,168 @@ public class FavListActivity extends FragmentActivity {
 	}
 
 	private void idInitialization() {
-		//		spSwitchCategory=(Spinner) findViewById(R.id.spSwitchCategory);
+		// spSwitchCategory=(Spinner) findViewById(R.id.spSwitchCategory);
 		favList = (ListView) findViewById(R.id.favList);
-		listCategory=new ArrayList<String>();
-		data=new ArrayList<FavData>();
-		adapterSubList = new FavAdapter(mContext,listData);
+		listCategory = new ArrayList<String>();
+		data = new ArrayList<FavData>();
+		adapterSubList = new FavAdapter(mContext, listData);
 		favList.setAdapter(adapterSubList);
-		btnBack=(Button) findViewById(R.id.btnBack);
-		viewTopbar=findViewById(R.id.viewTopbar);
+		btnBack = (Button) findViewById(R.id.btnBack);
+		viewTopbar = findViewById(R.id.viewTopbar);
 		viewTopbar.setVisibility(View.GONE);
-		searchView=(SearchView) findViewById(R.id.searchView);
-		btnSearch=(Button) findViewById(R.id.btnSeacrh);
-		tvCategoryType=(TextView) findViewById(R.id.tvCategoryType);
-		spSwitchCategory=(Spinner) findViewById(R.id.spSwitchCategory);
-		btnCategory=(Button) findViewById(R.id.btnCategory);
-		btnCategory.setOnClickListener(new OnClickListener() {
+		searchView = (SearchView) findViewById(R.id.searchView);
+		btnSearch = (Button) findViewById(R.id.btnSeacrh);
+		tvCategoryType = (TextView) findViewById(R.id.tvCategoryType);
+
+		llMail = (LinearLayout) findViewById(R.id.llMail);
+		llHome = (LinearLayout) findViewById(R.id.llHome);
+		llLeads = (LinearLayout) findViewById(R.id.llLeads);
+		llMenu = (LinearLayout) findViewById(R.id.llMenu);
+		// spSwitchCategory=(Spinner) findViewById(R.id.spSwitchCategory);
+		// btnCategory=(Button) findViewById(R.id.btnCategory);
+		// btnCategory.setOnClickListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// spSwitchCategory.performClick();
+		// }
+		// });
+
+		if (getIntent() != null && getIntent().getExtras() != null) {
+			vendor_type = getIntent().getExtras().getString("category_type");
+		}
+
+		llLeads.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				spSwitchCategory.performClick();
+				Intent myIntent = new Intent(FavListActivity.this,
+						MessageTabActivity.class);
+				 startActivity(myIntent);
+				 overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);
 			}
 		});
 
-		if(getIntent()!=null && getIntent().getExtras()!=null)
-		{
-			vendor_type=getIntent().getExtras().getString("category_type");
-		}
-
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, VendorCategoryHomeFragment.listItemsCategory);
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spSwitchCategory.setAdapter(dataAdapter);
-
-		spSwitchCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view,
-					int position, long id) {
-				category=String.valueOf(spSwitchCategory.getSelectedItem());
-				tvCategoryType.setText(category);
-			}
+		llMail.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
+			public void onClick(View v) {
+				if (!PreferenceUtil.getInstance().isRegistered()) {
+					ErrorDialog dialog = new ErrorDialog();
+					dialog.newInstance(mContext, "Alert!",
+							"Please register on Wedwise to use this feature",
+							null);
+					dialog.setCancelable(false);
+					dialog.show(getFragmentManager(), "test");
+				} else if (PreferenceUtil.getInstance().isRegistered()) {
+					Intent myIntent = new Intent(FavListActivity.this,
+							MessageListActivity.class);
+					 startActivity(myIntent);
+					 overridePendingTransition(R.anim.right_in,
+							R.anim.left_out);
+				}
 			}
 		});
-		//		btnSpinnerOpen=(Button) findViewById(R.id.btnSpinnerOpen);
+
+		llMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(FavListActivity.this,
+						MenuListActivity.class);
+				 startActivity(myIntent);
+				 overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);
+				// boolean isLogin = PreferenceUtil.getInstance().isLogin();
+				// if(isLogin)
+				// {
+				// LogoutConfirmationDialog dialogLogout=new
+				// LogoutConfirmationDialog();
+				// dialogLogout.setCancelable(false);
+				// dialogLogout.newInstance(getActivity(), "",
+				// "You are logged in.Do you want to logout?", iNotifyLogout);
+				// dialogLogout.show(getFragmentManager(), "test");
+				// }
+				// else if (!isLogin)
+				// {
+				// Intent myIntent = new Intent(getActivity(),
+				// LoginSignUpActivity.class);
+				//  startActivity(myIntent);
+				//  overridePendingTransition(R.anim.right_in,
+				// R.anim.left_out);
+				// }
+			}
+		});
+
+		// ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
+		// android.R.layout.simple_spinner_item,
+		// VendorCategoryHomeFragment.listItemsCategory);
+		// dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// spSwitchCategory.setAdapter(dataAdapter);
+
+		// spSwitchCategory.setOnItemSelectedListener(new
+		// OnItemSelectedListener() {
+		// @Override
+		// public void onItemSelected(AdapterView<?> parent, View view,
+		// int position, long id) {
+		// category=String.valueOf(spSwitchCategory.getSelectedItem());
+		// tvCategoryType.setText(category);
+		// }
+		//
+		// @Override
+		// public void onNothingSelected(AdapterView<?> parent) {
+		// }
+		// });
+		// btnSpinnerOpen=(Button) findViewById(R.id.btnSpinnerOpen);
 		btnSearch.setVisibility(View.VISIBLE);
-		//		imViewCategoryType.setVisibility(View.VISIBLE);
+		// imViewCategoryType.setVisibility(View.VISIBLE);
 		tvCategoryType.setVisibility(View.VISIBLE);
 
-		if(getIntent()!=null && getIntent().getExtras()!=null)
-		{
-			category=getIntent().getExtras().getString("category_type");
+		if (getIntent() != null && getIntent().getExtras() != null) {
+			category = getIntent().getExtras().getString("category_type");
 			tvCategoryType.setText(category);
-		}
-		else{
+		} else {
 			tvCategoryType.setText("");
 		}
-		//		actionBar.setDisplayShowCustomEnabled(true);
+		// actionBar.setDisplayShowCustomEnabled(true);
 
 		listCategory.add("BANQUITE");
 		listCategory.add("PHOTOGRAPHY");
 		listCategory.add("CATERERS");
 		listCategory.add("DECORATORS");
 		listCategory.add("OTHERS");
-		adapterSpinner=new SpinnerAdapter(FavListActivity.this, listCategory);
+		adapterSpinner = new SpinnerAdapter(FavListActivity.this, listCategory);
 		btnSearch.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				btnSearch.setVisibility(View.INVISIBLE);
 				searchView.setVisibility(View.VISIBLE);
-				tvCategoryType.setText(category.substring(0,1)+"...");
-				/*InputFilter[] filterArray = new InputFilter[1];
-				filterArray[0] = new InputFilter.LengthFilter(20);
-				tvCategoryType.setFilters(filterArray);*/
+				tvCategoryType.setText(category.substring(0, 1) + "...");
+				/*
+				 * InputFilter[] filterArray = new InputFilter[1];
+				 * filterArray[0] = new InputFilter.LengthFilter(20);
+				 * tvCategoryType.setFilters(filterArray);
+				 */
 				searchView.setIconified(false);
 				searchView.setBackgroundColor(Color.TRANSPARENT);
 				searchView.requestFocus();
-				int searchPlateId = searchView.getContext().getResources().getIdentifier("android:id/search_plate", null, null);
-				//				searchView.findViewById(searchPlateId).setBackgroundColor(Color.parseColor("#00000000"));
-				View searchPlateView=searchView.findViewById(searchPlateId);
-				if(searchPlateView!=null)
-				{
+				int searchPlateId = searchView.getContext().getResources()
+						.getIdentifier("android:id/search_plate", null, null);
+				// searchView.findViewById(searchPlateId).setBackgroundColor(Color.parseColor("#00000000"));
+				View searchPlateView = searchView.findViewById(searchPlateId);
+				if (searchPlateView != null) {
 					searchPlateView.setBackgroundColor(Color.WHITE);
 				}
 				try {
-					int id=searchView.getContext().getResources().getIdentifier("android:id/search_src_text",null,null);
-					TextView tv=(TextView) searchView.findViewById(id);
-					EditText et=(EditText) searchView.findViewById(id);
+					int id = searchView
+							.getContext()
+							.getResources()
+							.getIdentifier("android:id/search_src_text", null,
+									null);
+					TextView tv = (TextView) searchView.findViewById(id);
+					EditText et = (EditText) searchView.findViewById(id);
 					et.setHint("Search Here");
 					tv.setTextColor(Color.parseColor("#F05543"));
 				} catch (Exception e) {
@@ -175,18 +250,19 @@ public class FavListActivity extends FragmentActivity {
 			}
 		});
 
-		//		spSwitchCategory.setOnItemSelectedListener(new OnItemSelectedListener() {
+		// spSwitchCategory.setOnItemSelectedListener(new
+		// OnItemSelectedListener() {
 		//
-		//			@Override
-		//			public void onItemSelected(AdapterView<?> parent, View view,
-		//					int position, long id) {
+		// @Override
+		// public void onItemSelected(AdapterView<?> parent, View view,
+		// int position, long id) {
 		//
-		//			}
+		// }
 		//
-		//			@Override
-		//			public void onNothingSelected(AdapterView<?> parent) {
-		//			}
-		//		});
+		// @Override
+		// public void onNothingSelected(AdapterView<?> parent) {
+		// }
+		// });
 		searchView.setOnCloseListener(new OnCloseListener() {
 
 			@Override
@@ -195,10 +271,12 @@ public class FavListActivity extends FragmentActivity {
 				btnSearch.setVisibility(View.VISIBLE);
 				searchView.setVisibility(View.INVISIBLE);
 				tvCategoryType.setText(category);
-				/*InputFilter[] filterArray = new InputFilter[1];
-				filterArray[0] = new InputFilter.LengthFilter(1);
-				tvCategoryType.setFilters(filterArray);*/
-				//				searchView.setIconified(true);
+				/*
+				 * InputFilter[] filterArray = new InputFilter[1];
+				 * filterArray[0] = new InputFilter.LengthFilter(1);
+				 * tvCategoryType.setFilters(filterArray);
+				 */
+				// searchView.setIconified(true);
 				return false;
 			}
 		});
@@ -206,8 +284,8 @@ public class FavListActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				finish();		
-				overridePendingTransition(R.anim.right_in, R.anim.right_out);
+				finish();
+				overridePendingTransition(R.anim.right_out, R.anim.left_in);
 			}
 		});
 
@@ -218,7 +296,8 @@ public class FavListActivity extends FragmentActivity {
 
 				Intent myIntent = new Intent(FavListActivity.this,
 						MainActivity.class);
-				myIntent.putExtra("_receiveremail",listData.get(position).get("email"));
+				myIntent.putExtra("_receiveremail",
+						listData.get(position).get("email"));
 				startActivity(myIntent);
 				overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			}
@@ -229,20 +308,19 @@ public class FavListActivity extends FragmentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		url=GlobalCommonValues.CUSTOMER_VENDOR_LIST_AND_SEARCH;
+		url = GlobalCommonValues.CUSTOMER_VENDOR_LIST_AND_SEARCH;
 		new HttpAsyncTask().execute(url);
 	}
 
-	ArrayList<HashMap<String,String>> listData = new ArrayList<HashMap<String,String>>();
+	ArrayList<HashMap<String, String>> listData = new ArrayList<HashMap<String, String>>();
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if(progress==null)
-			{
-				progress=new ProgressDialog(mContext);
-				progress.show();		
+			if (progress == null) {
+				progress = new ProgressDialog(mContext);
+				progress.show();
 			}
 		}
 
@@ -256,33 +334,40 @@ public class FavListActivity extends FragmentActivity {
 			}
 			return null;
 		}
+
 		// onPostExecute displays the results of the AsyncTask.
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			if(progress!=null && progress.isShowing())
-			{
+			if (progress != null && progress.isShowing()) {
 				progress.dismiss();
-				progress=null;
+				progress = null;
 			}
-			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
-			{
+			if (!TextUtils.isEmpty(response)
+					&& GlobalCommonMethods.isJSONValid(response)) {
 				try {
-					JSONArray jsonArray = new JSONObject(response).getJSONObject("json").getJSONArray("vendor_list");	
-					HashMap<String,String> hashMap;
-					for (int i=0;i<jsonArray.length();i++)
-					{
-						String email=new JSONObject(String.valueOf(jsonArray.get(i))).get("vendor_email").toString();
-						String name=new JSONObject(String.valueOf(jsonArray.get(i))).get("name").toString();
-						String image=new JSONObject(String.valueOf(jsonArray.get(i))).get("image").toString();
-						//						String name=new JSONObject(String.valueOf(jsonArray.get(i)))
-						hashMap=new HashMap<String, String>();
-						hashMap.put("name",name);
-						hashMap.put("email",email);
-						hashMap.put("image",image);
+					JSONArray jsonArray = new JSONObject(response)
+							.getJSONObject("json").getJSONArray("vendor_list");
+					HashMap<String, String> hashMap;
+					for (int i = 0; i < jsonArray.length(); i++) {
+						String email = new JSONObject(String.valueOf(jsonArray
+								.get(i))).get("vendor_email").toString();
+						String name = new JSONObject(String.valueOf(jsonArray
+								.get(i))).get("name").toString();
+						String image = new JSONObject(String.valueOf(jsonArray
+								.get(i))).get("image").toString();
+						String price = new JSONObject(String.valueOf(jsonArray
+								.get(i))).get("starting_price").toString();
+						// String name=new
+						// JSONObject(String.valueOf(jsonArray.get(i)))
+						hashMap = new HashMap<String, String>();
+						hashMap.put("name", name);
+						hashMap.put("email", email);
+						hashMap.put("image", image);
+						hashMap.put("price", price);
 						listData.add(hashMap);
 					}
-					adapterSubList.listData=listData;
+					adapterSubList.listData = listData;
 					adapterSubList.notifyDataSetChanged();
 
 				} catch (Exception e) {
@@ -292,90 +377,74 @@ public class FavListActivity extends FragmentActivity {
 	}
 
 	// Create GetData Method
-	public  void  SetData()  throws  UnsupportedEncodingException
-	{
-		// Create data variable for sent values to server  
-		String data="";
-		String page_no="1";
+	public void SetData() throws UnsupportedEncodingException {
+		// Create data variable for sent values to server
+		String data = "";
+		String page_no = "1";
 
 		int density = getResources().getDisplayMetrics().densityDpi;
-		String image_type="",search_string="";
+		String image_type = "", search_string = "";
 
-		if(density==DisplayMetrics.DENSITY_MEDIUM)
-		{
-			image_type="drawable-hdpi";
-		}
-		else if(density==DisplayMetrics.DENSITY_HIGH)
-		{
-			image_type="drawable-xhdpi";
-		}
-		else if(density==DisplayMetrics.DENSITY_XHIGH)
-		{
-			image_type="drawable-xhdpi";
-		}
-		else if(density==DisplayMetrics.DENSITY_XXHIGH)
-		{
-			image_type="drawable-xxhdpi";
-		}
-		else if(density==DisplayMetrics.DENSITY_XXXHIGH)
-		{
-			image_type="drawable-xxxhdpi";
+		if (density == DisplayMetrics.DENSITY_MEDIUM) {
+			image_type = "drawable-hdpi";
+		} else if (density == DisplayMetrics.DENSITY_HIGH) {
+			image_type = "drawable-xhdpi";
+		} else if (density == DisplayMetrics.DENSITY_XHIGH) {
+			image_type = "drawable-xhdpi";
+		} else if (density == DisplayMetrics.DENSITY_XXHIGH) {
+			image_type = "drawable-xxhdpi";
+		} else if (density == DisplayMetrics.DENSITY_XXXHIGH) {
+			image_type = "drawable-xxxhdpi";
 		}
 
-		data= URLEncoder.encode("mode", "UTF-8") 
-				+ "=" + URLEncoder.encode("android", "UTF-8"); 
+		data = URLEncoder.encode("mode", "UTF-8") + "="
+				+ URLEncoder.encode("android", "UTF-8");
 
 		data += "&" + URLEncoder.encode("image_type", "UTF-8") + "="
-				+ URLEncoder.encode(image_type, "UTF-8"); 
+				+ URLEncoder.encode(image_type, "UTF-8");
 
 		data += "&" + URLEncoder.encode("vendor_type", "UTF-8") + "="
-				+ URLEncoder.encode(vendor_type,"UTF-8"); 
+				+ URLEncoder.encode(vendor_type, "UTF-8");
 
 		data += "&" + URLEncoder.encode("page_no", "UTF-8") + "="
-				+ URLEncoder.encode(page_no, "UTF-8"); 
+				+ URLEncoder.encode(page_no, "UTF-8");
 
 		data += "&" + URLEncoder.encode("search_string", "UTF-8") + "="
-				+ URLEncoder.encode(search_string, "UTF-8"); 
+				+ URLEncoder.encode(search_string, "UTF-8");
 
-
-		BufferedReader reader=null;
-		// Send data 
-		try
-		{ 
-			URL _url=null;
-			// Defined URL  where to send data
-			_url= new URL(GlobalCommonValues.CUSTOMER_VENDOR_LIST_AND_SEARCH);
+		BufferedReader reader = null;
+		// Send data
+		try {
+			URL _url = null;
+			// Defined URL where to send data
+			_url = new URL(GlobalCommonValues.CUSTOMER_VENDOR_LIST_AND_SEARCH);
 			// Send POST data request
 
-			URLConnection conn = _url.openConnection(); 
-			conn.setDoOutput(true); 
-			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
-			wr.write( data ); 
-			wr.flush(); 
+			URLConnection conn = _url.openConnection();
+			conn.setDoOutput(true);
+			OutputStreamWriter wr = new OutputStreamWriter(
+					conn.getOutputStream());
+			wr.write(data);
+			wr.flush();
 
-			// Get the server response 
-			reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			// Get the server response
+			reader = new BufferedReader(new InputStreamReader(
+					conn.getInputStream()));
 			StringBuilder sb = new StringBuilder();
 			String line = null;
 
 			// Read Server Response
-			while((line = reader.readLine()) != null)
-			{
+			while ((line = reader.readLine()) != null) {
 				// Append server response in string
 				sb.append(line + "\n");
 			}
 			response = sb.toString();
-		}
-		catch(Exception ex)
-		{
-		}
-		finally
-		{
-			try
-			{
+		} catch (Exception ex) {
+		} finally {
+			try {
 				reader.close();
+			} catch (Exception ex) {
 			}
-			catch(Exception ex) {}
 		}
 	}
 
@@ -383,6 +452,6 @@ public class FavListActivity extends FragmentActivity {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		overridePendingTransition(R.anim.right_in, R.anim.right_out);
+		overridePendingTransition(R.anim.left_in, R.anim.right_out);
 	}
 }

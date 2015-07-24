@@ -92,16 +92,19 @@ public class FavAdapter extends BaseAdapter {
 			holder.tvVeg_NonVeg=(TextView) convertView.findViewById(R.id.tvVeg_NonVeg);
 			holder.tvCapacity=(TextView) convertView.findViewById(R.id.tvCapacity);
 			holder.tvStartingPrice=(TextView) convertView.findViewById(R.id.tvStartingPrice);
+			holder.tvSearchRate=(TextView) convertView.findViewById(R.id.tvSearchRate);
 			holder.imViewBackground=(ImageView) convertView.findViewById(R.id.imViewBackground);
-			holder.imViewCar=(ImageView) convertView.findViewById(R.id.imViewCar);
-			holder.imViewGlass=(ImageView) convertView.findViewById(R.id.imViewGlass);
-			holder.imViewLocation=(ImageView) convertView.findViewById(R.id.imViewLocation);
-			holder.imViewHeart=(ImageView) convertView.findViewById(R.id.imViewHeart);
+//			holder.imViewCar=(ImageView) convertView.findViewById(R.id.imViewCar);
+//			holder.imViewGlass=(ImageView) convertView.findViewById(R.id.imViewGlass);
+//			holder.imViewLocation=(ImageView) convertView.findViewById(R.id.imViewLocation);
+//			holder.imViewHeart=(ImageView) convertView.findViewById(R.id.imViewHeart);
 			convertView.setTag(holder);
 		} else {
-			holder = (ViewHolder) convertView.getTag();
+			holder = (ViewHolder) convertView.getTag();  
 		}
-		holder.tvVenue.setText(listData.get(position).get("name") +" -- " + listData.get(position).get("email"));
+		holder.tvVenue.setText(listData.get(position).get("name"));
+//		holder.tvVenue.setText(listData.get(position).get("name") +" -- " + listData.get(position).get("email"));
+		holder.tvSearchRate.setText(listData.get(position).get("price")+"/-");
 		holder.tvVeg_NonVeg.setVisibility(View.GONE);
 		holder.tvCapacity.setVisibility(View.GONE);
 		holder.tvStartingPrice.setVisibility(View.GONE);
@@ -123,7 +126,7 @@ public class FavAdapter extends BaseAdapter {
 
 	public class ViewHolder {
 		ImageView imViewBackground,imViewCar,imViewGlass,imViewLocation,imViewHeart;
-		TextView tvVenue,tvVeg_NonVeg,tvCapacity,tvStartingPrice;
+		TextView tvVenue,tvVeg_NonVeg,tvCapacity,tvStartingPrice, tvSearchRate;
 	}
 
 	public static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {

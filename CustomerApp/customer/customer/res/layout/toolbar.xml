@@ -19,12 +19,12 @@
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="@dimen/btnBackWidth"
-            android:layout_height="@dimen/btnBackHeight"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/marginleftBackButton"
-            android:background="@drawable/back_arrow_header" />
+            android:background="@drawable/icon_back" />
 
         <TextView
             android:id="@+id/tvToolBar"
@@ -60,32 +60,18 @@
                 android:visibility="invisible" />
         </LinearLayout>
     </RelativeLayout>
-    <!--
-    android:popupTheme="@android:style/ThemeOverlay.Material.Light"
-    android:theme="@android:style/ThemeOverlay.Material.Dark.ActionBar"
-    
-    
-     app:popupTheme="@style/Theme.AppCompat.Light.NoActionBar"
-    app:theme="@style/Theme.AppCompat.Light.NoActionBar"
-    -->
+  
 
-    <ImageView
-        android:id="@+id/imView"
-        android:layout_width="@dimen/menuIconDimension"
+    <TextView
+        android:id="@+id/btn_skip"
+        android:layout_width="40dp"
         android:layout_height="@dimen/menuIconDimension"
         android:layout_gravity="end"
-        android:layout_marginRight="@dimen/marginleftBackButton"
-        android:background="@drawable/menu_unselected"
-        android:visibility="gone" />
+        android:layout_marginRight="20dp"
+        android:visibility="gone"
+        android:text="Skip"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:textColor="#ffffff"/>
 
-</android.support.v7.widget.Toolbar><!--
-     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:local="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:minHeight="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
--->
+</android.support.v7.widget.Toolbar>

@@ -70,7 +70,7 @@ public class ViewPagerAdapter extends PagerAdapter {
 		.defaultDisplayImageOptions(options)
 		.build();
 		ImageLoader.getInstance().init(config);
-		ImageLoader.getInstance().displayImage("http://wedwise.work"+listImages.get(position), imgflag, options, animateFirstListener);
+		ImageLoader.getInstance().displayImage("http://52.11.207.26"+listImages.get(position), imgflag, options, animateFirstListener);
 
 		// Add viewpager_item.xml to ViewPager
 		((ViewPager) container).addView(itemView);

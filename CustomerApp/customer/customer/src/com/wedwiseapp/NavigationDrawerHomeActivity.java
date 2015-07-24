@@ -28,10 +28,14 @@ NavigationDrawerCallbacks {
 		mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.fragment_drawer);
-		mNavigationDrawerFragment.setup(R.id.fragment_drawer,(DrawerLayout) findViewById(R.id.drawer), mToolbar);
-		if (mNavigationDrawerFragment!=null && mNavigationDrawerFragment.isDrawerOpen())
-			mNavigationDrawerFragment.closeDrawer();
+		Fragment fragment=null;
+		fragment=new VendorCategoryHomeFragment();
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+//		mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.fragment_drawer);
+//		mNavigationDrawerFragment.setup(R.id.fragment_drawer,(DrawerLayout) findViewById(R.id.drawer), mToolbar);
+//		if (mNavigationDrawerFragment!=null && mNavigationDrawerFragment.isDrawerOpen())
+//			mNavigationDrawerFragment.closeDrawer();
 	}
 
 	@Override
@@ -55,10 +59,11 @@ NavigationDrawerCallbacks {
 
 	@Override
 	public void onBackPressed() {
-		if (mNavigationDrawerFragment.isDrawerOpen())
-			mNavigationDrawerFragment.closeDrawer();
-		else
+//		if (mNavigationDrawerFragment.isDrawerOpen())
+//			mNavigationDrawerFragment.closeDrawer();
+//		else
 			super.onBackPressed();
+			overridePendingTransition(R.anim.left_in, R.anim.right_out);
 	}
 }
 

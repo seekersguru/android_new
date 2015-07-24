@@ -13,17 +13,16 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.wedwise.Activities.MenuListActivity;
 import com.wedwise.Activities.MessageListActivity;
 import com.wedwise.adapter.AlbumAdapter;
 import com.wedwise.common.GlobalCommonMethods;
 import com.wedwise.common.GlobalCommonValues;
 import com.wedwise.dialogs.ErrorDialog;
-import com.wedwise.dialogs.LogoutConfirmationDialog;
 import com.wedwise.interfaces.INotify;
 import com.wedwise.tab.MessageTabActivity;
 import com.wedwiseapp.FavListActivity;
 import com.wedwiseapp.R;
-import com.wedwiseapp.login.LoginSignUpActivity;
 import com.wedwiseapp.util.PreferenceUtil;
 import com.wedwiseapp.util.ShowDialog;
 
@@ -85,42 +84,50 @@ public class VendorCategoryHomeFragment extends Fragment{
 
 			@Override
 			public void onClick(View v) {
-				boolean isLogin = PreferenceUtil.getInstance().isLogin();
-				if(isLogin)
-				{
-					LogoutConfirmationDialog dialogLogout=new LogoutConfirmationDialog();
-					dialogLogout.setCancelable(false);
-					dialogLogout.newInstance(getActivity(), "", "You are logged in.Do you want to logout?", iNotifyLogout);
-					dialogLogout.show(getFragmentManager(), "test");
-				}
-				else if (!isLogin)
-				{
-					Intent myIntent = new Intent(getActivity(),
-							LoginSignUpActivity.class);
-					getActivity().startActivity(myIntent);
-					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-				}
+				Intent myIntent = new Intent(getActivity(),
+						MenuListActivity.class);
+				getActivity().startActivity(myIntent);
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//				boolean isLogin = PreferenceUtil.getInstance().isLogin();
+//				if(isLogin)
+//				{
+//					LogoutConfirmationDialog dialogLogout=new LogoutConfirmationDialog();
+//					dialogLogout.setCancelable(false);
+//					dialogLogout.newInstance(getActivity(), "", "You are logged in.Do you want to logout?", iNotifyLogout);
+//					dialogLogout.show(getFragmentManager(), "test");
+//				}
+//				else if (!isLogin)
+//				{
+//					Intent myIntent = new Intent(getActivity(),
+//							LoginSignUpActivity.class);
+//					getActivity().startActivity(myIntent);
+//					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//				}
 			}
 		});
 
 		btnMenu.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				boolean isLogin = PreferenceUtil.getInstance().isLogin();
-				if(isLogin)
-				{
-					LogoutConfirmationDialog dialogLogout=new LogoutConfirmationDialog();
-					dialogLogout.setCancelable(false);
-					dialogLogout.newInstance(getActivity(), "", "You are logged in.Do you want to logout?", iNotifyLogout);
-					dialogLogout.show(getFragmentManager(), "test");
-				}
-				else if (!isLogin)
-				{
-					Intent myIntent = new Intent(getActivity(),
-							LoginSignUpActivity.class);
-					getActivity().startActivity(myIntent);
-					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-				}
+				Intent myIntent = new Intent(getActivity(),
+						MenuListActivity.class);
+				getActivity().startActivity(myIntent);
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//				boolean isLogin = PreferenceUtil.getInstance().isLogin();
+//				if(isLogin)
+//				{
+//					LogoutConfirmationDialog dialogLogout=new LogoutConfirmationDialog();
+//					dialogLogout.setCancelable(false);
+//					dialogLogout.newInstance(getActivity(), "", "You are logged in.Do you want to logout?", iNotifyLogout);
+//					dialogLogout.show(getFragmentManager(), "test");
+//				}
+//				else if (!isLogin)
+//				{
+//					Intent myIntent = new Intent(getActivity(),
+//							LoginSignUpActivity.class);
+//					getActivity().startActivity(myIntent);
+//					getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+//				}
 			}
 		});
 

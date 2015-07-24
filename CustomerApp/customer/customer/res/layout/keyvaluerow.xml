@@ -18,8 +18,9 @@
         style="@style/text_000_14"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
         android:layout_weight="1"
-        android:gravity="right"
+        android:gravity="left"
         android:text="Jain only"
         android:textSize="@dimen/textSizeNormal" />
 

@@ -11,6 +11,25 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
+
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.google.gson.Gson;
 import com.wedwise.adapter.ViewPagerAdapter;
@@ -32,24 +51,7 @@ import com.wedwise.gsonmodels.TypeModel;
 import com.wedwise.tab.BidBookCreateActivity;
 import com.wedwiseapp.R;
 import com.wedwiseapp.util.IntentHelper;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+import com.wedwiseapp.views.CTextView;
 
 public class MainActivity extends Activity implements OnClickListener{
 
@@ -64,6 +66,8 @@ public class MainActivity extends Activity implements OnClickListener{
 	Bid bidDetail;
 	Book bookDetail;
 	String receiver_email="",_receiveremail="";
+	VendorDetail vendorDetail;
+	TextView tvTitle;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +76,7 @@ public class MainActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_main);
 		mContext = this;
 
+		tvTitle = (TextView) findViewById(R.id.tvTitle);
 		llMail=(LinearLayout) findViewById(R.id.llMail);
 		llCreateBid=(LinearLayout) findViewById(R.id.llCreateBid);	
 		llSchedule=(LinearLayout) findViewById(R.id.llSchedule);
@@ -100,7 +105,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			@Override
 			public void onClick(View v) {
 				finish();		
-				overridePendingTransition(R.anim.right_in, R.anim.right_out);
+				overridePendingTransition(R.anim.right_out, R.anim.left_in);
 			}
 		});
 		new HttpAsyncTask().execute();
@@ -110,7 +115,7 @@ public class MainActivity extends Activity implements OnClickListener{
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		overridePendingTransition(R.anim.right_in, R.anim.right_out);
+		overridePendingTransition(R.anim.right_out, R.anim.left_in);
 	}
 
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
@@ -317,7 +322,7 @@ public class MainActivity extends Activity implements OnClickListener{
 				+ URLEncoder.encode(image_type, "UTF-8");
 
 		data += "&" + URLEncoder.encode("vendor_email", "UTF-8") + "="
-				+ URLEncoder.encode("banquet_novotel@wedwise.in", "UTF-8");
+				+ URLEncoder.encode(_receiveremail, "UTF-8");
 
 		BufferedReader reader = null;
 
@@ -358,9 +363,34 @@ public class MainActivity extends Activity implements OnClickListener{
 	public void fillVendorDetail(VendorDetail vendorDetail, MergeAdapter mergeAdapter) {
 		View view = getLayoutInflater().inflate(
 				R.layout.vendor_detail_header, null);
-		for(int i = 0; i<3; i++){
-			String image = "R.drawable.bar_restaurant";
-			imageArra.add(image);
+		tvTitle.setText(vendorDetail.getJson().getData().getInfo().getTopName());
+		CTextView tvVideoLink = (CTextView) view.findViewById(R.id.tvVideoLink);
+		CTextView tvRotatingView = (CTextView) view.findViewById(R.id.tvRotatingView);
+		tvVideoLink.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+//				Intent intent = new Intent(MainActivity.this, VideoViewActivity.class);
+//				
+//				startActivity(intent);
+			}
+		});
+		
+		tvRotatingView.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+//				Intent intent = new Intent(MainActivity.this, VideoViewActivity.class);
+//				
+//				startActivity(intent);
+			}
+		});
+		
+		
+		for(String str : vendorDetail.getJson().getData().getInfo().getHeroImgs()){
+			imageArra.add(str);
 		}
 		ViewPager myPager = (ViewPager) view.findViewById(R.id.myfivepanelpager);
 		ViewPagerAdapter adapterview = new ViewPagerAdapter(MainActivity.this, imageArra);

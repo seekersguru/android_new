@@ -6,53 +6,53 @@
     android:background="@android:color/white"
     android:orientation="vertical" >
 
-    <com.wedwiseapp.views.CTextView
-        android:id="@+id/tvVenue"
-        style="@style/text_333_16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingLeftEditText"
-        android:text="Royal Gardens At ITC Maratha"
-        android:textSize="@dimen/textSizeMedium" />
+<!--     <com.wedwiseapp.views.CTextView -->
+<!--         android:id="@+id/tvVenue" -->
+<!--         style="@style/text_333_16" -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_marginTop="@dimen/paddingLeftEditText" -->
+<!--         android:text="Royal Gardens At ITC Maratha" -->
+<!--         android:textSize="@dimen/textSizeMedium" /> -->
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/paddingLeftEditText"
-        android:gravity="center"
-        android:orientation="horizontal" >
+<!--     <LinearLayout -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_marginTop="@dimen/paddingLeftEditText" -->
+<!--         android:gravity="center" -->
+<!--         android:orientation="horizontal" > -->
 
-        <com.wedwiseapp.views.CTextView
-            android:id="@+id/tvAddress"
-            style="@style/text_999_14"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Sakinaka junction andheri Kurla Road, Andheri East, Mumbai 400072" />
-    </LinearLayout>
+<!--         <com.wedwiseapp.views.CTextView -->
+<!--             android:id="@+id/tvAddress" -->
+<!--             style="@style/text_999_14" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:gravity="center" -->
+<!--             android:text="Sakinaka junction andheri Kurla Road, Andheri East, Mumbai 400072" /> -->
+<!--     </LinearLayout> -->
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+<!--     <FrameLayout -->
+<!--         android:layout_width="wrap_content" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:orientation="horizontal" > -->
 
-        <com.wedwiseapp.views.CTextView
-            android:id="@+id/tvMobileNumber"
-            style="@style/text_666_16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/paddingLeftEditText"
-            android:text="8739994888" />
+<!--         <com.wedwiseapp.views.CTextView -->
+<!--             android:id="@+id/tvMobileNumber" -->
+<!--             style="@style/text_666_16" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_gravity="center" -->
+<!--             android:layout_marginTop="@dimen/paddingLeftEditText" -->
+<!--             android:text="8739994888" /> -->
 
-        <Button
-            android:id="@+id/btnFavorites"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_marginLeft="80dp"
-            android:background="@drawable/favorites" />
-    </FrameLayout>
+<!--         <Button -->
+<!--             android:id="@+id/btnFavorites" -->
+<!--             android:layout_width="40dp" -->
+<!--             android:layout_height="40dp" -->
+<!--             android:layout_gravity="center" -->
+<!--             android:layout_marginLeft="80dp" -->
+<!--             android:background="@drawable/favorites" /> -->
+<!--     </FrameLayout> -->
 
     <FrameLayout
         android:layout_width="match_parent"

@@ -7,6 +7,7 @@
     <string name="nav_item_notifications">Messages</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="APP_ID">850130908373669</string>
 
     <!-- navigation drawer item labels -->
     <string-array name="nav_drawer_labels">

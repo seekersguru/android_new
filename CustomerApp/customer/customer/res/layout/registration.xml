@@ -8,13 +8,13 @@
         android:id="@+id/pager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
+ 
     <include
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        layout="@layout/toolbar" />
+        layout="@layout/toolbar" />  
 
     <ScrollView
         android:id="@+id/svMenu"
@@ -82,7 +82,8 @@
                         android:paddingLeft="@dimen/paddingLeftEditText"
                         android:singleLine="true"
                         android:textColor="#000"
-                        android:textSize="@dimen/textSizeMedium" />
+                        android:textSize="@dimen/textSizeMedium"
+                        android:textCursorDrawable="@drawable/black_cursor" />
 
                     <View
                         android:layout_width="match_parent"
@@ -98,7 +99,8 @@
                         android:paddingLeft="@dimen/paddingLeftEditText"
                         android:singleLine="true"
                         android:textColor="#000"
-                        android:textSize="@dimen/textSizeMedium" />
+                        android:textSize="@dimen/textSizeMedium"
+                        android:textCursorDrawable="@drawable/black_cursor" />
 
                     <View
                         android:layout_width="match_parent"
@@ -114,7 +116,8 @@
                         android:paddingLeft="@dimen/paddingLeftEditText"
                         android:singleLine="true"
                         android:textColor="#000"
-                        android:textSize="@dimen/textSizeMedium" />
+                        android:textSize="@dimen/textSizeMedium"
+                        android:textCursorDrawable="@drawable/black_cursor" />
 
                     <View
                         android:layout_width="match_parent"
@@ -130,7 +133,8 @@
                         android:paddingLeft="@dimen/paddingLeftEditText"
                         android:singleLine="true"
                         android:textColor="#000"
-                        android:textSize="@dimen/textSizeMedium" />
+                        android:textSize="@dimen/textSizeMedium"
+                        android:textCursorDrawable="@drawable/black_cursor" />
 
                     <View
                         android:layout_width="match_parent"
@@ -146,7 +150,31 @@
                         android:paddingLeft="@dimen/paddingLeftEditText"
                         android:singleLine="true"
                         android:textColor="#000"
-                        android:textSize="@dimen/textSizeMedium" />
+                        android:textSize="@dimen/textSizeMedium"
+                        android:textCursorDrawable="@drawable/black_cursor" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/viewSeparatorHeight"
+                        android:background="#EEECED" />
+
+                    <EditText
+                        android:id="@+id/tentive_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/editTextHeight"
+                        android:background="#ffffff"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:text=""
+                        android:hint="Tantive Date"
+                        android:textColorHint="#5c5c5c"
+                        android:paddingLeft="@dimen/paddingLeftEditText"
+                        android:singleLine="true"
+                        android:textColor="#000"
+                        android:textSize="@dimen/textSizeMedium"
+                        android:cursorVisible="true"
+                         
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -164,7 +192,8 @@
                         android:paddingLeft="@dimen/paddingLeftEditText"
                         android:singleLine="true"
                         android:textColor="#000"
-                        android:textSize="@dimen/textSizeMedium" />
+                        android:textSize="@dimen/textSizeMedium"
+                        android:textCursorDrawable="@drawable/black_cursor" />
 
                     <View
                         android:layout_width="match_parent"

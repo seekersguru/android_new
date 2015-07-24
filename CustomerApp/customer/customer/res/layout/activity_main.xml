@@ -17,7 +17,7 @@
             android:layout_height="@dimen/btnBackHeight"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/marginLeftRightllFields"
+            android:layout_marginLeft="@dimen/marginleftBackButton"
             android:background="@drawable/back_orange" />
 
         <TextView
@@ -44,8 +44,8 @@
         android:id="@+id/listView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button_layout"
-        android:layout_below="@+id/rlMain" />
+        android:layout_below="@+id/rlMain" 
+        android:layout_above="@+id/llBottomBarParent"/>
 
     <LinearLayout
         android:id="@+id/llBottomBarParent"

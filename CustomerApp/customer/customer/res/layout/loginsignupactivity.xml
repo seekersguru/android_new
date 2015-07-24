@@ -4,37 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg" >
 
-    <include
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/marginTopToolBar"
-        layout="@layout/toolbar" />
-
-    <ImageView
-        android:id="@+id/imViewLogo"
-        android:layout_width="93dp"
-        android:layout_height="93dp"
-        android:layout_below="@+id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/logo"
-        android:contentDescription="@string/drawer_open"
-        android:visibility="gone" >
-    </ImageView>
-
-    <!--
-    <LinearLayout
-        android:id="@+id/llFields"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/marginLeftRightButton"
-        android:layout_marginRight="@dimen/marginLeftRightButton"
-        android:layout_marginTop="@dimen/marginTopToolBar"
-        android:orientation="vertical" >
-    </LinearLayout>
-    -->
+   
 
     <LinearLayout
         android:id="@+id/llSocialSitesLogin"
@@ -109,5 +79,15 @@
         android:singleLine="false"
         android:textColor="#ffffff"
         android:textSize="@dimen/textSizeNormal" />
+
+ <ImageView
+     android:id="@+id/imViewLogo"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+     android:layout_above="@+id/llSocialSitesLogin"
+     android:layout_centerHorizontal="true"
+     android:background="@drawable/logo"
+     android:contentDescription="@string/drawer_open"
+     android:visibility="visible" />
 
 </RelativeLayout>

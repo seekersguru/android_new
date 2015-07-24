@@ -28,7 +28,7 @@
             android:weightSum="1" >
 
             <LinearLayout
-                android:id="@+id/llMail"
+                android:id="@+id/llHome"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".25"
@@ -47,16 +47,16 @@
                     android:orientation="vertical" >
 
                     <Button
-                        android:id="@+id/btnMail"
+                        android:id="@+id/btnHome"
                         android:layout_width="@dimen/dimenBottomBarIcons"
                         android:layout_height="@dimen/dimenBottomBarIcons"
                         android:layout_gravity="center"
-                        android:background="@drawable/mail_unselected" />
+                        android:background="@drawable/home_selected" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llHome"
+                android:id="@+id/llMail"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".25"
@@ -66,8 +66,8 @@
                     android:id="@+id/viewSeparatorOrangeSecond"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:visibility="gone"
-                    android:background="@drawable/divider_orange" />
+                    android:background="@drawable/divider_orange"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -76,11 +76,11 @@
                     android:orientation="vertical" >
 
                     <Button
-                        android:id="@+id/btnHome"
+                        android:id="@+id/btnMail"
                         android:layout_width="@dimen/dimenBottomBarIcons"
                         android:layout_height="@dimen/dimenBottomBarIcons"
                         android:layout_gravity="center"
-                        android:background="@drawable/home_selected" />
+                        android:background="@drawable/mail_unselected" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -95,8 +95,8 @@
                     android:id="@+id/viewSeparatorOrangeThird"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:visibility="gone"
-                    android:background="@drawable/divider_orange" />
+                    android:background="@drawable/divider_orange"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,8 +124,8 @@
                     android:id="@+id/viewSeparatorOrangeFourth"
                     android:layout_width="match_parent"
                     android:layout_height="3dp"
-                    android:visibility="gone"
-                    android:background="@drawable/divider_orange" />
+                    android:background="@drawable/divider_orange"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,7 +160,7 @@
             android:background="#00000000"
             android:cacheColorHint="#00000000"
             android:divider="#00000000"
-            android:dividerHeight="0dp"
+            android:dividerHeight="1dp"
             android:scrollbars="none" />
         <!-- tools:listitem="@layout/item_demo_01" -->
     </LinearLayout>

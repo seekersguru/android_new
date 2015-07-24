@@ -28,34 +28,47 @@
             android:orientation="horizontal"
             android:padding="@dimen/paddingLeftEditText" >
 
+            <TextView
+                android:id="@+id/tvSearchRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left|bottom"
+                android:text="500/-"
+                android:textColor="#fff"
+                android:textSize="@dimen/textSizeMedium" />
+
             <!-- @color/light_black_77 -->
 
-            <ImageView
-                android:id="@+id/imViewCar"
-                android:layout_width="@dimen/iconFavListWidth"
-                android:layout_height="@dimen/iconFavListHeight"
-                android:src="@drawable/car" />
 
-            <ImageView
-                android:id="@+id/imViewGlass"
-                android:layout_width="@dimen/iconFavListWidth"
-                android:layout_height="@dimen/iconFavListHeight"
-                android:layout_marginLeft="3dp"
-                android:src="@drawable/glass" />
+            <!-- <ImageView -->
+            <!-- android:id="@+id/imViewCar" -->
+            <!-- android:layout_width="@dimen/iconFavListWidth" -->
+            <!-- android:layout_height="@dimen/iconFavListHeight" -->
+            <!-- android:src="@drawable/car" /> -->
 
-            <ImageView
-                android:id="@+id/imViewLocation"
-                android:layout_width="@dimen/iconFavListWidth"
-                android:layout_height="@dimen/iconFavListHeight"
-                android:layout_marginLeft="3dp"
-                android:src="@drawable/location_favorite" />
 
-            <ImageView
-                android:id="@+id/imViewHeart"
-                android:layout_width="@dimen/iconFavListWidth"
-                android:layout_height="@dimen/iconFavListHeight"
-                android:layout_marginLeft="3dp"
-                android:src="@drawable/heart_favorite" />
+            <!-- <ImageView -->
+            <!-- android:id="@+id/imViewGlass" -->
+            <!-- android:layout_width="@dimen/iconFavListWidth" -->
+            <!-- android:layout_height="@dimen/iconFavListHeight" -->
+            <!-- android:layout_marginLeft="3dp" -->
+            <!-- android:src="@drawable/glass" /> -->
+
+
+            <!-- <ImageView -->
+            <!-- android:id="@+id/imViewLocation" -->
+            <!-- android:layout_width="@dimen/iconFavListWidth" -->
+            <!-- android:layout_height="@dimen/iconFavListHeight" -->
+            <!-- android:layout_marginLeft="3dp" -->
+            <!-- android:src="@drawable/location_favorite" /> -->
+
+
+            <!-- <ImageView -->
+            <!-- android:id="@+id/imViewHeart" -->
+            <!-- android:layout_width="@dimen/iconFavListWidth" -->
+            <!-- android:layout_height="@dimen/iconFavListHeight" -->
+            <!-- android:layout_marginLeft="3dp" -->
+            <!-- android:src="@drawable/heart_favorite" /> -->
         </LinearLayout>
     </RelativeLayout>
 
@@ -63,9 +76,9 @@
         android:id="@+id/tvVenue"
         style="@style/text_666_16"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:gravity="center"
         android:text="Royal Gardens At ITC Maratha" />
 
     <LinearLayout
@@ -100,7 +113,6 @@
             style="@style/text_666_14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            
             android:text="Capacity : 500" />
     </LinearLayout>
 

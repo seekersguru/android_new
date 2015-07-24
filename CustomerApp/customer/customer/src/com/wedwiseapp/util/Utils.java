@@ -12,4 +12,10 @@ public class Utils {
 		return Typeface.createFromAsset(c.getAssets(),
 				"ufonts.com_gotham-book.ttf");
 	}
+	public static String getMonth(int c) {
+
+		String month[]={"Jan","Feb","Mar","Apr","May","Jun","July","Aug","Sep","Oct","Nov","Dec"};
+		
+		return month[c-1];
+	}
 }
