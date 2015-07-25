@@ -20,11 +20,13 @@ import org.json.JSONObject;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
+import com.eventmanagementapp.tab.BidBookCreateActivity;
 import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -124,7 +126,6 @@ public class MFCalendarView extends LinearLayout{
 					int position, long id) {
 				((CalendarAdapter) parent.getAdapter()).setSelected(v);
 				currentSelectedDate = CalendarAdapter.dayString.get(position);
-
 				String[] separatedTime = currentSelectedDate.split("-");
 				String gridvalueString = separatedTime[2].replaceFirst("^0*",
 						"");// taking last part of date. ie; 2 from 2012-12-02.
@@ -138,12 +139,14 @@ public class MFCalendarView extends LinearLayout{
 					refreshCalendar();
 				}
 				((CalendarAdapter) parent.getAdapter()).setSelected(v);
-
 				month.setTimeInMillis(Util.dateToLong(currentSelectedDate));
 				calendaradapter.initCalendarAdapter(month, calendarListener);
-
 				if (calendarListener != null) 
 					calendarListener.onDateChanged(currentSelectedDate);
+				//2015-07-08(yyyy-MM-dd)
+				Intent myIntent=new Intent(mContext,BidBookCreateActivity.class);
+				myIntent.putExtra("date",currentSelectedDate);
+				((CalendarActivity)mContext).startActivity(myIntent);
 			}
 		});
 		addView(view);

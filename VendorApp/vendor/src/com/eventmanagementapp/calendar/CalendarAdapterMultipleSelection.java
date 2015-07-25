@@ -41,7 +41,7 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 	DateFormat df;
 
 	private ArrayList<String> items;
-	public static List<String> dayString;
+	public static List<String> dayString = new ArrayList<String>();
 	private View previousView;
 
 	Calendar a;
@@ -152,7 +152,7 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 		if (monthStr.length() == 1) {
 			monthStr = "0" + monthStr;
 		}
-		
+
 		if(listSelectedDates!=null && !listSelectedDates.isEmpty())
 		{
 			String[] arrayDate=date.split("-");
@@ -174,7 +174,7 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 				}
 			}
 		}
-		
+
 		/*if(listSelectedDates!=null && !listSelectedDates.isEmpty())
 		{
 			String[] arrayDate=date.split("-");
@@ -245,7 +245,8 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 	public void refreshDays() {
 		// clear items
 		items.clear();
-		dayString.clear();
+		if(dayString!=null)
+			dayString.clear();
 
 		pmonth = (Calendar) month.clone();
 		// month start day. ie; sun, mon, etc

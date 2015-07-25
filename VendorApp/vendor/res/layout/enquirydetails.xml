@@ -123,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/marginLeftRightllFields"
-            android:layout_weight="5"
+            android:layout_weight="10"
             android:fillViewport="true" >
 
             <LinearLayout
@@ -138,13 +138,15 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_alignParentBottom="true"
-            android:background="#9c9c9c" />
+            android:background="#9c9c9c" 
+            android:visibility="gone"/>
 
         <ListView
             android:id="@+id/lvPrice"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_weight="0"
+            android:visibility="gone"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@android:color/transparent"
             android:dividerHeight="0dp"

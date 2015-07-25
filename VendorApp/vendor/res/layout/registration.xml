@@ -93,6 +93,7 @@
                         android:hint="Password"
                         android:paddingLeft="@dimen/paddingLeftEditText"
                         android:singleLine="true"
+                        android:inputType="textPassword"
                         android:textColor="#000"
                         android:textSize="@dimen/textSizeMedium" />
 

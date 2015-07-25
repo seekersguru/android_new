@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#fff" >
+    android:background="#fff"
+    android:orientation="vertical" >
 
     <Button
         android:id="@+id/btnCreate"
@@ -15,16 +15,17 @@
         android:background="@color/calendarThemeOrangeColor"
         android:text="Create a New Booking"
         android:textColor="#fff"
-        android:visibility="gone"
-        android:textSize="@dimen/textSizeMedium" />
+        android:textSize="@dimen/textSizeMedium"
+        android:visibility="gone" />
 
-     <LinearLayout
+    <LinearLayout
         android:id="@+id/llTimeSlot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/marginTopCreateButton"
         android:orientation="horizontal"
         android:padding="@dimen/marginLeftRightllFields"
+        android:visibility="gone"
         android:weightSum="1" >
 
         <LinearLayout
@@ -79,21 +80,24 @@
                 android:textSize="@dimen/textSizeNormal" />
         </LinearLayout>
     </LinearLayout>
+
     <View
         android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/divider1"
-        android:background="#9c9c9c" />
+        android:background="#9c9c9c"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/llFields"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/divider1"
         android:layout_marginTop="@dimen/marginTopCreateButton"
         android:orientation="horizontal"
-        android:layout_below="@+id/divider1"
         android:padding="@dimen/marginLeftRightllFields"
+        android:visibility="gone"
         android:weightSum="1" >
 
         <TextView
@@ -137,6 +141,7 @@
         android:layout_height="2dp"
         android:layout_below="@+id/llFields"
         android:background="#9c9c9c" />
+
     <ListView
         android:id="@+id/lvBook"
         android:layout_width="match_parent"
@@ -147,6 +152,7 @@
         android:divider="#f1f1f1"
         android:dividerHeight="1dp" >
     </ListView>
+
     <TextView
         android:id="@+id/empty_view"
         android:layout_width="match_parent"

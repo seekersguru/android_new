@@ -2,8 +2,11 @@ package com.eventmanagementapp.adapter;
 
 import java.util.ArrayList;
 import com.eventmanagementapp.R;
+import com.eventmanagementapp.calendar.CalendarActivity;
+
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +49,10 @@ public class EventsDateAdapter extends BaseAdapter{
 		listItem = inflater.inflate(R.layout.list_events_date_item, parent, false);
 		TextView tvDate=(TextView) listItem.findViewById(R.id.tvDate);
 		tvDate.setText(listDates.get(position));
+//		if(mContext instanceof CalendarActivity)
+//		{
+//			tvDate.setTextColor(Color.parseColor("#87CEEB"));
+//		}
 		return listItem;
 	}
 

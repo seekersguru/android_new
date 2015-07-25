@@ -3,11 +3,15 @@ package com.eventmanagementapp.calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import com.eventmanagementapp.LoginSignUpActivity;
 import com.eventmanagementapp.MessageTabActivity;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.Activities.MessageListActivity;
 import com.eventmanagementapp.dialogs.FilterDialog;
+import com.eventmanagementapp.dialogs.OptionsDialog;
+import com.eventmanagementapp.interfaces.IAction;
 import com.eventmanagementapp.interfaces.INotify;
+import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -53,6 +57,8 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		btnBack=(Button) findViewById(R.id.btnBack);
 		btnSelecteDate=(Button) findViewById(R.id.btnSelecteDate);
 		btnFilter=(Button) findViewById(R.id.btnFilter);
+		btnSelecteDate.setVisibility(View.INVISIBLE);
+		btnFilter.setVisibility(View.INVISIBLE);
 		btnChange=(Button) findViewById(R.id.btnChange);
 		btnClearAll=(Button) findViewById(R.id.btnClearAll);
 		tvFilterFirst=(TextView) findViewById(R.id.tvFilterFirst);
@@ -110,13 +116,13 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 			}
 		});
 		 */
-		btnSelecteDate.setOnClickListener(new OnClickListener() {
+		/*btnSelecteDate.setOnClickListener(new OnClickListener() {
 			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) {
 				showDialog(999);
 			}
-		});
+		});*/
 
 		btnChange.setOnClickListener(new OnClickListener() {
 			@Override
@@ -136,7 +142,8 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 				tvFilterCriteria.setVisibility(View.GONE);
 			}
 		});
-		btnFilter.setOnClickListener(new OnClickListener() {
+
+		/*btnFilter.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				FilterDialog dialog = new FilterDialog();
@@ -145,7 +152,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 				dialog.newInstance(CalendarActivity.this, iNotify);
 				dialog.show(getSupportFragmentManager(),"Test");
 			}
-		});
+		});*/
 
 		mf.setOnCalendarViewListener(new onMFCalendarViewListener() {
 			@Override
@@ -183,6 +190,29 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 
 		Log.e("","locale:" + Util.getLocale());
 	}
+
+	IAction iNotifyAction = new IAction() {
+
+		@Override
+		public void setAction(String action) {
+			if(action.equalsIgnoreCase("availability"))
+			{
+				Intent myIntent=new Intent(CalendarActivity.this,CalendarActivityMultipleSelection.class);
+				startActivity(myIntent);	
+				overridePendingTransition(R.anim.right_in, R.anim.left_out);
+			}
+			else if(action.equalsIgnoreCase("logout"))
+			{
+				PreferenceUtil.getInstance().setLogin(false);
+				PreferenceUtil.getInstance().setRegister(false);
+				PreferenceUtil.getInstance().setIdentifier("");
+				PreferenceUtil.getInstance().setEmail("");
+				Intent myIntent = new Intent(CalendarActivity.this,LoginSignUpActivity.class);
+				myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(myIntent);
+			}
+		}
+	};
 
 	INotify iNotify=new INotify() {
 		@Override
@@ -259,9 +289,16 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		}
 		else if (v.getId()==R.id.llMenu || v.getId()==R.id.btnMenu)
 		{
-			Intent myIntent=new Intent(CalendarActivity.this,CalendarActivityMultipleSelection.class);
+			ArrayList<String> listOptions = new ArrayList<String>();
+			listOptions.add("Availability");
+			listOptions.add("Logout");
+			listOptions.add("Cancel");
+			OptionsDialog dialog = new OptionsDialog();
+			dialog.newInstance(mContext, "Select Option",listOptions, iNotifyAction);
+			dialog.show(getFragmentManager(), "");
+			/*Intent myIntent=new Intent(CalendarActivity.this,CalendarActivityMultipleSelection.class);
 			startActivity(myIntent);	
-			overridePendingTransition(R.anim.right_in, R.anim.left_out);	
+			overridePendingTransition(R.anim.right_in, R.anim.left_out);*/	
 		}
 		/*else if(v.getId()==R.id.btnCalendar)
 		{

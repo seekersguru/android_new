@@ -15,4 +15,11 @@
         android:textColor="@color/blackColor"
         android:textSize="@dimen/textSizeMedium" />
 
+ <!--    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tvDate"
+        android:layout_marginTop="3dp"
+        android:background="#9c9c9c" /> -->
+
 </RelativeLayout>

@@ -119,7 +119,6 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 				String url=GlobalCommonValues.VENDOR_BID_BOOK_RESPONSE;
 				new HttpAsyncTask(id,"button").execute(url);
 			}
-
 		}
 		else{
 			ShowDialog.displayDialog(EnquiryDetailsActivity.this,"Connection error:","No Internet Connection");

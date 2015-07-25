@@ -23,12 +23,12 @@ public class BidBookCreateActivity extends FragmentActivity{
 	EditText etDate;
 	TextView tvTitle;
 	Button btnBack,btnBitIt;
-//	Spinner spTimeSlot,spPerPlate,spMinPerson;
+	//	Spinner spTimeSlot,spPerPlate,spMinPerson;
 	ArrayList<String> listAdapter;
 	ArrayList<String> listTimings;
-//	SpinnerAdapter  adapterSpinner;
+	//	SpinnerAdapter  adapterSpinner;
 	Context mContext;
-//	private DatePicker datePicker;
+	//	private DatePicker datePicker;
 	private Calendar calendar;
 	//	private TextView dateView;
 	private int year, month, day;
@@ -44,10 +44,9 @@ public class BidBookCreateActivity extends FragmentActivity{
 		btnBitIt=(Button) findViewById(R.id.btnBitIt);
 		etDate=(EditText) findViewById(R.id.etDate);
 		btnBack=(Button) findViewById(R.id.btnBack);
-
-//		CustomFonts.setFontOfTextView(mContext,tvTitle,"fonts/GothamRnd-Light.otf");
-//		CustomFonts.setFontOfButton(mContext,btnBitIt,"fonts/GothamRnd-Light.otf");
-//		CustomFonts.setFontOfEditText(mContext,etDate,"fonts/GothamRnd-Light.otf");
+		//		CustomFonts.setFontOfTextView(mContext,tvTitle,"fonts/GothamRnd-Light.otf");
+		//		CustomFonts.setFontOfButton(mContext,btnBitIt,"fonts/GothamRnd-Light.otf");
+		//		CustomFonts.setFontOfEditText(mContext,etDate,"fonts/GothamRnd-Light.otf");
 
 		listAdapter=new ArrayList<String>();
 		listAdapter.add("200");
@@ -69,15 +68,23 @@ public class BidBookCreateActivity extends FragmentActivity{
 		adapterSpinner=new SpinnerAdapter(BidBookCreateActivity.this, listTimings);
 		spTimeSlot.setAdapter(adapterSpinner);*/
 
-		if(getIntent().getExtras().getString("type").equals("bid"))
+		if(getIntent()!=null && getIntent().getExtras()!=null)
 		{
-			tvTitle.setText("Create Bid");
-			btnBitIt.setText("BID IT");
-		}
-		else if(getIntent().getExtras().getString("type").equals("book"))
-		{
-			tvTitle.setText("Create Book");
-			btnBitIt.setText("BOOK IT");
+			if(getIntent().getExtras().getString("type")!=null && getIntent().getExtras().getString("type").equals("bid"))
+			{
+				tvTitle.setText("Create Bid");
+				btnBitIt.setText("BID IT");
+			}
+			else if(getIntent().getExtras().getString("type")!=null && getIntent().getExtras().getString("type").equals("book"))
+			{
+				tvTitle.setText("Create Book");
+				btnBitIt.setText("BOOK IT");
+			}
+			else if(getIntent().getExtras().getString("date")!=null)
+			{
+				tvTitle.setText(getIntent().getExtras().getString("date"));
+				btnBitIt.setText("BOOK IT");
+			}
 		}
 
 		//		etDate.setEnabled(false);
@@ -90,6 +97,7 @@ public class BidBookCreateActivity extends FragmentActivity{
 		//		showDate(year, month+1, day);
 		etDate.setOnClickListener(new OnClickListener() {
 
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onClick(View v) {
 				showDialog(999);
@@ -112,7 +120,7 @@ public class BidBookCreateActivity extends FragmentActivity{
 		if (id == 999) {
 			dpDialog=new DatePickerDialog(this, myDateListener, year, month, day);
 			dpDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//			dpDialog.setTitle("");
+			//			dpDialog.setTitle("");
 			return dpDialog;
 		}
 		return null;

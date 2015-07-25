@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.adapter.EventsDateAdapter;
 import com.eventmanagementapp.interfaces.IAction;
-import com.eventmanagementapp.interfaces.INotify;
 
 import android.app.DialogFragment;
 import android.content.Context;

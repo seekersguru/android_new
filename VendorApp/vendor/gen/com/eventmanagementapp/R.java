@@ -3478,15 +3478,16 @@ containing a value of this type.
         public static final int messenger_button_send_white_small=0x7f030044;
         public static final int mf_calendarview=0x7f030045;
         public static final int nav_drawer_row=0x7f030046;
-        public static final int registration=0x7f030047;
-        public static final int select_dialog_item_material=0x7f030048;
-        public static final int select_dialog_multichoice_material=0x7f030049;
-        public static final int select_dialog_singlechoice_material=0x7f03004a;
-        public static final int splash=0x7f03004b;
-        public static final int support_simple_spinner_dropdown_item=0x7f03004c;
-        public static final int tool_bar=0x7f03004d;
-        public static final int toolbar=0x7f03004e;
-        public static final int toolbar_default=0x7f03004f;
+        public static final int optionsdialog=0x7f030047;
+        public static final int registration=0x7f030048;
+        public static final int select_dialog_item_material=0x7f030049;
+        public static final int select_dialog_multichoice_material=0x7f03004a;
+        public static final int select_dialog_singlechoice_material=0x7f03004b;
+        public static final int splash=0x7f03004c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03004d;
+        public static final int tool_bar=0x7f03004e;
+        public static final int toolbar=0x7f03004f;
+        public static final int toolbar_default=0x7f030050;
     }
     public static final class menu {
         public static final int main=0x7f0e0000;

@@ -8,7 +8,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -273,7 +272,6 @@ public class BidTab extends Fragment {
 		String data="";
 		data= URLEncoder.encode("identifier", "UTF-8") 
 				+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(), "UTF-8"); 
-
 
 		data += "&" + URLEncoder.encode("min", "UTF-8") + "="
 				+ URLEncoder.encode(min, "UTF-8");

@@ -129,7 +129,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 					dialog.newInstance(mContext, "Event Dates", listDates,iNotifyAction);
 					dialog.show(getFragmentManager(), "test");
 				}
-				else if(listDates.isEmpty())
+				else if(listDates!=null && listDates.isEmpty())
 				{
 					ErrorDialog dialog=new ErrorDialog();
 					dialog.newInstance(mContext,"","No event Dates Selected", null);
@@ -187,7 +187,8 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-		CalendarActivityMultipleSelection.listDates.clear();
+		if(CalendarActivityMultipleSelection.listDates!=null)
+			CalendarActivityMultipleSelection.listDates.clear();
 		CalendarActivityMultipleSelection.listDates=null;
 	}
 
@@ -271,8 +272,8 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		String month=arrayDate[1];
 		String filter_string=CalendarActivity._filterString;
 
-//		data= URLEncoder.encode("availability", "UTF-8") 
-//				+ "=" + URLEncoder.encode("0", "UTF-8"); 
+		//		data= URLEncoder.encode("availability", "UTF-8") 
+		//				+ "=" + URLEncoder.encode("0", "UTF-8"); 
 
 		data= URLEncoder.encode("year", "UTF-8") 
 				+ "=" + URLEncoder.encode(year, "UTF-8"); 
