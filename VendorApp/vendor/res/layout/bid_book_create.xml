@@ -88,8 +88,8 @@
                     android:layout_gravity="left|center_vertical"
                     android:background="@drawable/rounded_border_edittext"
                     android:gravity="center"
-                    android:textColor="#000"
                     android:text="26/6/2015"
+                    android:textColor="#000"
                     android:textSize="@dimen/textSizeNormal" />
             </FrameLayout>
         </LinearLayout>
@@ -122,11 +122,11 @@
                     android:layout_width="@dimen/widthSpinnerTimeSlot"
                     android:layout_height="@dimen/heightSpinnerperplate"
                     android:background="@drawable/dropdown_long"
+                    android:drawableRight="@drawable/down_arrow_spinner"
                     android:gravity="center"
+                    android:paddingRight="@dimen/marginLeftRightllFields"
                     android:text="Morning"
                     android:textColor="#000"
-                    android:drawableRight="@drawable/down_arrow_spinner"
-                    android:paddingRight="@dimen/marginLeftRightllFields"
                     android:textSize="@dimen/textSizeNormal" />
                 <!--
                          <Spinner
@@ -135,7 +135,7 @@
                         android:layout_height="@dimen/heightSpinnerperplate"
                         android:layout_gravity="left|center_vertical"
                         android:background="#fff"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown" />
                 -->
             </LinearLayout>
         </LinearLayout>
@@ -215,8 +215,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".5"
-                android:paddingRight="3dp"
-                android:gravity="center_vertical" >
+                android:gravity="center_vertical"
+                android:paddingRight="3dp" >
 
                 <TextView
                     android:id="@+id/tvPerplate"
@@ -224,11 +224,11 @@
                     android:layout_height="@dimen/heightSpinnerperplate"
                     android:layout_alignParentLeft="true"
                     android:background="@drawable/spinnerbg"
+                    android:drawableRight="@drawable/down_arrow_spinner"
                     android:gravity="center"
+                    android:paddingRight="@dimen/marginLeftRightllFields"
                     android:text="200"
                     android:textColor="#000"
-                     android:drawableRight="@drawable/down_arrow_spinner"
-                    android:paddingRight="@dimen/marginLeftRightllFields"
                     android:textSize="@dimen/textSizeNormal" />
 
                 <TextView
@@ -237,8 +237,8 @@
                     android:layout_marginLeft="@dimen/paddingLeftEditText"
                     android:layout_toRightOf="@+id/tvPerplate"
                     android:background="@drawable/spinnerbg"
+                    android:drawableRight="@drawable/down_arrow_spinner"
                     android:gravity="center"
-                     android:drawableRight="@drawable/down_arrow_spinner"
                     android:paddingRight="@dimen/marginLeftRightllFields"
                     android:text="5"
                     android:textColor="#000"
@@ -260,7 +260,7 @@
                     android:layout_marginLeft="@dimen/paddingLeftEditText"
                     android:layout_toRightOf="@+id/spPerPlate"
                     android:background="#fff"
-                    android:spinnerMode="dropdown" />
+                    android:spinnerMode="dropdown" />
                 -->
             </RelativeLayout>
         </LinearLayout>
@@ -306,6 +306,7 @@
                     android:layout_marginLeft="@dimen/paddingLeftEditText"
                     android:layout_toRightOf="@+id/tvPerPlate"
                     android:background="#fff"
+                    android:gravity="center"
                     android:text="Min Person"
                     android:textColor="#000" />
             </RelativeLayout>

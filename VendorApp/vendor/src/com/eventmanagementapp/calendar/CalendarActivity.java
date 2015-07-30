@@ -6,6 +6,7 @@ import java.util.Calendar;
 import com.eventmanagementapp.LoginSignUpActivity;
 import com.eventmanagementapp.MessageTabActivity;
 import com.eventmanagementapp.R;
+import com.eventmanagementapp.Activities.MenuListActivity;
 import com.eventmanagementapp.Activities.MessageListActivity;
 import com.eventmanagementapp.dialogs.FilterDialog;
 import com.eventmanagementapp.dialogs.OptionsDialog;
@@ -44,6 +45,8 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 	TextView tvFilterCriteria,tvFilterFirst;//,tvFilterSecond;
 	LinearLayout llCalendar,llMail,llLeads,llMenu;
 	public static String _filterString="";
+	//	public static GIFView imViewProgreeBar;
+	public static TextView tvProgressBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +58,17 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		mf = (MFCalendarView) findViewById(R.id.mFCalendarView);
 		btnMenu=(Button) findViewById(R.id.btnMenu);
 		btnBack=(Button) findViewById(R.id.btnBack);
+		btnBack.setVisibility(View.GONE);
 		btnSelecteDate=(Button) findViewById(R.id.btnSelecteDate);
 		btnFilter=(Button) findViewById(R.id.btnFilter);
-		btnSelecteDate.setVisibility(View.INVISIBLE);
+		tvProgressBar=(TextView) findViewById(R.id.tvProgressBar);
+		btnSelecteDate.setVisibility(View.GONE);
+		btnBack.setVisibility(View.GONE);
+		tvProgressBar.setVisibility(View.GONE);
+		tvProgressBar.setVisibility(View.GONE);
+		//		imViewProgreeBar=(GIFView) findViewById(R.id.imViewProgreeBar);
+		//		imViewProgreeBar.set
+		//		btnSelecteDate.setVisibility(View.INVISIBLE);
 		btnFilter.setVisibility(View.INVISIBLE);
 		btnChange=(Button) findViewById(R.id.btnChange);
 		btnClearAll=(Button) findViewById(R.id.btnClearAll);
@@ -187,11 +198,10 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		eventDays.add(Util.getTomorrow());
 		eventDays.add(Util.getCurrentDate());
 		mf.setEvents(eventDays);
-
 		Log.e("","locale:" + Util.getLocale());
 	}
 
-	IAction iNotifyAction = new IAction() {
+	/*IAction iNotifyAction = new IAction() {
 
 		@Override
 		public void setAction(String action) {
@@ -203,16 +213,18 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 			}
 			else if(action.equalsIgnoreCase("logout"))
 			{
+				Intent myIntent = new Intent(CalendarActivity.this,LoginSignUpActivity.class);
+//				myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(myIntent);
 				PreferenceUtil.getInstance().setLogin(false);
 				PreferenceUtil.getInstance().setRegister(false);
 				PreferenceUtil.getInstance().setIdentifier("");
 				PreferenceUtil.getInstance().setEmail("");
-				Intent myIntent = new Intent(CalendarActivity.this,LoginSignUpActivity.class);
-				myIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(myIntent);
+				LoginSignUpActivity.isLoggedIn=false;
+				finish();																																																																																																																																		
 			}
 		}
-	};
+	};*/
 
 	INotify iNotify=new INotify() {
 		@Override
@@ -289,13 +301,16 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		}
 		else if (v.getId()==R.id.llMenu || v.getId()==R.id.btnMenu)
 		{
-			ArrayList<String> listOptions = new ArrayList<String>();
+			Intent myIntent=new Intent(CalendarActivity.this,MenuListActivity.class);
+			startActivity(myIntent);	
+			overridePendingTransition(R.anim.right_in, R.anim.left_out);
+			/*ArrayList<String> listOptions = new ArrayList<String>();
 			listOptions.add("Availability");
 			listOptions.add("Logout");
 			listOptions.add("Cancel");
 			OptionsDialog dialog = new OptionsDialog();
 			dialog.newInstance(mContext, "Select Option",listOptions, iNotifyAction);
-			dialog.show(getFragmentManager(), "");
+			dialog.show(getFragmentManager(), "");*/
 			/*Intent myIntent=new Intent(CalendarActivity.this,CalendarActivityMultipleSelection.class);
 			startActivity(myIntent);	
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);*/	

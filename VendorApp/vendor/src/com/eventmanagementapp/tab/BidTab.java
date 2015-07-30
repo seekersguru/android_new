@@ -53,7 +53,7 @@ public class BidTab extends Fragment {
 	boolean isMinId=false,isMaxId=false;
 	String min="0",max="-1";
 	boolean isWebServiceCalled=true;
-	static boolean isFirstTime=true;
+//	static boolean isFirstTime=true;
 	ArrayList<BookingDataBean> listData= new ArrayList<BookingDataBean>();
 
 	@Override
@@ -180,13 +180,11 @@ public class BidTab extends Fragment {
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			//			Toast.makeText(getBaseContext(), "Data Sent!"+response, Toast.LENGTH_LONG).show();
 			if(progress!=null && progress.isShowing())
 			{
 				progress.dismiss();
 				progress=null;
 			}
-
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
 				try {
@@ -209,16 +207,15 @@ public class BidTab extends Fragment {
 							bean.identifier= jArray.getJSONObject(i).getString("identifier");
 							bean.status= jArray.getJSONObject(i).getString("status");
 							listData.add(bean);
-							if(isFirstTime)
-							{
-								isFirstTime=false;
+//							if(isFirstTime)
+//							{
+//								isFirstTime=false;
 								listEnquiryDataBean.add(bean);
 								adapter.listEnquiryDataBean=listEnquiryDataBean;
-								adapter.notifyDataSetChanged();
-							}
+//							}
 						}
-						
-						if(!isFirstTime)
+						adapter.notifyDataSetChanged();
+						/*if(!isFirstTime)
 						{
 							if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
 							{
@@ -249,12 +246,8 @@ public class BidTab extends Fragment {
 								}
 								adapter.notifyDataSetChanged();
 							}
-						}
+						}*/
 					}
-				/*	if(adapter.listEnquiryDataBean!=null)
-						adapter.listEnquiryDataBean.clear();
-					adapter.listEnquiryDataBean=listEnquiryDataBean;
-					adapter.notifyDataSetChanged();*/
 					if(listEnquiryDataBean.size()==0){
 						empty_view.setVisibility(View.VISIBLE);
 					}

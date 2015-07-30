@@ -52,7 +52,7 @@ public class BookTab extends Fragment {
 	boolean isMinId=false,isMaxId=false;
 	String min="0",max="-1";
 	boolean isWebServiceCalled=true;
-	static boolean isFirstTime=true;
+//	static boolean isFirstTime=true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -207,16 +207,16 @@ public class BookTab extends Fragment {
 							bean.identifier= jArray.getJSONObject(i).getString("identifier");
 							bean.status= jArray.getJSONObject(i).getString("status");
 							listData.add(bean);
-							if(isFirstTime)
+							/*if(isFirstTime)
 							{
-								isFirstTime=false;
+								isFirstTime=false;*/
 								listMessages.add(bean);
 								adapterMessageList.listMessages=listMessages;
-								adapterMessageList.notifyDataSetChanged();
-							}
+								
+//							}
 						}
-
-						if(!isFirstTime)
+						adapterMessageList.notifyDataSetChanged();
+						/*if(!isFirstTime)
 						{
 							if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
 							{
@@ -247,7 +247,7 @@ public class BookTab extends Fragment {
 								}
 								adapterMessageList.notifyDataSetChanged();
 							}
-						}
+						}*/
 					}
 					/*if(adapterMessageList.listMessages!=null)
 						adapterMessageList.listMessages.clear();
@@ -268,7 +268,8 @@ public class BookTab extends Fragment {
 	{
 		// Create data variable for sent values to server  
 		String data="";
-		data= URLEncoder.encode("identifier", "UTF-8") 
+		data= URLEncoder.encode(""
+				+ "identifier", "UTF-8") 
 				+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(), "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("min", "UTF-8") + "="

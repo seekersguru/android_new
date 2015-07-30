@@ -48,6 +48,7 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 	ArrayList<ButtonBean> buttonList = new ArrayList<ButtonBean>();
 	ProgressDialog progress;
 	private String response;
+	LinearLayout llButtons;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -55,10 +56,15 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.enquirydetails);
 		btnBack=(Button) findViewById(R.id.btnBack);
+		btnBack.setVisibility(View.GONE);
 		tvTitle=(TextView) findViewById(R.id.tvTitle);
+		tvTitle.setVisibility(View.GONE);
 		lvPrice=(ListView) findViewById(R.id.lvPrice);
+		llButtons=(LinearLayout)findViewById(R.id.button_layout);
 		btnAccept=(Button) findViewById(R.id.btnAccept);
 		btnReject=(Button) findViewById(R.id.btnReject);
+		btnAccept.setVisibility(View.GONE);
+		btnReject.setVisibility(View.GONE);
 		btnAccept.setOnClickListener(this);
 		btnReject.setOnClickListener(this);
 		btnBack.setOnClickListener(this);
@@ -156,13 +162,11 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			//			Toast.makeText(getBaseContext(), "Data Sent!"+response, Toast.LENGTH_LONG).show();
 			if(progress!=null && progress.isShowing())
 			{
 				progress.dismiss();
 				progress=null;
 			}
-
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
 				try {
@@ -171,8 +175,10 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 						String _result = jsonObj.getString("result");
 						if(_result.equalsIgnoreCase("success")){
 							JSONObject jObject = jsonObj.getJSONObject("json");
-							tvTitle.setText(jObject.getString("label"));
-
+							//							tvTitle.setText(jObject.getString("label"));
+							String status = jObject.getString("status");
+							tvTitle.setText(jObject.getString("label")+"("+status+")");
+							tvTitle.setVisibility(View.VISIBLE);
 							LinearLayout parent_layout = (LinearLayout)findViewById(R.id.parent_layout);
 							JSONArray jArray = jObject.getJSONArray("table");
 							for(int i=0;i<jArray.length();i++){
@@ -182,11 +188,10 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 								((TextView)child.findViewById(R.id.value_label)).setText(jArray.getJSONObject(i).getString(key));
 								parent_layout.addView(child);
 							}
-
 							//get buttons here
 							JSONArray buttonArray = jObject.getJSONArray("buttons");
 							if(buttonArray.length()==0){
-								((LinearLayout)findViewById(R.id.button_layout)).setVisibility(View.GONE);
+								llButtons.setVisibility(View.GONE);
 							}
 							for(int i=0;i<buttonArray.length();i++){
 								ButtonBean buttonDetail = new ButtonBean();
@@ -201,10 +206,15 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 									btnReject.setTag(buttonDetail.buttonCode);
 								}
 
+								if(status.equalsIgnoreCase("pending"))
+								{
+									llButtons.setVisibility(View.VISIBLE);
+								}
+								else{
+									llButtons.setVisibility(View.GONE);
+								}
 								//buttonList.add(buttonDetail);
 							}
-
-
 						}
 					}else{
 						// parsing response of Accept/Reject button
@@ -223,7 +233,6 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 					e.getMessage();
 				}
 			}
-
 		}
 	}
 

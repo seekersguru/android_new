@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * Created by Edwin on 15/02/2015.
@@ -25,6 +26,7 @@ public class MessageTabActivity extends FragmentActivity {
 	// Declaring Your View and Variables
 
 	Toolbar toolbar;
+	TextView tvToolBar;
 	ViewPager pager;
 	TabAdapter adapter;
 	SlidingTabLayout tabs;
@@ -40,8 +42,16 @@ public class MessageTabActivity extends FragmentActivity {
 		setContentView(R.layout.messagetabactivity);
 		// Creating The Toolbar and setting it as the Toolbar for the activity
 		btnBack=(Button)findViewById(R.id.btnBack);
+		btnBack.setVisibility(View.GONE);
+		tvToolBar=(TextView) findViewById(R.id.tvToolBar);
+		tvToolBar.setVisibility(View.GONE);
+		if(getIntent()!=null && getIntent().getExtras()!=null && getIntent().getExtras().getString("date")!=null)
+		{
+			tvToolBar.setVisibility(View.VISIBLE);
+			tvToolBar.setText(getIntent().getExtras().getString("date"));
+		}
 		btnAddBidBook=(Button)findViewById(R.id.btnAddBidBook);
-		btnAddBidBook.setVisibility(View.VISIBLE);
+		btnAddBidBook.setVisibility(View.GONE);
 		/*toolbar = (Toolbar) findViewById(R.id.tool_bar);
 		toolbar.setVisibility(View.GONE);
 		ActionBar actionBar = getActionBar();

@@ -74,7 +74,7 @@ public class DisplayEventDatesDialog extends DialogFragment{
 			public void onClick(View v) {
 				dismiss();
 				if(iNotifyAction!=null)
-					iNotifyAction.setAction("senddata");
+					iNotifyAction.setAction("senddata"+"");
 			}
 		});
 		return view;

@@ -61,7 +61,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/FullBleedTheme"
             android:windowSoftInputMode="adjustResize" >
-        </activity>
+        </activity>
         -->
         <activity
             android:name=".ForgotPasswordActivity"
@@ -97,19 +97,23 @@
             android:name="com.eventmanagementapp.tab.EnquiryDetailsActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name="com.eventmanagementapp.Activities.MenuListActivity"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <!--
         <activity
             android:name="com.eventmanagementapp.Activities.VendorDetailsPageMapPopup"
             android:screenOrientation="portrait" >
-        </activity>
+        </activity>
         -->
 
 
         <!--
              <meta-data
             android:name="com.google.android.gms.version"
-            android:value="7327000" />
+            android:value="7327000" />
         -->
 
         <provider

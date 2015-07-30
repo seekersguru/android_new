@@ -81,7 +81,7 @@ public class OptionsDialog extends DialogFragment{
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				dismiss();
 				if(iNotifyAction!=null)
-					iNotifyAction.setAction(listOptions.get(position));
+					iNotifyAction.setAction(listOptions.get(position).toLowerCase());
 			}
 		});
 

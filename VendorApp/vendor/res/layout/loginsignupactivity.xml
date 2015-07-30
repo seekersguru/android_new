@@ -35,7 +35,7 @@
         android:layout_marginRight="@dimen/marginLeftRightButton"
         android:layout_marginTop="@dimen/marginTopToolBar"
         android:orientation="vertical" >
-    </LinearLayout>
+    </LinearLayout>
     -->
 
     <LinearLayout
@@ -49,13 +49,12 @@
         android:orientation="vertical" >
 
         <com.facebook.login.widget.LoginButton
-            android:id="@+id/btnFBLogin"
+            android:id="@+id/btnFBLogin" 
             android:layout_width="match_parent"
-            android:layout_height="@dimen/buttonheightFbLogin"
+            android:layout_height="wrap_content"
             android:text="SignIn from facebook"
-            android:textColor="#fff"
-            android:textSize="@dimen/textSizeMedium"
-             />
+            android:textColor="#fff" 
+            android:textSize="@dimen/textSizeMedium" />
 
         <Button
             android:id="@+id/btnGoogleLogin"
@@ -114,7 +113,7 @@
         android:textSize="@dimen/textSizeNormal" />
     <!--
      android:layout_below="@+id/llButtons"
-        android:layout_marginTop="@dimen/marginTopGoogleLoginButton"
+        android:layout_marginTop="@dimen/marginTopGoogleLoginButton"
     -->
 
 </RelativeLayout>

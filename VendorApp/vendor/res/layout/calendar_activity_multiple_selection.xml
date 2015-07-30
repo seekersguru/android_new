@@ -10,7 +10,8 @@
         android:id="@+id/rlTopBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottomBarHeight"
-        android:background="#fff" >
+        android:background="#fff" 
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btnBack"

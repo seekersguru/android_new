@@ -17,6 +17,7 @@ import java.util.Locale;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.eventmanagementapp.MessageTabActivity;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
@@ -41,11 +42,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MFCalendarView extends LinearLayout{
 
 	private static final String TODAY = "today";
-
 	private Calendar month;
 	private CalendarAdapter calendaradapter;
 	private Handler handler;
@@ -56,9 +57,10 @@ public class MFCalendarView extends LinearLayout{
 	private Locale locale;
 	onMFCalendarViewListener calendarListener;
 	String response="",url;
-	ProgressDialog progress;
+	//	ProgressDialog progress;
 	Context mContext;
 	String strYear="",strMonth="",minYear="",maxYear="";
+	int count=0;
 
 	public MFCalendarView(Context context) {
 		super(context);
@@ -124,6 +126,7 @@ public class MFCalendarView extends LinearLayout{
 		gridview.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View v,
 					int position, long id) {
+				count++;
 				((CalendarAdapter) parent.getAdapter()).setSelected(v);
 				currentSelectedDate = CalendarAdapter.dayString.get(position);
 				String[] separatedTime = currentSelectedDate.split("-");
@@ -144,9 +147,13 @@ public class MFCalendarView extends LinearLayout{
 				if (calendarListener != null) 
 					calendarListener.onDateChanged(currentSelectedDate);
 				//2015-07-08(yyyy-MM-dd)
-				Intent myIntent=new Intent(mContext,BidBookCreateActivity.class);
-				myIntent.putExtra("date",currentSelectedDate);
-				((CalendarActivity)mContext).startActivity(myIntent);
+				if(count==2)
+				{
+					Intent myIntent=new Intent(mContext,MessageTabActivity.class);
+					myIntent.putExtra("date",currentSelectedDate);
+					((CalendarActivity)mContext).startActivity(myIntent);
+					count=0;
+				}
 			}
 		});
 		addView(view);
@@ -165,7 +172,7 @@ public class MFCalendarView extends LinearLayout{
 			month.set(Calendar.MONTH,month.get(Calendar.MONTH) + 1);
 			strMonth=String.valueOf(month.get(Calendar.MONTH)+1);
 			strYear=String.valueOf(month.get(Calendar.YEAR));
-		}
+		}	
 	}
 
 	protected void setPreviousMonth() {
@@ -228,8 +235,11 @@ public class MFCalendarView extends LinearLayout{
 					" year:" + month.get(Calendar.YEAR));
 			calendaradapter.notifyDataSetChanged();
 			//Call Web Service
-			url=GlobalCommonValues.VENDOR_CALENDAR_HOME;
-			new HttpAsyncTask().execute(url);
+			if(GlobalCommonMethods.isNetworkAvailable(mContext))
+			{
+				url=GlobalCommonValues.VENDOR_CALENDAR_HOME;
+				new HttpAsyncTask().execute(url);
+			}
 		}
 	};
 
@@ -279,11 +289,14 @@ public class MFCalendarView extends LinearLayout{
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if(progress==null)
+			if(CalendarActivity.tvProgressBar!=null)
+				CalendarActivity.tvProgressBar.setVisibility(View.VISIBLE);
+			/*if(progress==null)
 			{
+//				Toast.makeText(mContext, "In Progress",1).show();
 				progress=new ProgressDialog(mContext);
 				progress.show();		
-			}
+			}*/
 		}
 
 		@Override
@@ -299,11 +312,13 @@ public class MFCalendarView extends LinearLayout{
 		// onPostExecute displays the results of the AsyncTask.
 		@Override
 		protected void onPostExecute(Void result) {
-			if(progress!=null && progress.isShowing())
+			/*if(progress!=null && progress.isShowing())
 			{
 				progress.dismiss();
 				progress=null;
-			}
+			}*/
+			if(CalendarActivity.tvProgressBar!=null && CalendarActivity.tvProgressBar.getVisibility()==View.VISIBLE)
+				CalendarActivity.tvProgressBar.setVisibility(View.GONE);
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
 				// In case of fetching message listing
@@ -352,6 +367,10 @@ public class MFCalendarView extends LinearLayout{
 	{
 		// Create data variable for sent values to server
 		String filter_string=CalendarActivity._filterString;
+		if(strMonth.length()==1 && !strMonth.startsWith("0"))
+		{
+			strMonth="0"+strMonth;
+		}
 		String data="";
 		data= URLEncoder.encode("availability", "UTF-8") 
 				+ "=" + URLEncoder.encode("0", "UTF-8"); 

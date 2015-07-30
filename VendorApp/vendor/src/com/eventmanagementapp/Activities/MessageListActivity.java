@@ -18,6 +18,7 @@ import com.eventmanagementapp.adapter.MessagesListAdapter;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
 import com.eventmanagementapp.dialogs.ErrorDialog;
+import com.eventmanagementapp.util.CustomFonts;
 import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.app.ProgressDialog;
@@ -54,7 +55,7 @@ public class MessageListActivity extends FragmentActivity{
 	String min="0",max="-1";
 	boolean isWebServiceCalled=true;
 	ArrayList<HashMap<String, String>> listData= new ArrayList<HashMap<String, String>>();
-	static boolean isFirstTime=true;
+//	static boolean isFirstTime=true;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -74,9 +75,10 @@ public class MessageListActivity extends FragmentActivity{
 		viewTopbar.setVisibility(View.VISIBLE);*/
 		tvTitle=(TextView) findViewById(R.id.tvTitle);
 		btnBack=(Button) findViewById(R.id.btnBack);
+		btnBack.setVisibility(View.GONE);
 		lvMessages=(ListView)findViewById(R.id.lvMessages);
 		listMessages=new ArrayList<HashMap<String, String>>();
-
+		CustomFonts.setFontOfTextView(mContext,tvTitle,"fonts/GothamRoundedBook.ttf");
 		adapterMessageList=new MessagesListAdapter(mContext, listMessages);
 		lvMessages.setAdapter(adapterMessageList);
 		lvMessages.setOnItemClickListener(new OnItemClickListener() {
@@ -163,7 +165,7 @@ public class MessageListActivity extends FragmentActivity{
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		isFirstTime=false;
+//		isFirstTime=false;
 	}
 
 	//	@Override
@@ -248,14 +250,11 @@ public class MessageListActivity extends FragmentActivity{
 							hashMap.put("receiver_email", receiver_email);
 							hashMap.put("id", id);
 							listData.add(hashMap);
-							if(isFirstTime)
-							{
-								isFirstTime=false;
-								adapterMessageList.listChat.add(hashMap);
-								adapterMessageList.notifyDataSetChanged();
-							}
+							adapterMessageList.listChat.add(hashMap);
+							
 						}
-						if(!isFirstTime)
+						adapterMessageList.notifyDataSetChanged();
+						/*if(!isFirstTime)
 						{
 							if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
 							{
@@ -286,7 +285,7 @@ public class MessageListActivity extends FragmentActivity{
 								}
 								adapterMessageList.notifyDataSetChanged();
 							}
-						}
+						}*/
 					}
 				} catch (Exception e) {
 					e.getMessage();

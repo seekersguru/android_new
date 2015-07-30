@@ -11,6 +11,16 @@ import java.util.ArrayList;
 
 import org.json.JSONObject;
 
+import com.eventmanagementapp.calendar.CalendarActivity;
+import com.eventmanagementapp.common.GlobalCommonMethods;
+import com.eventmanagementapp.common.GlobalCommonValues;
+import com.eventmanagementapp.dialogs.ErrorDialog;
+import com.eventmanagementapp.interfaces.IAction;
+import com.eventmanagementapp.util.CustomFonts;
+import com.eventmanagementapp.util.PreferenceUtil;
+import com.eventmanagementapp.util.ShowDialog;
+import com.eventmanagementapp.util.SystemBarTintManager;
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -34,15 +44,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
-import com.eventmanagementapp.calendar.CalendarActivity;
-import com.eventmanagementapp.common.GlobalCommonMethods;
-import com.eventmanagementapp.common.GlobalCommonValues;
-import com.eventmanagementapp.dialogs.ErrorDialog;
-import com.eventmanagementapp.interfaces.IAction;
-import com.eventmanagementapp.util.PreferenceUtil;
-import com.eventmanagementapp.util.ShowDialog;
-import com.eventmanagementapp.util.SystemBarTintManager;
 
 
 public class RegistrationSignUpActivity extends FragmentActivity implements
@@ -93,6 +94,7 @@ TextWatcher{
 		tvLogin=(TextView) findViewById(R.id.tvLogin);
 		spVendorType=(Spinner) findViewById(R.id.spVendorType);
 		ArrayList<String> spinnerArray = new ArrayList<String>();
+		tvToolBar.setVisibility(View.GONE);
 		spinnerArray.add("Banquets");
 		spinnerArray.add("Caterers");
 		spinnerArray.add("Photographers");
@@ -143,11 +145,11 @@ TextWatcher{
 			etNumber.setVisibility(View.VISIBLE);
 			etAddress.setVisibility(View.VISIBLE);
 			spVendorType.setVisibility(View.VISIBLE);
-			
+
 			if(!TextUtils.isEmpty(getIntent().getStringExtra("userEmail"))){
 				etEmailAddress.setText(getIntent().getStringExtra("userEmail").trim());
 			}
-			
+
 		}
 		else if(getIntent().getExtras().getString("type").equals("login"))
 		{ 
@@ -169,17 +171,18 @@ TextWatcher{
 			//			etNumber.setVisibility(View.VISIBLE);
 			//			etAddress.setVisibility(View.VISIBLE);
 		}
-		//		CustomFonts.setFontOfEditText(mContext, etEmailAddress,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etPassword,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etName,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etNumber,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etAddress,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etPasswordReset,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfButton(mContext,btnSignIn,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfButton(mContext,btnPasswordReset,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvLogin,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvForgotPassword,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvToolBar,"fonts/GothamRnd-Light.otf");
+
+		CustomFonts.setFontOfEditText(mContext, etEmailAddress,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfEditText(mContext, etPassword,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfEditText(mContext, etName,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfEditText(mContext, etNumber,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfEditText(mContext, etAddress,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfEditText(mContext, etPasswordReset,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfButton(mContext,btnSignIn,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfButton(mContext,btnPasswordReset,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvLogin,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvForgotPassword,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvToolBar,"fonts/GothamRoundedBook.ttf");
 		etEmailAddress.addTextChangedListener(this);
 		etPassword.addTextChangedListener(this);
 		etName.addTextChangedListener(this);
@@ -355,7 +358,7 @@ TextWatcher{
 						String _result = jsonObj.getString("result");
 						String message = jsonObj.getString("message");//{"identifier":"aattyy@aa.com:cKrNpFhEm4DogRm1a8E6Lhc9YBg"}
 						if(!jsonObj.getString("json").equals("0"))
-						identifier =new JSONObject( jsonObj.getString("json")).getString("identifier");
+							identifier =new JSONObject( jsonObj.getString("json")).getString("identifier");
 						PreferenceUtil.getInstance().setEmail(email);
 						PreferenceUtil.getInstance().setIdentifier(identifier);
 						if(message.equals("0"))
@@ -389,15 +392,21 @@ TextWatcher{
 						String _result = jsonObj.getString("result");
 						String message = jsonObj.getString("message");
 						if(message.equals("0"))
+						{
 							message="Logged In Successfully";
-						ErrorDialog dialog=new ErrorDialog();
-						dialog.newInstance(mContext, _result.toUpperCase(), message, iActionObj);
-						dialog.setCancelable(false);
-						dialog.show(getFragmentManager(), "test");
-						if(message.toLowerCase().contains("logged in successfully"))
+						}
+						if(!message.toLowerCase().contains("logged in successfully"))
+						{
+							ErrorDialog dialog=new ErrorDialog();
+							dialog.newInstance(mContext, _result.toUpperCase(), message, iActionObj);
+							dialog.setCancelable(false);
+							dialog.show(getFragmentManager(), "test");
+						}
+						else if(message.toLowerCase().contains("logged in successfully"))
 						{
 							PreferenceUtil.getInstance().setLogin(true);
 							PreferenceUtil.getInstance().setIdentifier(jsonObj.getJSONObject("json").getString("identifier"));
+							iActionObj.setAction("navigate");
 						}
 					} catch (Exception e) {
 						e.getMessage();
@@ -450,13 +459,13 @@ TextWatcher{
 					+ URLEncoder.encode(vendorType, "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("name", "UTF-8") 
-					+ "=" + URLEncoder.encode(name, "UTF-8");
+			+ "=" + URLEncoder.encode(name, "UTF-8");
 
 			data += "&" + URLEncoder.encode("contact_number", "UTF-8") 
-					+ "=" + URLEncoder.encode(mobileNumber, "UTF-8");
+			+ "=" + URLEncoder.encode(mobileNumber, "UTF-8");
 
 			data += "&" + URLEncoder.encode("address", "UTF-8") 
-					+ "=" + URLEncoder.encode(address, "UTF-8");
+			+ "=" + URLEncoder.encode(address, "UTF-8");
 		}
 		else if(url.equals(GlobalCommonValues.LOGIN)){
 			if(!isRecentRegistered)

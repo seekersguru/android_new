@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.bean.BookingDataBean;
+import com.eventmanagementapp.util.CustomFonts;
 
 public class EnquiryDataAdapter extends BaseAdapter{
 
@@ -48,7 +49,10 @@ public class EnquiryDataAdapter extends BaseAdapter{
 		TextView tvDateFirst=(TextView) listItem.findViewById(R.id.tvDateFirst);
 		TextView tvDateSecond=(TextView) listItem.findViewById(R.id.tvDateSecond);
 		TextView tvPackageDedtails=(TextView) listItem.findViewById(R.id.tvPackageDedtails);
-
+		CustomFonts.setFontOfTextView(mContext,tvName,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDateFirst,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDateSecond,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvPackageDedtails,"fonts/GothamRoundedBook.ttf");
 		tvName.setText(listEnquiryDataBean.get(position).receiver_name);
 		tvDateFirst.setText(listEnquiryDataBean.get(position).event_date);
 		String msg_time = (listEnquiryDataBean.get(position).msg_time).substring(0,listEnquiryDataBean.get(position).msg_time.indexOf(" "));

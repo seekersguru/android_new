@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eventmanagementapp.R;
+import com.eventmanagementapp.util.CustomFonts;
 
 public class MessagesListAdapter extends BaseAdapter{
 
@@ -54,10 +55,11 @@ public class MessagesListAdapter extends BaseAdapter{
 		TextView tvSubject=(TextView) listItem.findViewById(R.id.tvSubject);
 		TextView tvDescription=(TextView) listItem.findViewById(R.id.tvDescription);
 		ImageView imViewAtttachment=(ImageView) listItem.findViewById(R.id.imViewAttachment);
-		//		CustomFonts.setFontOfTextView(mContext,tvContactName,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvDate,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvSubject,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvDescription,"fonts/GothamRnd-Light.otf");
+		imViewAtttachment.setVisibility(View.GONE);
+		CustomFonts.setFontOfTextView(mContext,tvContactName,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDate,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvSubject,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDescription,"fonts/GothamRoundedBook.ttf");
 		tvDescription.setVisibility(View.GONE);
 		tvContactName.setText(listChat.get(position).get("receiver_name"));
 		tvSubject.setText(listChat.get(position).get("message"));

@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import com.eventmanagementapp.R;
+import com.eventmanagementapp.util.CustomFonts;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -15,8 +18,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eventmanagementapp.R;
 
 public class ChatAdapter extends BaseAdapter {
 
@@ -58,17 +59,19 @@ public class ChatAdapter extends BaseAdapter {
 		rlRight.setVisibility(View.GONE);
 		rlLeft.setVisibility(View.GONE);
 
-		//		CustomFonts.setFontOfTextView(mContext,tvMessageLeft,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvMessageRight,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvDateLeft,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvDateRight,"fonts/GothamRnd-Light.otf");
+		CustomFonts.setFontOfTextView(mContext,tvMessageLeft,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvMessageRight,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDateLeft,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDateRight,"fonts/GothamRoundedBook.ttf");
 
 		if (listChat.get(position).get("from_to").equalsIgnoreCase("c2v")) {
+
 			rlRight.setVisibility(View.GONE);
 			rlLeft.setVisibility(View.VISIBLE);
 			tvMessageLeft.setText(listChat.get(position).get("message"));
 			tvDateLeft.setVisibility(View.VISIBLE);
 			try {
+
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 				Date myDate = simpleDateFormat.parse(listChat.get(position).get("msg_time"));
@@ -79,11 +82,13 @@ public class ChatAdapter extends BaseAdapter {
 				e.getMessage();
 			}
 		} else {
+
 			rlRight.setVisibility(View.VISIBLE);
 			rlLeft.setVisibility(View.GONE);
 			tvMessageRight.setText(listChat.get(position).get("message"));
 			tvDateRight.setVisibility(View.VISIBLE);
 			try {
+
 				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				simpleDateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 				Date myDate = simpleDateFormat.parse(listChat.get(position).get("msg_time"));

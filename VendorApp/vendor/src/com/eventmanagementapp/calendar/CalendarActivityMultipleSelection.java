@@ -20,6 +20,8 @@ import com.eventmanagementapp.common.GlobalCommonValues;
 import com.eventmanagementapp.dialogs.DisplayEventDatesDialog;
 import com.eventmanagementapp.dialogs.ErrorDialog;
 import com.eventmanagementapp.interfaces.IAction;
+import com.eventmanagementapp.util.CustomFonts;
+import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -37,6 +39,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Shows off the most basic usage
@@ -54,6 +57,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 	public static ArrayList<String> listDates = new ArrayList<String>();
 	String response,url;
 	ProgressDialog progress;
+	String strYear="",strMonth="",minYear="",maxYear="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +68,10 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		mContext=CalendarActivityMultipleSelection.this;
 		mf = (MFCalendarViewMultipleSelection) findViewById(R.id.mFCalendarView);
 		btnBack=(Button) findViewById(R.id.btnBack);
+		btnBack.setVisibility(View.GONE);
 		btnSelecteDate=(Button) findViewById(R.id.btnSelecteDate);
 		btnShowBookings=(Button) findViewById(R.id.btnShowBookings);
+		CustomFonts.setFontOfButton(mContext,btnShowBookings,"fonts/GothamRoundedBook.ttf");
 		btnFilter=(Button) findViewById(R.id.btnFilter);
 		btnSelecteDate.setVisibility(View.GONE);
 		btnFilter.setVisibility(View.GONE);
@@ -132,7 +138,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 				else if(listDates!=null && listDates.isEmpty())
 				{
 					ErrorDialog dialog=new ErrorDialog();
-					dialog.newInstance(mContext,"","No event Dates Selected", null);
+					dialog.newInstance(mContext,"","No Dates Selected", null);
 					dialog.show(getFragmentManager(), "test");
 				}
 			}
@@ -176,9 +182,9 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 	IAction iNotifyAction = new IAction() {
 		@Override
 		public void setAction(String action) {
-			if(action.equals("senddata"))	
-			{
-				url=GlobalCommonValues.VENDOR_CALENDAR_HOME;
+			if(action.contains("senddata"))	
+			{       //listDates
+				url=GlobalCommonValues.VENDOR_CALENDAR_AVAILABILITY;
 				new HttpAsyncTask().execute(url);
 			}
 		}
@@ -223,12 +229,16 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 			}
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
+				//				Toast.makeText(mContext, response,1).show();
 				// In case of fetching message listing
 				try {   
 					JSONObject jsonObj = new JSONObject(response);
 					//new JSONObject(jsonObj.getString("json")).getString("data")
 					//new JSONObject(jsonObj.getString("json")).getJSONArray("available_years")
 					//{"15":25,"1":5,"16":7}
+					JSONArray yearArray=new JSONObject(jsonObj.getString("json")).getJSONArray("available_years");
+					minYear=yearArray.getString(0);
+					maxYear=yearArray.getString(1);
 					String year=new JSONObject(response).getJSONObject("request_data").getString("year");
 					String month=new JSONObject(response).getJSONObject("request_data").getString("month");
 					JSONArray datesJsonArray=new JSONArray(new JSONObject(jsonObj.getString("json")).getString("data"));
@@ -270,10 +280,18 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		String data="";
 		String year=arrayDate[0];
 		String month=arrayDate[1];
-		String filter_string=CalendarActivity._filterString;
-
-		//		data= URLEncoder.encode("availability", "UTF-8") 
-		//				+ "=" + URLEncoder.encode("0", "UTF-8"); 
+		if(month.length()==1 && !month.startsWith("0"))
+		{
+			month="0"+month;
+		}
+		//		String filter_string=CalendarActivity._filterString;
+		String dates="",avail_type="",time_slot="";
+		for(int i=0;i<listDates.size();i++)
+		{
+			dates+=listDates.get(i)+",";
+		}
+		/*data= URLEncoder.encode("availability", "UTF-8") 
+				+ "=" + URLEncoder.encode("1", "UTF-8"); */
 
 		data= URLEncoder.encode("year", "UTF-8") 
 				+ "=" + URLEncoder.encode(year, "UTF-8"); 
@@ -281,8 +299,17 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		data += "&" + URLEncoder.encode("month", "UTF-8") + "="
 				+ URLEncoder.encode(month, "UTF-8"); 
 
-		data += "&" + URLEncoder.encode("filter_string", "UTF-8") 
-		+ "=" + URLEncoder.encode(filter_string,"UTF-8");
+		data += "&" + URLEncoder.encode("time_slot", "UTF-8") 
+		+ "=" + URLEncoder.encode(time_slot,"UTF-8");
+
+		data += "&" + URLEncoder.encode("avail_type", "UTF-8") 
+		+ "=" + URLEncoder.encode(avail_type,"UTF-8");
+
+		data +="&" + URLEncoder.encode("identifier", "UTF-8") 
+		+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(), "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("dates", "UTF-8") 
+		+ "=" + URLEncoder.encode(dates.substring(0,dates.lastIndexOf(",")),"UTF-8");
 
 		BufferedReader reader=null;
 		// Send data 
@@ -290,7 +317,7 @@ public class CalendarActivityMultipleSelection extends FragmentActivity implemen
 		{ 
 			URL _url=null;
 			// Defined URL  where to send data
-			_url= new URL(GlobalCommonValues.VENDOR_CALENDAR_HOME);
+			_url= new URL(GlobalCommonValues.VENDOR_CALENDAR_AVAILABILITY);
 			// Send POST data request
 
 			URLConnection conn = _url.openConnection(); 

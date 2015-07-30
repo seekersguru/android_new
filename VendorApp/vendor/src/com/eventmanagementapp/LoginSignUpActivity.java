@@ -42,7 +42,6 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 
-import android.R.color;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -102,20 +101,21 @@ public class LoginSignUpActivity extends FragmentActivity implements OnClickList
 		setContentView(R.layout.loginsignupactivity);
 		btnLogin=(Button) findViewById(R.id.btnLogin);
 		btnFBLogin=(LoginButton) findViewById(R.id.btnFBLogin);
-		btnFBLogin.setBackgroundResource(R.drawable.sign_up_fb);
-		btnFBLogin.setReadPermissions(Arrays.asList("user_friends"));		
+		btnFBLogin.setReadPermissions(Arrays.asList("user_friends"));	
+		btnFBLogin.setPadding(0, 25, 0, 25);
 		btnGoogleLogin=(Button) findViewById(R.id.btnGoogleLogin);
 		btnSignUp=(Button) findViewById(R.id.btnSignUp);
 		tvBottomBar=(TextView) findViewById(R.id.tvBottomBar);
-		tvBottomBar.setText(Html.fromHtml("By signing up,I agree to terms of services,privacy policies,guest policies,and host guarantee terms.").toString());
+		tvBottomBar.setText(Html.fromHtml("By signing up I agree to terms and policies of wedwise.").toString());//("By signing up,I agree to terms of services,privacy policies,guest policies,and host guarantee terms.").toString());
 		toolbar=(Toolbar) findViewById(R.id.toolbar);
 		btnBack=(Button) toolbar.findViewById(R.id.btnBack);
 		tvToolBar=(TextView)toolbar.findViewById(R.id.tvToolBar);
 		toolbar.findViewById(R.id.refresh_button).setVisibility(View.GONE);
 		tvToolBar.setText("Log In or Sign Up");
+		tvToolBar.setVisibility(View.GONE);
 		btnBack.setVisibility(View.GONE);
 		CustomFonts.setFontOfButton(mContext, btnSignUp,"fonts/GothamRoundedBook.ttf");
-		//		CustomFonts.setFontOfButton(mContext, btnLogin,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfButton(mContext, btnLogin,"fonts/GothamRoundedBook.ttf");
 		CustomFonts.setFontOfTextView(mContext, tvToolBar,"fonts/GothamRoundedBook.ttf");
 		CustomFonts.setFontOfTextView(mContext, tvBottomBar,"fonts/GothamRoundedBook.ttf");
 		btnBack.setOnClickListener(new OnClickListener() {
@@ -224,11 +224,6 @@ public class LoginSignUpActivity extends FragmentActivity implements OnClickList
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
-				/*Intent myIntent=new Intent(LoginSignUpActivity.this,BidBookDetailsScreenActivity.class);
-				startActivity(myIntent);
-				overridePendingTransition(R.anim.right_in, R.anim.left_out);*/
 			}
 		});
 
@@ -343,7 +338,7 @@ public class LoginSignUpActivity extends FragmentActivity implements OnClickList
 		{
 			finish();
 		}
-		AppEventsLogger.activateApp(this);
+//		AppEventsLogger.activateApp(LoginSignUpActivity.this);
 		LoginManager.getInstance().logOut();
 	}
 
@@ -462,15 +457,18 @@ public class LoginSignUpActivity extends FragmentActivity implements OnClickList
 						if(message.equals("0")){
 							message="Logged In Successfully";
 						}
-
-						ErrorDialog dialog=new ErrorDialog();
-						dialog.newInstance(mContext, _result.toUpperCase(), message, iActionObj);
-						dialog.setCancelable(false);
-						dialog.show(getFragmentManager(), "test");
+						if(!message.toLowerCase().contains("logged in successfully"))
+						{
+							ErrorDialog dialog=new ErrorDialog();
+							dialog.newInstance(mContext, _result.toUpperCase(), message, iActionObj);
+							dialog.setCancelable(false);
+							dialog.show(getFragmentManager(), "test");
+						}
 						if(message.toLowerCase().contains("logged in successfully"))
 						{
 							PreferenceUtil.getInstance().setLogin(true);
 							PreferenceUtil.getInstance().setIdentifier(jsonObj.getJSONObject("json").getString("identifier"));
+							iActionObj.setAction("navigate");
 						}
 					} catch (Exception e) {
 						e.getMessage();

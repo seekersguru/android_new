@@ -44,6 +44,7 @@ public class BidBookCreateActivity extends FragmentActivity{
 		btnBitIt=(Button) findViewById(R.id.btnBitIt);
 		etDate=(EditText) findViewById(R.id.etDate);
 		btnBack=(Button) findViewById(R.id.btnBack);
+		tvTitle.setVisibility(View.GONE);
 		//		CustomFonts.setFontOfTextView(mContext,tvTitle,"fonts/GothamRnd-Light.otf");
 		//		CustomFonts.setFontOfButton(mContext,btnBitIt,"fonts/GothamRnd-Light.otf");
 		//		CustomFonts.setFontOfEditText(mContext,etDate,"fonts/GothamRnd-Light.otf");

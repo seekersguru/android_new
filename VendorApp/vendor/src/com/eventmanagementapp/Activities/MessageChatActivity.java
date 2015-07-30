@@ -9,6 +9,8 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,6 +20,7 @@ import com.eventmanagementapp.adapter.ChatAdapter;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
 import com.eventmanagementapp.dialogs.ErrorDialog;
+import com.eventmanagementapp.util.CustomFonts;
 import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.annotation.SuppressLint;
@@ -26,11 +29,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,7 +48,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MessageChatActivity extends FragmentActivity{
 
@@ -55,7 +59,7 @@ public class MessageChatActivity extends FragmentActivity{
 	EditText etMessage;
 	ListView lvChatMessages;
 	ChatAdapter adapterChat;
-	ArrayList<HashMap<String, String>> listChat;
+	//ArrayList<HashMap<String, String>> listChat;
 	String response,url;
 	ProgressDialog progress;
 	String page_count="1";
@@ -63,8 +67,10 @@ public class MessageChatActivity extends FragmentActivity{
 	boolean isMinId=false,isMaxId=false;
 	String min="0",max="-1";
 	boolean isWebServiceCalled=true;
+	private String chatId = "";
 	ArrayList<HashMap<String, String>> listData= new ArrayList<HashMap<String, String>>();
-	static boolean isFirstTime=true;
+	//	static boolean isFirstTime=true;
+	int count=0;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -76,20 +82,22 @@ public class MessageChatActivity extends FragmentActivity{
 		toolbar.setBackgroundColor(Color.parseColor("#ffffff"));
 		lvChatMessages=(ListView) findViewById(R.id.lvChatMessages);
 		btnBack=(Button) toolbar.findViewById(R.id.btnBack);
+		btnBack.setVisibility(View.GONE);
 		tvToolBar=(TextView)toolbar.findViewById(R.id.tvToolBar);
 		etMessage=(EditText) findViewById(R.id.etMessage);
 		btnSendMessage=(Button) findViewById(R.id.btnSendMessage);
 		imViewOverflowMenuicon=(ImageView)toolbar.findViewById(R.id.imViewOverFlow);
 		imViewAttachment=(ImageView) toolbar.findViewById(R.id.imViewAttachment);
 		imViewOverflowMenuicon.setBackgroundResource(R.drawable.overflow_menu);
+		CustomFonts.setFontOfTextView(mContext,tvToolBar,"fonts/GothamRoundedBook.ttf");
 		//imViewAttachment.setVisibility(View.VISIBLE);
 		//imViewOverflowMenuicon.setVisibility(View.VISIBLE);
 		//		tvToolBar.setText("Sujata Weds Rajesh");
 		tvToolBar.setTextColor(Color.parseColor("#555555"));
 		btnBack.setBackground(MessageChatActivity.this.getResources().getDrawable(R.drawable.back_orange));
-		listChat=new ArrayList<HashMap<String, String>>();
+		//		listChat=new ArrayList<HashMap<String, String>>();
 		//		CustomFonts.setFontOfTextView(mContext, tvToolBar, "fonts/GothamRnd-Light.otf");
-		adapterChat=new ChatAdapter(MessageChatActivity.this,listChat);
+		adapterChat=new ChatAdapter(MessageChatActivity.this,listData);
 		lvChatMessages.setAdapter(adapterChat);
 		if(getIntent()!=null && getIntent().getExtras()!=null)
 		{
@@ -127,7 +135,6 @@ public class MessageChatActivity extends FragmentActivity{
 						if (offset == 0) {
 							isMinId=true;
 							isMaxId=false;
-
 							if(adapterChat.listChat!=null && !adapterChat.listChat.isEmpty())
 							{
 								min = String.valueOf(adapterChat.listChat.get(0).get("id"));
@@ -201,8 +208,45 @@ public class MessageChatActivity extends FragmentActivity{
 
 	protected void onDestroy() {
 		super.onDestroy();
-		isFirstTime=false;
+		//		isFirstTime=false;
 	};
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		callAsynchronousTask();
+	}
+
+	public void callAsynchronousTask() {
+		final Handler handler = new Handler();
+		Timer timer = new Timer();
+		TimerTask doAsynchronousTask = new TimerTask() {       
+			@Override
+			public void run() {
+				handler.post(new Runnable() {
+					public void run() {       
+						try {
+							isMinId=false;
+							isMaxId=true;
+							if(adapterChat.listChat!=null && !adapterChat.listChat.isEmpty())
+							{
+								max = String.valueOf(adapterChat.listChat.get(adapterChat.listChat.size()-1).get("id"));
+								min = "-1";
+							}
+							url=GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL;
+							new HttpAsyncTask().execute(url);
+							//HttpAsyncTask performBackgroundTask = new HttpAsyncTask();
+							// PerformBackgroundTask this class is the class that extends AsynchTask 
+							new HttpAsyncTask().execute();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+						}
+					}
+				});
+			}
+		};
+		timer.schedule(doAsynchronousTask, 0,30000); //execute in every 50000 ms
+	}
 
 	ArrayList<HashMap<String, String>> _listChat=new ArrayList<HashMap<String,String>>();
 	private class HttpAsyncTask extends AsyncTask<String, Void, Void> {
@@ -211,11 +255,11 @@ public class MessageChatActivity extends FragmentActivity{
 			super.onPreExecute();
 			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
 			{
-				if(progress==null)
+				/*if(progress==null)
 				{
 					progress=new ProgressDialog(mContext);
 					progress.show();		
-				}
+				}*/
 			}
 		}
 
@@ -233,14 +277,14 @@ public class MessageChatActivity extends FragmentActivity{
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
+			/*if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
 			{
 				if(progress!=null && progress.isShowing())
 				{
 					progress.dismiss();
 					progress=null;
 				}
-			}
+			}*/
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
 				if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_CREATE))
@@ -287,7 +331,10 @@ public class MessageChatActivity extends FragmentActivity{
 				else if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_DETAIL))
 				{
 					// In case of fetching message listing
+					boolean isChanged = false;
 					try {
+
+						Log.d("MessageChat", "Response :"+response);
 						JSONObject jsonObj = new JSONObject(response);
 						String _result = jsonObj.getString("result");
 						if(_result.equalsIgnoreCase("error"))
@@ -300,8 +347,10 @@ public class MessageChatActivity extends FragmentActivity{
 						}
 						else if(_result.equalsIgnoreCase("success")){
 							etMessage.setText("");
+							ArrayList<HashMap<String,String>> listChatLocal = new ArrayList<HashMap<String,String>>();
+							//listChatLocal=adapterChat.listChat;
 							JSONArray jsonArray = jsonObj.getJSONArray("json");
-							//							adapterChat.listChat.clear();
+							//adapterChat.listChat.clear();
 							for(int i=0;i<jsonArray.length();i++)
 							{
 								tvToolBar.setText(new JSONObject(jsonArray.getString(i)).getString("vendor_name"));
@@ -315,46 +364,21 @@ public class MessageChatActivity extends FragmentActivity{
 								hashMap.put("from_to",from_to);
 								hashMap.put("id", id);
 								listData.add(hashMap);
-								if(isFirstTime)
-								{
-									isFirstTime=false;
+								listChatLocal.add(hashMap);
+
+								if(chatId.equalsIgnoreCase("") || !chatId.equalsIgnoreCase(adapterChat.listChat.get(adapterChat.listChat.size()-1).get("id").toString())){
+									chatId = hashMap.get("id");
 									adapterChat.listChat.add(hashMap);
-									adapterChat.notifyDataSetChanged();
+									isChanged=true;
+									//									isChanged = true;
+									//									chatId = hashMap.get("id");
+									//									adapterChat.listChat.add(hashMap);
 								}
 							}
 
-							if(!isFirstTime)
-							{
-								if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
-								{
-									//Post Append
-									for(int i=0;i<listData.size();i++)
-										adapterChat.listChat.add(listData.get(i));
-									adapterChat.notifyDataSetChanged();
-								}
-								else if(new JSONObject(response).getJSONObject("request_data").getString("max").equals("-1"))
-								{
-									ArrayList<HashMap<String, String>> listDataTemp= new ArrayList<>();
-									//Pre Append
-									if(adapterChat.listChat!=null && !adapterChat.listChat.isEmpty())
-									{
-										for(int i=0;i<adapterChat.listChat.size();i++)
-										{
-											listDataTemp.add(adapterChat.listChat.get(i));
-										}
-										adapterChat.listChat.clear();
-										for(int i=0;i<listData.size();i++)
-										{
-											adapterChat.listChat.add(listData.get(i));
-										}
-										for(int i=0;i<listDataTemp.size();i++)
-										{
-											adapterChat.listChat.add(listDataTemp.get(i));
-										}
-									}
-									adapterChat.notifyDataSetChanged();
-								}
-							}
+							adapterChat.notifyDataSetChanged();
+							if(isChanged)
+								lvChatMessages.setSelection(adapterChat.listChat.size()-1);
 						}
 					} catch (Exception e) {
 						e.getMessage();
