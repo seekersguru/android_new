@@ -12,6 +12,7 @@ import com.eventmanagementapp.dialogs.FilterDialog;
 import com.eventmanagementapp.dialogs.OptionsDialog;
 import com.eventmanagementapp.interfaces.IAction;
 import com.eventmanagementapp.interfaces.INotify;
+import com.eventmanagementapp.util.CustomFonts;
 import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.app.DatePickerDialog;
@@ -42,7 +43,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 	private int year, month, day;
 	DatePickerDialog dpDialog;
 	Context mContext;
-	TextView tvFilterCriteria,tvFilterFirst;//,tvFilterSecond;
+	TextView tvFilterCriteria,tvFilterFirst,tvTitle;//,tvFilterSecond;
 	LinearLayout llCalendar,llMail,llLeads,llMenu;
 	public static String _filterString="";
 	//	public static GIFView imViewProgreeBar;
@@ -73,7 +74,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		btnChange=(Button) findViewById(R.id.btnChange);
 		btnClearAll=(Button) findViewById(R.id.btnClearAll);
 		tvFilterFirst=(TextView) findViewById(R.id.tvFilterFirst);
-		//		tvFilterSecond=(TextView) findViewById(R.id.tvFilterSecond);
+		tvTitle=(TextView) findViewById(R.id.tvTitle);
 		tvFilterCriteria=(TextView) findViewById(R.id.tvFilterCriteria);
 		tvFilterFirst.setVisibility(View.GONE);
 		//		tvFilterSecond.setVisibility(View.GONE);
@@ -109,6 +110,7 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 		btnMail.setOnClickListener(this);
 		btnLeads.setOnClickListener(this);
 		btnMenu.setOnClickListener(this);
+		CustomFonts.setFontOfTextView(mContext, tvTitle,"fonts/GothamRoundedBook.ttf");
 		/*btnMail.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -152,6 +152,7 @@ public class MessageListActivity extends FragmentActivity{
 		});
 
 		Button refreshButton = (Button)findViewById(R.id.refresh_button);
+		refreshButton.setVisibility(View.GONE);
 		refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -188,14 +189,14 @@ public class MessageListActivity extends FragmentActivity{
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			/*if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
+			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
 			{
 				if(progress==null)
 				{
 					progress=new ProgressDialog(mContext);
 					progress.show();		
 				}
-			}*/
+			}
 		}
 
 		@Override
@@ -213,11 +214,11 @@ public class MessageListActivity extends FragmentActivity{
 		protected void onPostExecute(Void result) {
 			if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_LIST))
 			{
-				/*if(progress!=null && progress.isShowing())
+				if(progress!=null && progress.isShowing())
 				{
 					progress.dismiss();
 					progress=null;
-				}*/
+				}
 			}
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{  //{"request_data":{"msg_type":"message","min":"0","max":"-1","from_to

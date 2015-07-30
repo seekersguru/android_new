@@ -82,7 +82,7 @@ public class MessageChatActivity extends FragmentActivity{
 		toolbar.setBackgroundColor(Color.parseColor("#ffffff"));
 		lvChatMessages=(ListView) findViewById(R.id.lvChatMessages);
 		btnBack=(Button) toolbar.findViewById(R.id.btnBack);
-		btnBack.setVisibility(View.GONE);
+		btnBack.setVisibility(View.INVISIBLE);
 		tvToolBar=(TextView)toolbar.findViewById(R.id.tvToolBar);
 		etMessage=(EditText) findViewById(R.id.etMessage);
 		btnSendMessage=(Button) findViewById(R.id.btnSendMessage);
@@ -167,6 +167,7 @@ public class MessageChatActivity extends FragmentActivity{
 		});
 
 		Button refreshButton = (Button)findViewById(R.id.refresh_button);
+		refreshButton.setVisibility(View.GONE);
 		refreshButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

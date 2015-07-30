@@ -12,20 +12,6 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.text.TextUtils;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.adapter.EnquiryDetailsAdapter;
 import com.eventmanagementapp.bean.ButtonBean;
@@ -36,6 +22,23 @@ import com.eventmanagementapp.dialogs.SuccessDialog;
 import com.eventmanagementapp.interfaces.IAction;
 import com.eventmanagementapp.util.PreferenceUtil;
 import com.eventmanagementapp.util.ShowDialog;
+
+import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
+import android.graphics.Typeface;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
+import android.view.Gravity;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class EnquiryDetailsActivity extends FragmentActivity implements OnClickListener{
 
@@ -177,7 +180,7 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 							JSONObject jObject = jsonObj.getJSONObject("json");
 							//							tvTitle.setText(jObject.getString("label"));
 							String status = jObject.getString("status");
-							tvTitle.setText(jObject.getString("label")+"("+status+")");
+							tvTitle.setText(jObject.getString("label"));
 							tvTitle.setVisibility(View.VISIBLE);
 							LinearLayout parent_layout = (LinearLayout)findViewById(R.id.parent_layout);
 							JSONArray jArray = jObject.getJSONArray("table");
@@ -211,7 +214,19 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 									llButtons.setVisibility(View.VISIBLE);
 								}
 								else{
-									llButtons.setVisibility(View.GONE);
+									//									llButtons.setVisibility(View.GONE);
+									llButtons.removeAllViews();
+									TextView tvStatus=new TextView(getApplicationContext());
+									tvStatus.setText(status);
+									tvStatus.setTextColor(getResources().getColor(R.color.calendarThemeOrangeColor));
+									tvStatus.setTextSize(16.0f);
+									tvStatus.setTypeface(null,Typeface.BOLD);
+									LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+//									params.setMargins(5, 15, 0, 0);
+									params.gravity = Gravity.CENTER;
+									tvStatus.setLayoutParams(params);
+									tvStatus.setGravity(Gravity.CENTER);
+									llButtons.addView(tvStatus);
 								}
 								//buttonList.add(buttonDetail);
 							}
