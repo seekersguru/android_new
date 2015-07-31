@@ -59,6 +59,7 @@
             android:layout_alignParentTop="true"
             android:background="#00000000"
             android:gravity="center" />
+
     </RelativeLayout>
 
 </RelativeLayout>

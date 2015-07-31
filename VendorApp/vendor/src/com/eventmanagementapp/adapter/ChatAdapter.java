@@ -77,7 +77,11 @@ public class ChatAdapter extends BaseAdapter {
 				Date myDate = simpleDateFormat.parse(listChat.get(position).get("msg_time"));
 				simpleDateFormat.setTimeZone(TimeZone.getDefault());
 				String formattedDate = simpleDateFormat.format(myDate);
-				tvDateLeft.setText(formattedDate);
+				try {
+					tvDateLeft.setText(formattedDate.split(" ")[0]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
 			} catch (Exception e) {
 				e.getMessage();
 			}
@@ -94,7 +98,11 @@ public class ChatAdapter extends BaseAdapter {
 				Date myDate = simpleDateFormat.parse(listChat.get(position).get("msg_time"));
 				simpleDateFormat.setTimeZone(TimeZone.getDefault());
 				String formattedDate = simpleDateFormat.format(myDate);
-				tvDateRight.setText(formattedDate);
+				try {
+					tvDateRight.setText(formattedDate.split(" ")[0]);
+				} catch (Exception e) {
+					e.getMessage();
+				}
 			} catch (Exception e) {
 				e.getMessage();
 			}

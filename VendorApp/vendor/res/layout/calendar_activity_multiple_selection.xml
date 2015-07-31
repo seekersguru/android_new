@@ -10,8 +10,8 @@
         android:id="@+id/rlTopBar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottomBarHeight"
-        android:background="#fff" 
-        android:visibility="gone">
+        android:background="#fff"
+        android:visibility="visible" >
 
         <Button
             android:id="@+id/btnBack"
@@ -44,10 +44,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="WEDwise"
-            android:textColor="#ffffff"
+            android:text="Check Availability"
+            android:textColor="#555555"
             android:textSize="22sp"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <View
             android:id="@+id/viewTopbar"
@@ -96,7 +96,7 @@
             android:text="Message"
             android:textColor="#000"
             android:textSize="15sp" />
-    </LinearLayout>
+    </LinearLayout>
     -->
 
     <LinearLayout
@@ -178,7 +178,7 @@
                 </LinearLayout>
                 <!--
                       android:layout_width="@dimen/buttonMessageWidth"
-                        android:layout_height="@dimen/dimenBottomBarIcons"
+                        android:layout_height="@dimen/dimenBottomBarIcons"
                 -->
             </LinearLayout>
 
@@ -279,66 +279,37 @@
                 android:orientation="vertical"
                 android:padding="@dimen/paddingLeftEditText" >
 
-                <TextView
-                    android:id="@+id/tvFilterCriteria"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:text="2/05/2015 : 5 BOOK + 3 INQUIRIES \nFOLLOWING CITY"
-                    android:textColor="#000"
-                    android:textSize="@dimen/textSizeNormal" />
-
-                <View
-                    android:layout_width="250dp"
-                    android:layout_height="1dp"
-                    android:layout_gravity="center_horizontal"
-                    android:background="#9c9c9c" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:id="@+id/tvFilterFirst"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Filters : Enquiries,Event Date,Bid Date"
-                        android:textColor="#000"
-                        android:textSize="@dimen/textSizeSmall" />
-                </LinearLayout>
-
-                <LinearLayout
+                <Button
+                    android:id="@+id/btnSelectTimeSlot"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/buttonSignUpHeight"
+                    android:background="@drawable/button_border_grey"
+                    android:gravity="center"
+                    android:text="Select Time Slot"
+                    android:textColor="#c0c0c0"
+                    android:textSize="@dimen/textSizeMedium" />
+
+                <Button
+                    android:id="@+id/btnSelectAvailabilityType"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/buttonSignUpHeight"
+                    android:layout_marginTop="@dimen/marginLeftRightllFields"
+                    android:background="@drawable/button_border_grey"
+                    android:gravity="center"
+                    android:text="Select Availability Type"
+                    android:textColor="#c0c0c0"
+                    android:textSize="@dimen/textSizeMedium" />
+
+                <Button
+                    android:id="@+id/btnCheckAvailability"
+                    android:layout_width="190dp"
+                    android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/paddingLeftEditText"
-                    android:gravity="center" >
-
-                    <Button
-                        android:id="@+id/btnShowBookings"
-                        android:layout_width="100dp"
-                        android:layout_height="38dp"
-                        android:background="@color/calendarThemeOrangeColor"
-                        android:gravity="center"
-                        android:text="Show Bookings"
-                        android:textColor="#fff"
-                        android:textSize="@dimen/textSizeSmall" />
-
-                   <!--  <Button
-                        android:id="@+id/btnChange"
-                        android:layout_width="95dp"
-                        android:layout_height="33dp"
-                        android:layout_marginLeft="@dimen/marginLeftRightllFields"
-                        android:background="@color/calendarThemeOrangeColor"
-                        android:gravity="center"
-                        android:text="Change"
-                        android:textColor="#fff"
-                        android:textSize="@dimen/textSizeSmall" /> -->
-                </LinearLayout>
+                    android:layout_marginTop="@dimen/marginLeftRightllFields"
+                    android:background="@color/calendarThemeOrangeColor"
+                    android:textColor="#ffffff"
+                    android:text="Check Availability"
+                    android:textSize="@dimen/textSizeMedium" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

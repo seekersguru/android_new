@@ -21,11 +21,9 @@ import com.eventmanagementapp.MessageTabActivity;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.common.GlobalCommonMethods;
 import com.eventmanagementapp.common.GlobalCommonValues;
-import com.eventmanagementapp.tab.BidBookCreateActivity;
 import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.annotation.TargetApi;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -42,7 +40,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MFCalendarView extends LinearLayout{
 
@@ -328,7 +325,8 @@ public class MFCalendarView extends LinearLayout{
 					JSONArray yearArray=new JSONObject(jsonObj.getString("json")).getJSONArray("available_years");
 					minYear=yearArray.getString(0);
 					maxYear=yearArray.getString(1);
-
+					CalendarActivityMultipleSelection.minYear=yearArray.getString(0);
+					CalendarActivityMultipleSelection.maxYear=yearArray.getString(1);
 					//{"15":25,"1":5,"16":7}
 					String year=new JSONObject(response).getJSONObject("request_data").getString("year");
 					String month=new JSONObject(response).getJSONObject("request_data").getString("month");

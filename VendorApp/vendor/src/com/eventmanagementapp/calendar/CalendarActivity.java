@@ -3,17 +3,13 @@ package com.eventmanagementapp.calendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import com.eventmanagementapp.LoginSignUpActivity;
 import com.eventmanagementapp.MessageTabActivity;
 import com.eventmanagementapp.R;
 import com.eventmanagementapp.Activities.MenuListActivity;
 import com.eventmanagementapp.Activities.MessageListActivity;
 import com.eventmanagementapp.dialogs.FilterDialog;
-import com.eventmanagementapp.dialogs.OptionsDialog;
-import com.eventmanagementapp.interfaces.IAction;
 import com.eventmanagementapp.interfaces.INotify;
 import com.eventmanagementapp.util.CustomFonts;
-import com.eventmanagementapp.util.PreferenceUtil;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -280,6 +276,10 @@ public class CalendarActivity extends FragmentActivity implements OnClickListene
 	protected void onDestroy() {
 		super.onDestroy();
 		_filterString=null;
+		CalendarActivityMultipleSelection.strMonth=null;
+		CalendarActivityMultipleSelection.strYear=null;
+		CalendarActivityMultipleSelection.maxYear=null;
+		CalendarActivityMultipleSelection.minYear=null;
 	}
 
 	@Override

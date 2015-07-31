@@ -4,18 +4,29 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.eventmanagementapp.R;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,22 +50,30 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 	private int mnthlength;
 	private String itemvalue, curentDateString;
 	DateFormat df;
-
+	DisplayImageOptions options;
+	private ImageLoadingListener animateFirstListener = new AnimateFirstDisplayListener();
 	private ArrayList<String> items;
 	public static List<String> dayString = new ArrayList<String>();
 	private View previousView;
-
 	Calendar a;
 	TextView dayView,tvCount,tvPeekDate;
 	Button btnDisableOverlay;
+	ImageView imViewBGIndicator;
 	RelativeLayout rlContainer;
 	LinearLayout llSelectedDateBorder;
 	ArrayList<HashMap<String,String>> listSelectedDates = new ArrayList<HashMap<String,String>>();
 
 	public CalendarAdapterMultipleSelection(Context c, Calendar monthCalendar) {
-
 		mContext = c;
 		initCalendarAdapter(monthCalendar, null);
+		options = new DisplayImageOptions.Builder()
+				.showImageOnLoading(R.drawable.ic_stub)
+				.showImageForEmptyUri(R.drawable.ic_empty)
+				.showImageOnFail(R.drawable.ic_error)
+				.cacheInMemory(true)
+				.cacheOnDisk(true)
+				.considerExifParams(true)
+				.displayer(new RoundedBitmapDisplayer(20)).build();
 	}
 
 	public void initCalendarAdapter(Calendar monthCalendar,
@@ -106,13 +125,14 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 			// attributes
 			LayoutInflater vi = (LayoutInflater) mContext
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			v = vi.inflate(R.layout.cell_item_custom, null);
+			v = vi.inflate(R.layout.cell_item_custom_multiple_selection, null);
 		}
 		dayView = (TextView) v.findViewById(R.id.tvDate);
 		tvCount=(TextView) v.findViewById(R.id.tvCount);
 		tvPeekDate=(TextView) v.findViewById(R.id.tvPeekDate);
 		btnDisableOverlay=(Button) v.findViewById(R.id.btnDisableOverlay);
 		rlContainer=(RelativeLayout) v.findViewById(R.id.rlContainer);
+		imViewBGIndicator=(ImageView)v.findViewById(R.id.imViewBGIndicator);
 		llSelectedDateBorder=(LinearLayout) v.findViewById(R.id.llSelectedDateBorder);
 		btnDisableOverlay.setVisibility(View.GONE);
 		llSelectedDateBorder.setVisibility(View.GONE);
@@ -159,20 +179,33 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 			String year=arrayDate[0];
 			String month=arrayDate[1];
 			String day=arrayDate[2];
-
 			tagloop:for(int i=0;i<listSelectedDates.size();i++)
 			{
 				if(year.equals(listSelectedDates.get(i).get("year")) && month.equals(listSelectedDates.get(i).get("month")))
 				{
 					if(day.equals(listSelectedDates.get(i).get("day")))
 					{
-						rlContainer.setBackgroundColor(Color.parseColor("#009688"));//#00796B
-						/*tvCount.setVisibility(View.VISIBLE);
-						tvCount.setText(listSelectedDates.get(i).get("count"));*/
+						imViewBGIndicator.setVisibility(View.VISIBLE);
+						imViewBGIndicator.setAlpha(.5f);
+						rlContainer.setBackgroundColor(Color.parseColor("#ffffff"));
+						String imagePath=listSelectedDates.get(i).get("image_path");
+						ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(mContext)
+								.defaultDisplayImageOptions(options)
+								.build();
+						ImageLoader.getInstance().init(config);
+						try {
+							ImageLoader.getInstance().displayImage(imagePath, imViewBGIndicator, options, animateFirstListener);
+						} catch (Exception e) {
+							e.getMessage();
+						}
 						break tagloop;
 					}
 				}
 			}
+		}
+		else{
+			rlContainer.setBackgroundColor(Color.parseColor("#ffffff"));
+			imViewBGIndicator.setVisibility(View.GONE);
 		}
 
 		/*if(listSelectedDates!=null && !listSelectedDates.isEmpty())
@@ -311,5 +344,18 @@ public class CalendarAdapterMultipleSelection extends BaseAdapter {
 		return curentDateString;
 	}
 
-
+	public static class AnimateFirstDisplayListener extends SimpleImageLoadingListener {
+		public static final List<String> displayedImages = Collections.synchronizedList(new LinkedList<String>());
+		@Override
+		public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+			if (loadedImage != null) {
+				ImageView imageView = (ImageView) view;
+				boolean firstDisplay = !displayedImages.contains(imageUri);
+				if (firstDisplay) {
+					FadeInBitmapDisplayer.animate(imageView, 500);
+					displayedImages.add(imageUri);
+				}
+			}
+		}
+	}
 }

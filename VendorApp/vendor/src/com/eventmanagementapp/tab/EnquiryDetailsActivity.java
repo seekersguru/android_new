@@ -97,11 +97,11 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 			break;
 		case R.id.btnAccept:
-			int id = (int) btnAccept.getTag();
+			int id =(int) btnReject.getTag(); //(int) btnAccept.getTag();
 			checkInternetConnection(id,"button");
 			break;
 		case R.id.btnReject:
-			int id1 = (int) btnReject.getTag();
+			int id1 = (int) btnAccept.getTag();//(int) btnReject.getTag();
 			checkInternetConnection(id1,"button");
 			break;
 		default:

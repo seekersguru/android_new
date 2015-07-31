@@ -127,7 +127,7 @@ public class MFCalendarViewMultipleSelection extends LinearLayout{
 		addView(view);
 	}
 
-	protected void setNextMonth() {
+	/*protected void setNextMonth() {
 		if (month.get(Calendar.MONTH) == 
 				month.getActualMaximum(Calendar.MONTH)) {
 
@@ -149,7 +149,41 @@ public class MFCalendarViewMultipleSelection extends LinearLayout{
 			month.set(Calendar.MONTH,
 					month.get(Calendar.MONTH) - 1);
 		}
+	}*/
+	
+	protected void setNextMonth() {
+		CalendarActivityMultipleSelection.listDates.clear();
+		CalendarActivityMultipleSelection.listDatesResponse.clear();
+		//		if(month.get(Calendar.YEAR) + 1<Integer.parseInt(maxYear))
+		if (month.get(Calendar.MONTH) == month.getActualMaximum(Calendar.MONTH)) {
+			if((month.get(Calendar.YEAR) + 1)<=Integer.parseInt(CalendarActivityMultipleSelection.maxYear))
+			{
+				month.set((month.get(Calendar.YEAR) + 1),month.getActualMinimum(Calendar.MONTH), 1);
+				CalendarActivityMultipleSelection.strMonth="1";
+				CalendarActivityMultipleSelection.strYear=String.valueOf(month.get(Calendar.YEAR));
+			}
+		} else {
+			month.set(Calendar.MONTH,month.get(Calendar.MONTH) + 1);
+			CalendarActivityMultipleSelection.strMonth=String.valueOf(month.get(Calendar.MONTH)+1);
+			CalendarActivityMultipleSelection.strYear=String.valueOf(month.get(Calendar.YEAR));
+		}	
+	}
 
+	protected void setPreviousMonth() {
+		CalendarActivityMultipleSelection.listDatesResponse.clear();
+		CalendarActivityMultipleSelection.listDates.clear();
+		if (month.get(Calendar.MONTH) == month.getActualMinimum(Calendar.MONTH)) {
+			if(Integer.parseInt(CalendarActivityMultipleSelection.minYear)<(month.get(Calendar.YEAR)))
+			{
+				month.set((month.get(Calendar.YEAR) - 1),month.getActualMaximum(Calendar.MONTH), 1);
+				CalendarActivityMultipleSelection.strMonth="12";
+				CalendarActivityMultipleSelection.strYear=String.valueOf(month.get(Calendar.YEAR));
+			}
+		} else {
+			month.set(Calendar.MONTH,month.get(Calendar.MONTH) - 1);
+			CalendarActivityMultipleSelection.strMonth=String.valueOf(month.get(Calendar.MONTH)+1);
+			CalendarActivityMultipleSelection.strYear=String.valueOf(month.get(Calendar.YEAR));
+		}
 	}
 
 	protected void showToast(String string) {

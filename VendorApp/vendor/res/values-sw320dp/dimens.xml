@@ -23,8 +23,8 @@
     <dimen name="textSizeXLarge">30sp</dimen>
     
     <!-- LoginSignUpActivity -->
-    <dimen name="btnBackHeight">20dp</dimen>
-    <dimen name="btnBackWidth">21dp</dimen>
+    <dimen name="btnBackHeight">30dp</dimen>
+    <dimen name="btnBackWidth">31dp</dimen>
     <dimen name="marginleftBackButton">5dp</dimen>
     <dimen name="marginleftToolbarText">10dp</dimen>
     <dimen name="menuIconDimension">30dp</dimen>

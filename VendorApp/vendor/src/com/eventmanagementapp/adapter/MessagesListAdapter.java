@@ -69,7 +69,11 @@ public class MessagesListAdapter extends BaseAdapter{
 			Date myDate = simpleDateFormat.parse(listChat.get(position).get("msg_time"));
 			simpleDateFormat.setTimeZone(TimeZone.getDefault());
 			String formattedDate = simpleDateFormat.format(myDate);
-			tvDate.setText(formattedDate);
+			try {
+				tvDate.setText(formattedDate.split(" ")[0]);
+			} catch (Exception e) {
+				e.getMessage();
+			}
 		} catch (Exception e) {
 			e.getMessage();
 		}

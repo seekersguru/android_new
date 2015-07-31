@@ -100,7 +100,6 @@ public class CalendarAdapter extends BaseAdapter {
 	// create a new view for each item referenced by the Adapter
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View v = convertView;
-
 		if (convertView == null) { // if it's not recycled, initialize some
 			// attributes
 			LayoutInflater vi = (LayoutInflater) mContext
@@ -171,6 +170,9 @@ public class CalendarAdapter extends BaseAdapter {
 					}
 				}
 			}
+		}
+		else{
+			rlContainer.setBackgroundColor(Color.parseColor("#ffffff"));
 		}
 
 		/*if(date.equals("2015-06-25") || date.equals("2015-06-28") || date.equals("2015-06-30") || date.equals("2015-07-01") || date.equals("2015-07-05"))
