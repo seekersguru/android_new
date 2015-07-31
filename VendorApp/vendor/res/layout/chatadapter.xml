@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:text="Helo Guys how are you"
+            android:text="Hello Guys how are you"
             android:textColor="#000"
             android:textSize="@dimen/textSizeNormal" />
 
