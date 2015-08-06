@@ -18,7 +18,11 @@ import com.wedwise.chat.MessageChatActivity;
 import com.wedwise.common.GlobalCommonMethods;
 import com.wedwise.common.GlobalCommonValues;
 import com.wedwise.dialogs.ErrorDialog;
+import com.wedwise.tab.MessageTabActivity;
+import com.wedwiseapp.FavListActivity;
+import com.wedwiseapp.NavigationDrawerHomeActivity;
 import com.wedwiseapp.R;
+import com.wedwiseapp.util.CustomFonts;
 import com.wedwiseapp.util.PreferenceUtil;
 
 import android.app.ProgressDialog;
@@ -34,6 +38,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -49,6 +54,8 @@ public class MessageListActivity extends FragmentActivity{
 	String response,url,responseMessageList;
 	ProgressDialog progress;
 	String page_count="1";
+	Button btnMail,btnHome,btnLeads,btnMenu;
+	LinearLayout llMail, llHome, llLeads, llMenu;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -70,6 +77,136 @@ public class MessageListActivity extends FragmentActivity{
 		btnBack=(Button) findViewById(R.id.btnBack);
 		lvMessages=(ListView)findViewById(R.id.lvMessages);
 		listMessages=new ArrayList<HashMap<String, String>>();
+		
+		CustomFonts.setFontOfTextView(MessageListActivity.this, tvTitle, "fonts/GothamRoundedBook.ttf");
+		
+		llMail = (LinearLayout) findViewById(R.id.llMail);
+		llHome = (LinearLayout) findViewById(R.id.llHome);
+		llLeads = (LinearLayout) findViewById(R.id.llLeads);
+		llMenu = (LinearLayout) findViewById(R.id.llMenu);
+		btnMail = (Button) findViewById(R.id.btnMail);
+		btnHome=(Button) findViewById(R.id.btnHome);
+		btnLeads=(Button) findViewById(R.id.btnLeads);
+		btnMenu = (Button) findViewById(R.id.btnMenu);
+		
+		llHome.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent myIntent = new Intent(MessageListActivity.this,
+						NavigationDrawerHomeActivity.class);
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.left_in, R.anim.right_out);
+			}
+		});
+
+		llLeads.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(MessageListActivity.this,
+						MessageTabActivity.class);
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);
+			}
+		});
+
+		llMail.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+//				if (!PreferenceUtil.getInstance().isRegistered()) {
+//					ErrorDialog dialog = new ErrorDialog();
+//					dialog.newInstance(mContext, "Alert!",
+//							"Please register on Wedwise to use this feature",
+//							null);
+//					dialog.setCancelable(false);
+//					dialog.show(getFragmentManager(), "test");
+//				} else if (PreferenceUtil.getInstance().isRegistered()) {
+//					Intent myIntent = new Intent(MessageListActivity.this,
+//							MessageListActivity.class);
+//					startActivity(myIntent);
+//					overridePendingTransition(R.anim.right_in,
+//							R.anim.left_out);
+//				}
+			}
+		});
+
+		llMenu.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(MessageListActivity.this,
+						MenuListActivity.class);
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);
+				// boolean isLogin = PreferenceUtil.getInstance().isLogin();
+				// if(isLogin)
+				// {
+				// LogoutConfirmationDialog dialogLogout=new
+				// LogoutConfirmationDialog();
+				// dialogLogout.setCancelable(false);
+				// dialogLogout.newInstance(getActivity(), "",
+				// "You are logged in.Do you want to logout?", iNotifyLogout);
+				// dialogLogout.show(getFragmentManager(), "test");
+				// }
+				// else if (!isLogin)
+				// {
+				// Intent myIntent = new Intent(getActivity(),
+				// LoginSignUpActivity.class);
+				//  startActivity(myIntent);
+				//  overridePendingTransition(R.anim.right_in,
+				// R.anim.left_out);
+				// }
+			}
+		});
+		
+		btnMenu.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(MessageListActivity.this,
+						MenuListActivity.class);
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);
+			}
+		});
+
+		
+		btnMail.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//				if (!PreferenceUtil.getInstance().isRegistered()) {
+//					ErrorDialog dialog = new ErrorDialog();
+//					dialog.newInstance(mContext, "Alert!",
+//							"Please register on Wedwise to use this feature",
+//							null);
+//					dialog.setCancelable(false);
+//					dialog.show(getFragmentManager(), "test");
+//				} else if (PreferenceUtil.getInstance().isRegistered()) {
+//					Intent myIntent = new Intent(MessageListActivity.this,
+//							MessageListActivity.class);
+//					startActivity(myIntent);
+//					overridePendingTransition(R.anim.right_in,
+//							R.anim.left_out);
+//				}
+			}
+		});
+		
+		btnLeads.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(MessageListActivity.this,
+						MessageTabActivity.class);
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);					
+			}
+		});
+
 
 		//		listMessages.add("Andy Lau");
 		//		listMessages.add("James Moore");

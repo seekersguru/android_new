@@ -30,9 +30,8 @@
             android:id="@+id/tvToolBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/marginleftToolbarText"
-            android:layout_toRightOf="@+id/btnBack"
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="@dimen/textSizeMedium" />

@@ -71,7 +71,7 @@ public class PackagesModel extends TypeModel {
 				while (iterator.hasNext()) {
 					String key = iterator.next();
 					if(key.equals("minimum")){
-						listData.get(i).setMinimum(getKeyValueObject(new JSONObject(jsonObject.getJSONObject(key).toString())));
+//						listData.get(i).setMinimum(getKeyValueObject(new JSONObject(jsonObject.getJSONObject(key).toString())));
 					}else if(key.equals("quoted")){
 						listData.get(i).setQuoted(getKeyValueObject(new JSONObject(jsonObject.getJSONObject(key).toString())));
 					}else if(key.equals("options")){

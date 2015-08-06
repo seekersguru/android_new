@@ -6,6 +6,8 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.wedwise.adapter.Acodianadapter;
 import com.wedwise.gsonmodels.Acodianmodal;
@@ -28,6 +31,7 @@ import com.wedwise.gsonmodels.SectionModel;
 import com.wedwise.json.PackagesModelNew;
 import com.wedwise.json.TopPackege;
 import com.wedwiseapp.R;
+import com.wedwiseapp.util.CustomFonts;
 import com.wedwiseapp.views.CTextView;
 
 public class ShowIndividualSection extends Activity{
@@ -39,6 +43,8 @@ public class ShowIndividualSection extends Activity{
 	ListView acodianlistview;
 	Acodianadapter adapter;
 	List<Acodianmodal> _listDataHeader;
+	TextView tvTitle;
+	String header;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,8 @@ public class ShowIndividualSection extends Activity{
 		scrollView = (ScrollView) activity.findViewById(R.id.scrollView);
 //		lvExp = (ExpandableListView) findViewById(R.id.lvExp);
 		btnShowIndBack = (Button) findViewById(R.id.btnShowIndBack);
+		tvTitle = (TextView) findViewById(R.id.tvTitle);
+		CustomFonts.setFontOfTextView(ShowIndividualSection.this, tvTitle, "fonts/GothamRoundedBook.ttf");
 		acodianlistview = (ListView) findViewById(R.id.acodianlistview);
 		btnShowIndBack.setOnClickListener(new OnClickListener() {
 			
@@ -56,7 +64,7 @@ public class ShowIndividualSection extends Activity{
 			public void onClick(View arg0) {
 				// TODO Auto-generated method stub
 				finish();
-				overridePendingTransition(R.anim.right_in, R.anim.right_out);
+				overridePendingTransition(R.anim.left_in, R.anim.right_out);
 			}
 		});
 		acodianlistview.setOnItemClickListener(new OnItemClickListener() {
@@ -107,14 +115,32 @@ public class ShowIndividualSection extends Activity{
 			//
 
 //			scrollView.setVisibility(View.GONE);
-			initPackages(sectionModel);
+			//initPackages(sectionModel);
+			PackagesModel packagesModel = (PackagesModel) sectionModel.getReadTypeModel();
 			
+			if (!TextUtils.isEmpty(sectionModel.getHeader())) {
+				header = sectionModel.getHeader();
+			} else {
+				tvTitle.setVisibility(View.GONE);
+			}
+			
+			Intent intent=new Intent(ShowIndividualSection.this,AccordianList.class);
+			intent.putExtra("Datalist", packagesModel);
+			intent.putExtra("header", header);
+			startActivityForResult(intent, 1111);
 			break;
 		case para:
 			break;
 		default:
 			break;
 		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		finish();
 	}
 
 	@SuppressLint("InflateParams")
@@ -123,12 +149,12 @@ public class ShowIndividualSection extends Activity{
 		_listDataHeader = new ArrayList<Acodianmodal>();
 		HashMap<String, List<KeyValueHeader>> _listDataChild = new HashMap<String, List<KeyValueHeader>>();
 		ArrayList<ArrayList<KeyValue>> arrayList1 = new ArrayList<ArrayList<KeyValue>>();
-		CTextView tvDescription = (CTextView) activity
-				.findViewById(R.id.tvDescription);
+//		CTextView tvDescription = (CTextView) activity
+//				.findViewById(R.id.tvDescription);
 		if (!TextUtils.isEmpty(sectionModel.getHeader())) {
-			tvDescription.setText(sectionModel.getRead_header());
+			tvTitle.setText(sectionModel.getRead_header());
 		} else {
-			tvDescription.setVisibility(View.GONE);
+			tvTitle.setVisibility(View.GONE);
 		}
 		for (TopPackege package_Values : packagesModel.getPackage_Values()) {
 		
@@ -186,25 +212,40 @@ public class ShowIndividualSection extends Activity{
 	private void initKeyValue(SectionModel sectionModel) {
 		LinearLayout linearLayout = (LinearLayout) activity
 				.findViewById(R.id.key_value_layout);
-		CTextView tvDescription = (CTextView) activity
-				.findViewById(R.id.tvDescription);
+//		CTextView tvDescription = (CTextView) activity
+//				.findViewById(R.id.tvDescription);
 		if (!TextUtils.isEmpty(sectionModel.getHeader())) {
-			tvDescription.setText(sectionModel.getRead_header());
+			tvTitle.setText(sectionModel.getHeader());
 		} else {
-			tvDescription.setVisibility(View.GONE);
+			tvTitle.setVisibility(View.GONE);
 		}
-		KeyValue_Model keyValue_Model = (KeyValue_Model) sectionModel
+		final KeyValue_Model keyValue_Model = (KeyValue_Model) sectionModel
 				.getReadTypeModel();
 		View blank_line_view = null;
-		for (String key : keyValue_Model.getPairs().keySet()) {
+		for (final String key : keyValue_Model.getPairs().keySet()) {
 			View child = activity.getLayoutInflater().inflate(
 					R.layout.keyvaluerow, null);
 			CTextView key_layout = (CTextView) child
 					.findViewById(R.id.key_layout);
 			CTextView value_layout = (CTextView) child
 					.findViewById(R.id.value_layout);
+			CustomFonts.setFontOfTextView(activity, key_layout, "fonts/GothamRoundedBook.ttf");
+			CustomFonts.setFontOfTextView(activity, value_layout, "fonts/GothamRoundedBook.ttf");
 			key_layout.setText(key);
 			value_layout.setText(keyValue_Model.getPairs().get(key));
+			if(key.equals("Phone")){
+				value_layout.setCompoundDrawablesWithIntrinsicBounds(
+		                    R.drawable.icon_call, 0, 0, 0);
+				child.setOnClickListener(new OnClickListener() {
+					
+					@Override
+					public void onClick(View arg0) {
+						Intent callIntent = new Intent(Intent.ACTION_CALL);
+						callIntent.setData(Uri.parse("tel:"+keyValue_Model.getPairs().get(key)));
+						startActivity(callIntent);
+					}
+				});
+			}
 			linearLayout.addView(child);
 			blank_line_view = activity.getLayoutInflater().inflate(
 					R.layout.blank_line, null);
@@ -219,7 +260,7 @@ public class ShowIndividualSection extends Activity{
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
-		overridePendingTransition(R.anim.right_in, R.anim.right_out);
+		overridePendingTransition(R.anim.left_in, R.anim.right_out);
 	}
 
 }

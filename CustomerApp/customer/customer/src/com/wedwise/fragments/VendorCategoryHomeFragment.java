@@ -86,6 +86,7 @@ public class VendorCategoryHomeFragment extends Fragment{
 			public void onClick(View v) {
 				Intent myIntent = new Intent(getActivity(),
 						MenuListActivity.class);
+				myIntent.putExtra("menuArray", listItemsCategory);
 				getActivity().startActivity(myIntent);
 				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 //				boolean isLogin = PreferenceUtil.getInstance().isLogin();
@@ -111,6 +112,7 @@ public class VendorCategoryHomeFragment extends Fragment{
 			public void onClick(View v) {
 				Intent myIntent = new Intent(getActivity(),
 						MenuListActivity.class);
+				myIntent.putExtra("menuArray", listItemsCategory);
 				getActivity().startActivity(myIntent);
 				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 //				boolean isLogin = PreferenceUtil.getInstance().isLogin();

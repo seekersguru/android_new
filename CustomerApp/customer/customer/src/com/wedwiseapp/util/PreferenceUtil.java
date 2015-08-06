@@ -83,4 +83,22 @@ public class PreferenceUtil {
 		editor.putString("email", email);
 		editor.commit();
 	}
+	public String getBrideName() {
+		String uid = sp.getString("BrideName", null);
+		return uid;
+	}
+	
+	public void setBrideName(String email) {
+		editor.putString("BrideName", email);
+		editor.commit();
+	}
+	public String getGroomName() {
+		String uid = sp.getString("GroomName", null);
+		return uid;
+	}
+	
+	public void setGroomName(String groomname) {
+		editor.putString("GroomName", groomname);
+		editor.commit();
+	}
 }

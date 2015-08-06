@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg" >
+    android:layout_height="match_parent" >
 
-   
+   <android.support.v4.view.ViewPager
+        android:id="@+id/vPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <LinearLayout
         android:id="@+id/llSocialSitesLogin"
@@ -78,15 +80,15 @@
         android:padding="@dimen/marginLeftRightllFields"
         android:singleLine="false"
         android:textColor="#ffffff"
-        android:textSize="@dimen/textSizeNormal" />
+        android:textSize="@dimen/textSizeSmall" />
 
  <ImageView
      android:id="@+id/imViewLogo"
-     android:layout_width="wrap_content"
-     android:layout_height="wrap_content"
+     android:layout_width="100dp"
+     android:layout_height="100dp"
      android:layout_above="@+id/llSocialSitesLogin"
      android:layout_centerHorizontal="true"
-     android:background="@drawable/logo"
+     android:background="@drawable/logo_wedwise"
      android:contentDescription="@string/drawer_open"
      android:visibility="visible" />
 

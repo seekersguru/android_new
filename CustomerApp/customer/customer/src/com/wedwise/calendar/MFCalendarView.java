@@ -44,13 +44,13 @@ public class MFCalendarView extends LinearLayout{
 		init(context);
 	}
 
-	
+
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	public MFCalendarView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		init(context);
 	}
-	
+
 	public MFCalendarView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		init(context);
@@ -79,7 +79,7 @@ public class MFCalendarView extends LinearLayout{
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", month));
 
 		CustomFonts.setFontOfTextView(context, title, "fonts/GothamRnd-Light.otf");
-		
+
 		RelativeLayout previous = (RelativeLayout) view.findViewById(R.id.previous);
 
 		previous.setOnClickListener(new OnClickListener() {
@@ -120,10 +120,8 @@ public class MFCalendarView extends LinearLayout{
 					refreshCalendar();
 				}
 				((CalendarAdapter) parent.getAdapter()).setSelected(v);
-
 				month.setTimeInMillis(Util.dateToLong(currentSelectedDate));
 				calendaradapter.initCalendarAdapter(month, calendarListener);
-
 				if (calendarListener != null) 
 					calendarListener.onDateChanged(currentSelectedDate);
 			}
@@ -135,10 +133,10 @@ public class MFCalendarView extends LinearLayout{
 	protected void setNextMonth() {
 		if (month.get(Calendar.MONTH) == 
 				month.getActualMaximum(Calendar.MONTH)) {
-			
+
 			month.set((month.get(Calendar.YEAR) + 1),
 					month.getActualMinimum(Calendar.MONTH), 1);
-			
+
 		} else {
 			month.set(Calendar.MONTH,
 					month.get(Calendar.MONTH) + 1);
@@ -158,7 +156,7 @@ public class MFCalendarView extends LinearLayout{
 	}
 
 	protected void showToast(String string) {
-//		Toast.makeText(getContext(), string, Toast.LENGTH_SHORT).show();
+		//		Toast.makeText(getContext(), string, Toast.LENGTH_SHORT).show();
 	}
 
 	public int getSelectedMonth(){
@@ -195,7 +193,7 @@ public class MFCalendarView extends LinearLayout{
 			Log.d("", "month:"+ (month.get(Calendar.MONTH)+1) + 
 					" year:" + month.get(Calendar.YEAR));
 			calendaradapter.notifyDataSetChanged();
-			
+
 			//call web service here
 		}
 	};

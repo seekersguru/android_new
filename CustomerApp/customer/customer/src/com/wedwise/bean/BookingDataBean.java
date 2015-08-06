@@ -13,5 +13,5 @@ public class BookingDataBean {
 	public String event_date;
 	public String receiver_name;
 	public String identifier;
-	
+	public String status;
 }

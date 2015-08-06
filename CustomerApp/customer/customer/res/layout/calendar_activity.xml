@@ -26,9 +26,8 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/marginleftBackButton"
-            android:layout_toRightOf="@+id/btnBack"
             android:text="Schedule Visit"
             android:textColor="#000"
             android:textSize="@dimen/textSizeLarge"
@@ -64,6 +63,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+            
+             <LinearLayout
+                android:id="@+id/llCalendarHolder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/marginLeftRightllFields"
+                android:layout_marginRight="@dimen/marginLeftRightllFields"
+                android:background="#ffffffff"
+                android:orientation="vertical" >
+
+                <com.wedwise.calendar.MFCalendarView
+                    android:id="@+id/mFCalendarView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <!-- </com.wedwise.calendar.MFCalendarView> -->
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llTimePickerContainer"
@@ -80,22 +95,7 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/llCalendarHolder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/marginLeftRightllFields"
-                android:layout_marginRight="@dimen/marginLeftRightllFields"
-                android:layout_marginTop="30dp"
-                android:background="#ffffffff"
-                android:orientation="vertical" >
-
-                <com.wedwise.calendar.MFCalendarView
-                    android:id="@+id/mFCalendarView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <!-- </com.wedwise.calendar.MFCalendarView> -->
-            </LinearLayout>
+           
 
             <Button
                 android:id="@+id/btnSchedule"

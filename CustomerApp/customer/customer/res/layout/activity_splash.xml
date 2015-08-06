@@ -2,7 +2,7 @@
     android:id="@+id/linearLayout1"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/home_gradient"
+    android:background="#EA675C"
     android:gravity="center_horizontal"
     android:orientation="vertical" >
 
@@ -16,12 +16,12 @@
 
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:background="#0000"
             android:clickable="false"
             android:gravity="center"
-            android:src="@drawable/logo" />
+            android:src="@drawable/logo_wedwise" />
 
         <TextView
             android:id="@+id/textView1"

@@ -80,13 +80,17 @@ public class MessageChatActivity extends FragmentActivity{
 		imViewOverflowMenuicon.setVisibility(View.VISIBLE);
 		//		tvToolBar.setText("Sujata Weds Rajesh");
 		tvToolBar.setTextColor(Color.parseColor("#555555"));
-		btnBack.setBackground(MessageChatActivity.this.getResources().getDrawable(R.drawable.back_orange));
+		try {
+			btnBack.setBackground(MessageChatActivity.this.getResources().getDrawable(R.drawable.back_orange));
+		} catch (NoSuchMethodError e) {
+			e.getMessage();
+		}
 		listChat=new ArrayList<HashMap<String, String>>();
-		CustomFonts.setFontOfTextView(mContext, tvToolBar, "fonts/GothamRnd-Light.otf");
+		CustomFonts.setFontOfTextView(mContext, tvToolBar, "fonts/GothamRoundedBook.ttf");
 		adapterChat=new ChatAdapter(MessageChatActivity.this,listChat);
 		lvChatMessages.setAdapter(adapterChat);
 
-		if(getIntent()!=null && getIntent().getExtras()!=null)
+		if(getIntent()!=null && getIntent().getExtras()!=null && getIntent().getExtras().getString("receiver_email")!=null)
 		{
 			_receiver_email=getIntent().getExtras().getString("receiver_email");
 		}
@@ -171,7 +175,7 @@ public class MessageChatActivity extends FragmentActivity{
 			{
 				if(url.equals(GlobalCommonValues.CUSTOMER_VENDOR_MESSAGE_CREATE))
 				{
-					
+
 					// In case of sending message
 					try {
 						JSONObject jsonObj = new JSONObject(response);

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.wedwise.bean.BookingDataBean;
 import com.wedwiseapp.R;
+import com.wedwiseapp.util.CustomFonts;
 
 import android.app.Activity;
 import android.content.Context;
@@ -49,16 +50,16 @@ public class BookListAdapter extends BaseAdapter{
 		TextView tvDateFirst=(TextView) listItem.findViewById(R.id.tvDateFirst);
 		TextView tvDateSecond=(TextView) listItem.findViewById(R.id.tvDateSecond);
 		TextView tvPackageDedtails=(TextView) listItem.findViewById(R.id.tvPackageDedtails);
-//		CustomFonts.setFontOfTextView(mContext,tvDate,"fonts/GothamRnd-Light.otf");
-//		CustomFonts.setFontOfTextView(mContext,tvSubject,"fonts/GothamRnd-Light.otf");
-//		CustomFonts.setFontOfTextView(mContext,tvDescription,"fonts/GothamRnd-Light.otf");
-		
+		CustomFonts.setFontOfTextView(mContext,tvName,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDateFirst,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvDateSecond,"fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(mContext,tvPackageDedtails,"fonts/GothamRoundedBook.ttf");
 		tvName.setText(listMessages.get(position).receiver_name);
 		tvDateFirst.setText(listMessages.get(position).event_date);
 		String msg_time = (listMessages.get(position).msg_time).substring(0,listMessages.get(position).msg_time.indexOf(" "));
 		tvDateSecond.setText(msg_time);
-		tvPackageDedtails.setText(listMessages.get(position).line1+"\n"+listMessages.get(position).line2);
-		
+		tvPackageDedtails.setText(listMessages.get(position).line1+"\n"+listMessages.get(position).line2+"--"+listMessages.get(position).status);
+
 		return listItem;
 	}
 

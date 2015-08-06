@@ -31,6 +31,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -41,12 +43,16 @@ import android.widget.TextView;
 public class BookTab extends Fragment {
 
 	ListView lvBook;
-	ArrayList<BookingDataBean> listMessages;
+	ArrayList<BookingDataBean> listMessages = new ArrayList<BookingDataBean>();
+	ArrayList<BookingDataBean> listData = new ArrayList<BookingDataBean>();
 	BookListAdapter adapterMessageList;
 	ProgressDialog progress;
 	private String response;
 	TextView empty_view;
-
+	boolean isMinId=false,isMaxId=false;
+	String min="0",max="-1";
+	boolean isWebServiceCalled=true;
+//	static boolean isFirstTime=true;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -59,8 +65,9 @@ public class BookTab extends Fragment {
 	{
 		lvBook=(ListView) view.findViewById(R.id.lvBook);
 		empty_view = (TextView)view.findViewById(R.id.empty_view);
+
 		listMessages=new ArrayList<BookingDataBean>();
-		checkInternetConnection();
+		//		checkInternetConnection();
 		adapterMessageList=new BookListAdapter(getActivity(), listMessages);
 		lvBook.setAdapter(adapterMessageList);
 		lvBook.setOnItemClickListener(new OnItemClickListener() {
@@ -68,14 +75,70 @@ public class BookTab extends Fragment {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				/*BookingDataBean	bidDetail = listMessages.get(position);
+				BookingDataBean	bidDetail = listMessages.get(position);
 				Intent myIntent=new Intent(getActivity(),EnquiryDetailsActivity.class);
 				myIntent.putExtra("id", bidDetail.id);
 				myIntent.putExtra("type","book");
 				startActivity(myIntent);
-				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);*/	
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);	
 			}
 		});
+
+		lvBook.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				isWebServiceCalled=true;
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+				if(isWebServiceCalled)
+				{
+					isWebServiceCalled=false;
+					if (firstVisibleItem == 0) {
+						// check if we reached the top or bottom of the list
+						View v = lvBook.getChildAt(0);
+						int offset = (v == null) ? 0 : v.getTop();
+						if (offset == 0) {
+							isMinId=true;
+							isMaxId=false;
+							if(adapterMessageList.listMessages!=null && !adapterMessageList.listMessages.isEmpty())
+							{
+								min = String.valueOf(adapterMessageList.listMessages.get(0).id);
+								max="-1";
+							}
+							checkInternetConnection();
+							// reached the top:
+							return;
+						} 
+					} else if (totalItemCount - visibleItemCount == firstVisibleItem){
+						View v =  lvBook.getChildAt(totalItemCount-1);
+						int offset = (v == null) ? 0 : v.getTop();
+						if (offset == 0) {
+							isMinId=false;
+							isMaxId=true;
+							if(adapterMessageList.listMessages!=null && !adapterMessageList.listMessages.isEmpty())
+							{
+								max = String.valueOf(adapterMessageList.listMessages.get(adapterMessageList.listMessages.size()-1).id);
+								min="-1";
+							}
+							checkInternetConnection();
+							// reached the top:
+							return;
+						}
+					} 
+					//  if (visibleItemCount + firstVisibleItem >= totalItemCount)
+				}
+			}
+		});
+	}
+
+	@Override
+	public void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		checkInternetConnection();
 	}
 
 	private void checkInternetConnection()
@@ -142,12 +205,54 @@ public class BookTab extends Fragment {
 							bean.event_date= jArray.getJSONObject(i).getString("event_date");
 							bean.receiver_name= jArray.getJSONObject(i).getString("receiver_name");
 							bean.identifier= jArray.getJSONObject(i).getString("identifier");
-
-							listMessages.add(bean);
+							bean.status= jArray.getJSONObject(i).getString("status");
+							listData.add(bean);
+							/*if(isFirstTime)
+							{
+								isFirstTime=false;*/
+								listMessages.add(bean);
+								adapterMessageList.listMessages=listMessages;
+								
+//							}
 						}
+						adapterMessageList.notifyDataSetChanged();
+						/*if(!isFirstTime)
+						{
+							if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
+							{
+								//Post Append
+								for(int i=0;i<listData.size();i++)
+									adapterMessageList.listMessages.add(listData.get(i));
+								adapterMessageList.notifyDataSetChanged();
+							}
+							else if(new JSONObject(response).getJSONObject("request_data").getString("max").equals("-1"))
+							{
+								ArrayList<BookingDataBean> listDataTemp= new ArrayList<BookingDataBean>();
+								//Pre Append
+								if(adapterMessageList.listMessages!=null && !adapterMessageList.listMessages.isEmpty())
+								{
+									for(int i=0;i<adapterMessageList.listMessages.size();i++)
+									{
+										listDataTemp.add(adapterMessageList.listMessages.get(i));
+									}
+									adapterMessageList.listMessages.clear();
+									for(int i=0;i<listData.size();i++)
+									{
+										adapterMessageList.listMessages.add(listData.get(i));
+									}
+									for(int i=0;i<listDataTemp.size();i++)
+									{
+										adapterMessageList.listMessages.add(listDataTemp.get(i));
+									}
+								}
+								adapterMessageList.notifyDataSetChanged();
+							}
+						}*/
 					}
+					/*if(adapterMessageList.listMessages!=null)
+						adapterMessageList.listMessages.clear();
 					adapterMessageList.listMessages=listMessages;
-					adapterMessageList.notifyDataSetChanged();
+					adapterMessageList.notifyDataSetChanged();*/
 					if(listMessages.size()==0){
 						empty_view.setVisibility(View.VISIBLE);
 					}
@@ -163,8 +268,15 @@ public class BookTab extends Fragment {
 	{
 		// Create data variable for sent values to server  
 		String data="";
-		data= URLEncoder.encode("identifier", "UTF-8") 
+		data= URLEncoder.encode(""
+				+ "identifier", "UTF-8") 
 				+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(), "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("min", "UTF-8") + "="
+				+ URLEncoder.encode(min, "UTF-8");
+
+		data += "&" + URLEncoder.encode("max", "UTF-8") + "="
+				+ URLEncoder.encode(max, "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("page_no", "UTF-8") + "="
 				+ URLEncoder.encode("1", "UTF-8"); 

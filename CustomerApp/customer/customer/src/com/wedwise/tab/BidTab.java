@@ -31,6 +31,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
@@ -48,6 +50,11 @@ public class BidTab extends Fragment {
 	ProgressDialog progress;
 	private String response;
 	TextView empty_view;
+	boolean isMinId=false,isMaxId=false;
+	String min="0",max="-1";
+	boolean isWebServiceCalled=true;
+//	static boolean isFirstTime=true;
+	ArrayList<BookingDataBean> listData= new ArrayList<BookingDataBean>();
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -60,21 +67,80 @@ public class BidTab extends Fragment {
 	{
 		lvBid=(ListView) view.findViewById(R.id.lvBid);
 		empty_view = (TextView)view.findViewById(R.id.empty_view);
-		checkInternetConnection();
+		//		checkInternetConnection();
 		adapter=new EnquiryDataAdapter(getActivity(),listEnquiryDataBean);
 		lvBid.setAdapter(adapter);
+		checkInternetConnection();
 		lvBid.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position,
 					long id) {
-				/*BookingDataBean	bidDetail = listEnquiryDataBean.get(position);
+				BookingDataBean	bidDetail = listEnquiryDataBean.get(position);
 				Intent myIntent=new Intent(getActivity(),EnquiryDetailsActivity.class);
 				myIntent.putExtra("id", bidDetail.id);
 				myIntent.putExtra("type","bid");
 				startActivity(myIntent);
-				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);*/			
+				getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);			
 			}
-		});		
+		});	
+
+		lvBid.setOnScrollListener(new OnScrollListener() {
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				isWebServiceCalled=true;
+			}
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+			if(isWebServiceCalled)
+			{
+				isWebServiceCalled=false;
+				if (firstVisibleItem == 0) {
+					// check if we reached the top or bottom of the list
+					View v = lvBid.getChildAt(0);
+					int offset = (v == null) ? 0 : v.getTop();
+					if (offset == 0) {
+						isMinId=true;
+						isMaxId=false;
+
+						if(adapter.listEnquiryDataBean!=null && !adapter.listEnquiryDataBean.isEmpty())
+						{
+							min = String.valueOf(adapter.listEnquiryDataBean.get(0).id);
+							max="-1";
+						}
+						//						minid="0";
+						checkInternetConnection();
+						//	                	Toast.makeText(getActivity(), "Top",1000).show();
+						// reached the top:
+						return;
+					} 
+				} else if (totalItemCount - visibleItemCount == firstVisibleItem){
+					View v =  lvBid.getChildAt(totalItemCount-1);
+					int offset = (v == null) ? 0 : v.getTop();
+					if (offset == 0) {
+						isMinId=false;
+						isMaxId=true;
+						if(adapter.listEnquiryDataBean!=null && !adapter.listEnquiryDataBean.isEmpty())
+						{
+							max = String.valueOf(adapter.listEnquiryDataBean.get(adapter.listEnquiryDataBean.size()-1).id);
+							min = "-1";
+						}
+						checkInternetConnection();
+						// reached the top:
+						return;
+					}
+				} 
+				//  if (visibleItemCount + firstVisibleItem >= totalItemCount)
+			}
+			}
+		});
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		checkInternetConnection();
 	}
 
 	private void checkInternetConnection()
@@ -114,13 +180,11 @@ public class BidTab extends Fragment {
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			//			Toast.makeText(getBaseContext(), "Data Sent!"+response, Toast.LENGTH_LONG).show();
 			if(progress!=null && progress.isShowing())
 			{
 				progress.dismiss();
 				progress=null;
 			}
-
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
 				try {
@@ -141,11 +205,49 @@ public class BidTab extends Fragment {
 							bean.event_date= jArray.getJSONObject(i).getString("event_date");
 							bean.receiver_name= jArray.getJSONObject(i).getString("receiver_name");
 							bean.identifier= jArray.getJSONObject(i).getString("identifier");
-							listEnquiryDataBean.add(bean);
+							bean.status= jArray.getJSONObject(i).getString("status");
+							listData.add(bean);
+//							if(isFirstTime)
+//							{
+//								isFirstTime=false;
+								listEnquiryDataBean.add(bean);
+								adapter.listEnquiryDataBean=listEnquiryDataBean;
+//							}
 						}
+						adapter.notifyDataSetChanged();
+						/*if(!isFirstTime)
+						{
+							if(new JSONObject(response).getJSONObject("request_data").getString("min").equals("-1"))
+							{
+								//Post Append
+								for(int i=0;i<listData.size();i++)
+									adapter.listEnquiryDataBean.add(listData.get(i));
+								adapter.notifyDataSetChanged();
+							}
+							else if(new JSONObject(response).getJSONObject("request_data").getString("max").equals("-1"))
+							{
+								ArrayList<BookingDataBean> listDataTemp= new ArrayList<BookingDataBean>();
+								//Pre Append
+								if(adapter.listEnquiryDataBean!=null && !adapter.listEnquiryDataBean.isEmpty())
+								{
+									for(int i=0;i<adapter.listEnquiryDataBean.size();i++)
+									{
+										listDataTemp.add(adapter.listEnquiryDataBean.get(i));
+									}
+									adapter.listEnquiryDataBean.clear();
+									for(int i=0;i<listData.size();i++)
+									{
+										adapter.listEnquiryDataBean.add(listData.get(i));
+									}
+									for(int i=0;i<listDataTemp.size();i++)
+									{
+										adapter.listEnquiryDataBean.add(listDataTemp.get(i));
+									}
+								}
+								adapter.notifyDataSetChanged();
+							}
+						}*/
 					}
-					adapter.listEnquiryDataBean=listEnquiryDataBean;
-					adapter.notifyDataSetChanged();
 					if(listEnquiryDataBean.size()==0){
 						empty_view.setVisibility(View.VISIBLE);
 					}
@@ -163,6 +265,12 @@ public class BidTab extends Fragment {
 		String data="";
 		data= URLEncoder.encode("identifier", "UTF-8") 
 				+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(), "UTF-8"); 
+
+		data += "&" + URLEncoder.encode("min", "UTF-8") + "="
+				+ URLEncoder.encode(min, "UTF-8");
+
+		data += "&" + URLEncoder.encode("max", "UTF-8") + "="
+				+ URLEncoder.encode(max, "UTF-8"); 
 
 		data += "&" + URLEncoder.encode("page_no", "UTF-8") + "="
 				+ URLEncoder.encode("1", "UTF-8"); 

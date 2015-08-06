@@ -1,5 +1,7 @@
 package com.wedwise.Activities;
 
+import java.util.ArrayList;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,14 +18,17 @@ import android.widget.TextView;
 
 import com.wedwiseapp.R;
 import com.wedwiseapp.login.LoginSignUpActivity;
+import com.wedwiseapp.util.CustomFonts;
 import com.wedwiseapp.util.PreferenceUtil;
 
 public class MenuListActivity extends Activity {
 
-	private String[] menuitem = {"Profile","Banquets","Decorators","Caterers","Photography","Others","Favourites","Logout"};
+	private String[] menuitem = {"Profile","Favourites","Logout"};
 	private ListView listView;
-	TextView txtMenurow;
+	TextView txtMenurow, tvTitle;
 	Button 	btnBack;
+	ArrayList<String> menuItem = new ArrayList<String>();
+	ArrayList<String> menuItemFull = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +37,13 @@ public class MenuListActivity extends Activity {
 		setContentView(R.layout.activity_menulist);
 		listView = (ListView) findViewById(R.id.list_item);
 		btnBack = (Button) findViewById(R.id.btnBack);
-		
+		tvTitle = (TextView) findViewById(R.id.tvTitle);
+		CustomFonts.setFontOfTextView(MenuListActivity.this, tvTitle, "fonts/GothamRoundedBook.ttf");
+//		menuItem = getIntent().getStringArrayListExtra("menuArray");
+		menuItem.add("Profile");
+		menuItem.add("Favourites");
+		menuItem.add("Logout");
+//		menuItemFull.addAll(menuItem);
 		btnBack.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -43,20 +54,20 @@ public class MenuListActivity extends Activity {
 			}
 		});
 		
-		MenuListAdapter adapter = new MenuListAdapter(MenuListActivity.this, R.layout.menu_list_row, menuitem);
+		MenuListAdapter adapter = new MenuListAdapter(MenuListActivity.this, R.layout.menu_list_row, menuItem);
 		listView.setAdapter(adapter);
 	}
 
 	private class MenuListAdapter extends ArrayAdapter<String> {
 
-		private String[] listdata;
+		private  ArrayList<String> _menu_item;
 		private Context context;
 		int _resource;
 
-		public MenuListAdapter(Context context, int resource, String[] objects) {
-			super(context, resource, objects);
+		public MenuListAdapter(Context context, int resource, ArrayList<String> menu_item) {
+			super(context, resource, menu_item);
 			this.context  = context;
-			listdata = objects;
+			_menu_item = menu_item;
 			_resource = resource;
 		}
 		
@@ -72,15 +83,15 @@ public class MenuListActivity extends Activity {
 				txtMenurow = (TextView) view.findViewById(R.id.txtMenurow);
 				
 			}
-			
-			txtMenurow.setText(listdata[position]);
+			CustomFonts.setFontOfTextView(context, txtMenurow, "fonts/GothamRoundedBook.ttf");
+			txtMenurow.setText(_menu_item.get(position));
 			
 			txtMenurow.setOnClickListener(new OnClickListener() {
 				
 				@Override
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
-					if(listdata[position].equals("Logout")){
+					if(_menu_item.get(position).equals("Logout")){
 						PreferenceUtil.getInstance().setEmail("");
 						PreferenceUtil.getInstance().setIdentifier("");
 						PreferenceUtil.getInstance().setLogin(false);
@@ -88,7 +99,7 @@ public class MenuListActivity extends Activity {
 						Intent intent = new Intent(context, LoginSignUpActivity.class);
 						startActivity(intent);
 						finish();
-					}else if(listdata[position].equals("Profile")){
+					}else if(_menu_item.get(position).equals("Profile")){
 						
 					}
 				}

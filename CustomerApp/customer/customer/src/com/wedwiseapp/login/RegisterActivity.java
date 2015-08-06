@@ -51,6 +51,7 @@ import com.wedwise.dialogs.ErrorDialog;
 import com.wedwise.interfaces.IAction;
 import com.wedwiseapp.NavigationDrawerHomeActivity;
 import com.wedwiseapp.R;
+import com.wedwiseapp.util.CustomFonts;
 import com.wedwiseapp.util.PreferenceUtil;
 import com.wedwiseapp.util.ShowDialog;
 import com.wedwiseapp.util.Utils;
@@ -67,7 +68,7 @@ TextWatcher{
 	Gson gson;
 	ProgressDialog progress;
 	UserRegistrationBean objUserRegistration;
-	String response="",responseImages="";
+	String response="",responseImages="",responseData="";
 	ArrayList<HashMap<String, String>> listData=new ArrayList<HashMap<String,String>>();
 	String url="";
 	boolean isRecentRegistered=false;
@@ -131,7 +132,7 @@ TextWatcher{
 		year = calendar.get(Calendar.YEAR);
 		month = calendar.get(Calendar.MONTH);
 		day = calendar.get(Calendar.DAY_OF_MONTH);
-		tentivedate.setText(year+"-"+(month+1)+"-"+day);
+//		tentivedate.setText(year+"-"+(month+1)+"-"+day);
 		if(getIntent().getExtras().getString("loginfrom") != null){
 			loginfrom=getIntent().getExtras().getString("loginfrom");
 		}
@@ -221,18 +222,18 @@ TextWatcher{
 			//			etGroomName.setVisibility(View.VISIBLE);
 			//			etArea.setVisibility(View.VISIBLE);
 		}
-		//		CustomFonts.setFontOfEditText(mContext, etEmailAddress,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etPassword,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etBrideName,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etGroomName,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etArea,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etPasswordReset,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfEditText(mContext, etContactNumber,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfButton(mContext,btnSignIn,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfButton(mContext,btnPasswordReset,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvLogin,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvForgotPassword,"fonts/GothamRnd-Light.otf");
-		//		CustomFonts.setFontOfTextView(mContext,tvToolBar,"fonts/GothamRnd-Light.otf");
+				CustomFonts.setFontOfEditText(mContext, etEmailAddress,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfEditText(mContext, etPassword,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfEditText(mContext, etBrideName,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfEditText(mContext, etGroomName,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfEditText(mContext, etArea,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfEditText(mContext, etPasswordReset,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfEditText(mContext, etContactNumber,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfButton(mContext,btnSignIn,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfButton(mContext,btnPasswordReset,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfTextView(mContext,tvLogin,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfTextView(mContext,tvForgotPassword,"fonts/GothamRoundedBook.ttf");
+				CustomFonts.setFontOfTextView(mContext,tvToolBar,"fonts/GothamRoundedBook.ttf");
 		etEmailAddress.addTextChangedListener(this);
 		etPassword.addTextChangedListener(this);
 		etBrideName.addTextChangedListener(this);
@@ -539,7 +540,7 @@ TextWatcher{
 		protected Void doInBackground(String... params) {
 			try {
 				// Calling method for setting to be sent to the server
-				SetData("registaration");
+				SetData();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -575,6 +576,8 @@ TextWatcher{
 						if(!jsonObj.getString("json").equals("0"))
 							identifier =new JSONObject(jsonObj.getString("json")).getString("identifier");
 						PreferenceUtil.getInstance().setEmail(email);
+						PreferenceUtil.getInstance().setBrideName(bride_name);;
+						PreferenceUtil.getInstance().setGroomName(groom_name);;
 						PreferenceUtil.getInstance().setIdentifier(identifier);
 						if(message.equals("0"))
 							message="Registered Successfully";
@@ -605,6 +608,13 @@ TextWatcher{
 						String message = jsonObj.getString("message");
 						if(message.equals("0")){
 							PreferenceUtil.getInstance().setRegister(true);
+							PreferenceUtil.getInstance().setLogin(true);
+							PreferenceUtil.getInstance().setIdentifier(jsonObj.getJSONObject("json").getString("identifier"));
+//							if(GlobalCommonMethods.isNetworkAvailable(mContext))
+//							{
+//								String url=GlobalCommonValues.USERREGISTRATION;
+//								new HttpAsyncTaskData().execute(url);
+//							}
 							Intent intent = new Intent(mContext, NavigationDrawerHomeActivity.class);
 							intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
 							startActivity(intent);
@@ -723,7 +733,7 @@ TextWatcher{
 	}
 
 	// Create GetData Metod
-	public  void  SetData(String type)  throws  UnsupportedEncodingException
+	public  void  SetData()  throws  UnsupportedEncodingException
 	{
 		// Create data variable for sent values to server  
 
@@ -737,22 +747,13 @@ TextWatcher{
 					+ URLEncoder.encode(etPassword.getText().toString(), "UTF-8"); 
 
 			data += "&" + URLEncoder.encode("groom_name", "UTF-8") 
-					+ "=" + URLEncoder.encode(etBrideName.getText().toString(), "UTF-8");
+					+ "=" + URLEncoder.encode(etGroomName.getText().toString(), "UTF-8");
 
 			data += "&" + URLEncoder.encode("bride_name", "UTF-8") 
 					+ "=" + URLEncoder.encode(etBrideName.getText().toString(), "UTF-8");
 
 			data += "&" + URLEncoder.encode("contact_number", "UTF-8") 
 					+ "=" + URLEncoder.encode(etContactNumber.getText().toString(), "UTF-8");
-			
-			if(type.equals("get")){
-				data += "&" + URLEncoder.encode("contact_number", "UTF-8") 
-						+ "=" + URLEncoder.encode("get", "UTF-8");
-			}else if(type.equals("update")){
-				data += "&" + URLEncoder.encode("contact_number", "UTF-8") 
-						+ "=" + URLEncoder.encode("get", "UTF-8");
-			}
-			
 		}
 		else if(url.equals(GlobalCommonValues.LOGIN)){
 
@@ -821,7 +822,6 @@ TextWatcher{
 			catch(Exception ex) {}
 		}
 	}
-	
 	DatePickerDialog dpDialog;
 	private int year, month, day;
 	private TextView tentivedate;
@@ -852,4 +852,141 @@ TextWatcher{
 		tentivedate.setText(new StringBuilder().append(year).append("-")
 				.append(month).append("-").append(day));
 	}
+	
+	
+	private class HttpAsyncTaskData extends AsyncTask<String, Void, Void> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if(progress==null)
+			{
+				progress=new ProgressDialog(mContext);
+				progress.show();		
+			}
+		}
+
+		@Override
+		protected Void doInBackground(String... params) {
+			try {
+				// Calling method for setting to be sent to the server
+				SetDataRegistration();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		// onPostExecute displays the results of the AsyncTask.
+		@SuppressLint("DefaultLocale")
+		@Override
+		protected void onPostExecute(Void result) {
+			//			Toast.makeText(getBaseContext(), "Data Sent!"+response, Toast.LENGTH_LONG).show();
+			if(progress!=null && progress.isShowing())
+			{
+				progress.dismiss();
+				progress=null;
+			}
+
+			if(!TextUtils.isEmpty(responseData) && GlobalCommonMethods.isJSONValid(responseData))
+			{
+				if(url.equals(GlobalCommonValues.USERREGISTRATION))
+				{
+					try {
+						String identifier="";
+						JSONObject jsonObj = new JSONObject(responseData);
+						//JSONObject jsonMainNode = jsonObj.getJSONObject("request_data");
+						JSONObject request_data = jsonObj.getJSONObject("request_data");
+						String contact_number = request_data.getString("contact_number");
+						String password = request_data.getString("password");
+						String bride_name = request_data.getString("bride_name");
+						String email = request_data.getString("email");
+						String groom_name = request_data.getString("groom_name");
+						String _result = jsonObj.getString("result");
+						String message = jsonObj.getString("message");
+						if(!jsonObj.getString("json").equals("0"))
+							identifier =new JSONObject(jsonObj.getString("json")).getString("identifier");
+						PreferenceUtil.getInstance().setEmail(email);
+						PreferenceUtil.getInstance().setBrideName(bride_name);
+						PreferenceUtil.getInstance().setGroomName(groom_name);
+						PreferenceUtil.getInstance().setIdentifier(identifier);
+						if(message.equals("0"))
+							message="Registered Successfully";
+						
+						Intent intent = new Intent(mContext, NavigationDrawerHomeActivity.class);
+						intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+						startActivity(intent);
+						overridePendingTransition(R.anim.right_in, R.anim.left_out);
+						finish();
+						if(!message.toLowerCase().equalsIgnoreCase("registered successfully"))
+						{
+//							ErrorDialog dialog=new ErrorDialog();
+//							dialog.newInstance(mContext, _result.toUpperCase(), message, iActionObj);
+//							dialog.setCancelable(false);
+//							dialog.show(getFragmentManager(), "test");
+						}
+						else if(message.toLowerCase().equalsIgnoreCase("registered successfully"))
+						{
+//							isRecentRegistered=true;
+//							emailLogin=email;
+//							passwordLogin=password;
+//							checkInternetConnection("login");
+						}
+					} catch (Exception e) {
+						e.getMessage();
+					}
+				}
+			}
+		}
+	}
+	
+	private void SetDataRegistration() throws  UnsupportedEncodingException{
+		String data="";
+			data= URLEncoder.encode("identifier", "UTF-8") 
+					+ "=" + URLEncoder.encode(PreferenceUtil.getInstance().getIdentifier(), "UTF-8"); 
+
+			data += "&" + URLEncoder.encode("operation", "UTF-8") + "="
+					+ URLEncoder.encode("get", "UTF-8"); 
+			BufferedReader reader=null;
+
+			// Send data 
+			try
+			{ 
+				URL _url=null;
+				// Defined URL  where to send data
+					_url= new URL(GlobalCommonValues.USERREGISTRATION);
+				// Send POST data request
+
+				URLConnection conn = _url.openConnection(); 
+				conn.setDoOutput(true); 
+				OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream()); 
+				wr.write( data ); 
+				wr.flush(); 
+
+				// Get the server response 
+				reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+				StringBuilder sb = new StringBuilder();
+				String line = null;
+
+				// Read Server Response
+				while((line = reader.readLine()) != null)
+				{
+					// Append server response in string
+					sb.append(line + "\n");
+				}
+				responseData = sb.toString();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+			finally
+			{
+				try
+				{
+					reader.close();
+				}
+				catch(Exception ex) {}
+			}
+
+	}
+
 }

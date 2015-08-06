@@ -81,14 +81,15 @@ public class Acodianadapter extends BaseAdapter {
 									.findViewById(R.id.key_layout);
 							CTextView value_layout = (CTextView) child
 									.findViewById(R.id.value_layout);
-							if(val.getKey().equals("Minimum Price")){
-								key_layout.setTypeface(null, Typeface.BOLD);
-								value_layout.setTypeface(null, Typeface.BOLD);
-							}else if(val.getKey().equals("Quoted Price")){
-								key_layout.setTypeface(null, Typeface.BOLD);
-								value_layout.setTypeface(null, Typeface.BOLD);
+							if(val.getKey() != null){
+								if(val.getKey().equals("Minimum Price")){
+									key_layout.setTypeface(null, Typeface.BOLD);
+									value_layout.setTypeface(null, Typeface.BOLD);
+								}else if(val.getKey().equals("Quoted Price")){
+									key_layout.setTypeface(null, Typeface.BOLD);
+									value_layout.setTypeface(null, Typeface.BOLD);
+								}
 							}
-							
 							key_layout.setText(val.getKey());
 							value_layout.setText(val.getValue());
 							holder.linearLayout.addView(child);

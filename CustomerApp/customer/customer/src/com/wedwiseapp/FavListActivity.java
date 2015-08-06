@@ -13,17 +13,6 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.example.vendordetailpage.MainActivity;
-import com.wedwise.Activities.MenuListActivity;
-import com.wedwise.Activities.MessageListActivity;
-import com.wedwise.adapter.FavAdapter;
-import com.wedwise.adapter.SpinnerAdapter;
-import com.wedwise.common.GlobalCommonMethods;
-import com.wedwise.common.GlobalCommonValues;
-import com.wedwise.dialogs.ErrorDialog;
-import com.wedwise.tab.MessageTabActivity;
-import com.wedwiseapp.util.PreferenceUtil;
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -46,20 +35,35 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SearchView.OnCloseListener;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.vendordetailpage.MainActivity;
+import com.wedwise.Activities.MenuListActivity;
+import com.wedwise.Activities.MessageListActivity;
+import com.wedwise.adapter.FavAdapter;
+import com.wedwise.adapter.SpinnerAdapter;
+import com.wedwise.common.GlobalCommonMethods;
+import com.wedwise.common.GlobalCommonValues;
+import com.wedwise.dialogs.ErrorDialog;
+import com.wedwise.tab.MessageTabActivity;
+import com.wedwiseapp.util.CustomFonts;
+import com.wedwiseapp.util.PreferenceUtil;
 
 @SuppressLint("InflateParams")
 public class FavListActivity extends FragmentActivity {
 	ListView favList;
 	FavAdapter adapterSubList;
 	Context mContext;
-	Button btnBack, btnMenu, btnSearch;// ,btnSpinnerOpen;
+	Button btnBack, btnSearch;// ,btnSpinnerOpen;
+	Button btnMail,btnHome,btnLeads,btnMenu;
+	LinearLayout llMail, llHome, llLeads, llMenu;
 	ArrayList<FavData> data;
 	SearchView searchView;
 	// Spinner spSwitchCategory;
 	ArrayList<String> listCategory;
 	SpinnerAdapter adapterSpinner;
 	// ImageView imViewCategoryType;
-	TextView tvCategoryType;
+	TextView tvCategoryType, tvresult;
 	View viewTopbar;
 	String category = "";
 	// Button btnCategory;
@@ -67,7 +71,13 @@ public class FavListActivity extends FragmentActivity {
 	String response, url;
 	ProgressDialog progress;
 	String vendor_type;
-	LinearLayout llMail, llHome, llLeads, llMenu;
+	
+	
+	ArrayList<ArrayList<HashMap<String,String>>> listImages1 = new ArrayList<ArrayList<HashMap<String,String>>>();
+	
+	boolean isSearch = false;
+	EditText et;
+	String search;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +93,7 @@ public class FavListActivity extends FragmentActivity {
 		favList = (ListView) findViewById(R.id.favList);
 		listCategory = new ArrayList<String>();
 		data = new ArrayList<FavData>();
-		adapterSubList = new FavAdapter(mContext, listData);
+		adapterSubList = new FavAdapter(mContext, listData, listImages1);
 		favList.setAdapter(adapterSubList);
 		btnBack = (Button) findViewById(R.id.btnBack);
 		viewTopbar = findViewById(R.id.viewTopbar);
@@ -91,11 +101,18 @@ public class FavListActivity extends FragmentActivity {
 		searchView = (SearchView) findViewById(R.id.searchView);
 		btnSearch = (Button) findViewById(R.id.btnSeacrh);
 		tvCategoryType = (TextView) findViewById(R.id.tvCategoryType);
+		tvresult = (TextView) findViewById(R.id.tvresult);
+		CustomFonts.setFontOfTextView(FavListActivity.this, tvCategoryType, "fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(FavListActivity.this, tvresult, "fonts/GothamRoundedBook.ttf");
 
 		llMail = (LinearLayout) findViewById(R.id.llMail);
 		llHome = (LinearLayout) findViewById(R.id.llHome);
 		llLeads = (LinearLayout) findViewById(R.id.llLeads);
 		llMenu = (LinearLayout) findViewById(R.id.llMenu);
+		btnMail = (Button) findViewById(R.id.btnMail);
+		btnHome=(Button) findViewById(R.id.btnHome);
+		btnLeads=(Button) findViewById(R.id.btnLeads);
+		btnMenu = (Button) findViewById(R.id.btnMenu);
 		// spSwitchCategory=(Spinner) findViewById(R.id.spSwitchCategory);
 		// btnCategory=(Button) findViewById(R.id.btnCategory);
 		// btnCategory.setOnClickListener(new OnClickListener() {
@@ -110,14 +127,23 @@ public class FavListActivity extends FragmentActivity {
 			vendor_type = getIntent().getExtras().getString("category_type");
 		}
 
+		llHome.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				finish();
+				overridePendingTransition(R.anim.left_in, R.anim.right_out);
+			}
+		});
+
 		llLeads.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				Intent myIntent = new Intent(FavListActivity.this,
 						MessageTabActivity.class);
-				 startActivity(myIntent);
-				 overridePendingTransition(R.anim.right_in,
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
 						R.anim.left_out);
 			}
 		});
@@ -126,7 +152,7 @@ public class FavListActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				if (!PreferenceUtil.getInstance().isRegistered()) {
+				if (PreferenceUtil.getInstance().getBrideName() == null || PreferenceUtil.getInstance().getBrideName().equals("") ) {
 					ErrorDialog dialog = new ErrorDialog();
 					dialog.newInstance(mContext, "Alert!",
 							"Please register on Wedwise to use this feature",
@@ -136,8 +162,8 @@ public class FavListActivity extends FragmentActivity {
 				} else if (PreferenceUtil.getInstance().isRegistered()) {
 					Intent myIntent = new Intent(FavListActivity.this,
 							MessageListActivity.class);
-					 startActivity(myIntent);
-					 overridePendingTransition(R.anim.right_in,
+					startActivity(myIntent);
+					overridePendingTransition(R.anim.right_in,
 							R.anim.left_out);
 				}
 			}
@@ -149,8 +175,8 @@ public class FavListActivity extends FragmentActivity {
 			public void onClick(View v) {
 				Intent myIntent = new Intent(FavListActivity.this,
 						MenuListActivity.class);
-				 startActivity(myIntent);
-				 overridePendingTransition(R.anim.right_in,
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
 						R.anim.left_out);
 				// boolean isLogin = PreferenceUtil.getInstance().isLogin();
 				// if(isLogin)
@@ -172,6 +198,51 @@ public class FavListActivity extends FragmentActivity {
 				// }
 			}
 		});
+		
+		btnMenu.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(FavListActivity.this,
+						MenuListActivity.class);
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);
+			}
+		});
+
+		
+		btnMail.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (PreferenceUtil.getInstance().getBrideName() == null || PreferenceUtil.getInstance().getBrideName().equals("") ) {
+					ErrorDialog dialog = new ErrorDialog();
+					dialog.newInstance(mContext, "Alert!",
+							"Please register on Wedwise to use this feature",
+							null);
+					dialog.setCancelable(false);
+					dialog.show(getFragmentManager(), "test");
+				} else if (PreferenceUtil.getInstance().isRegistered()) {
+					Intent myIntent = new Intent(FavListActivity.this,
+							MessageListActivity.class);
+					startActivity(myIntent);
+					overridePendingTransition(R.anim.right_in,
+							R.anim.left_out);
+				}
+			}
+		});
+		
+		btnLeads.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent myIntent = new Intent(FavListActivity.this,
+						MessageTabActivity.class);
+				startActivity(myIntent);
+				overridePendingTransition(R.anim.right_in,
+						R.anim.left_out);					
+			}
+		});
+
 
 		// ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this,
 		// android.R.layout.simple_spinner_item,
@@ -215,14 +286,7 @@ public class FavListActivity extends FragmentActivity {
 
 			@Override
 			public void onClick(View v) {
-				btnSearch.setVisibility(View.INVISIBLE);
-				searchView.setVisibility(View.VISIBLE);
-				tvCategoryType.setText(category.substring(0, 1) + "...");
-				/*
-				 * InputFilter[] filterArray = new InputFilter[1];
-				 * filterArray[0] = new InputFilter.LengthFilter(20);
-				 * tvCategoryType.setFilters(filterArray);
-				 */
+				//				btnSearch.setVisibility(View.INVISIBLE);
 				searchView.setIconified(false);
 				searchView.setBackgroundColor(Color.TRANSPARENT);
 				searchView.requestFocus();
@@ -240,13 +304,33 @@ public class FavListActivity extends FragmentActivity {
 							.getIdentifier("android:id/search_src_text", null,
 									null);
 					TextView tv = (TextView) searchView.findViewById(id);
-					EditText et = (EditText) searchView.findViewById(id);
+					et = (EditText) searchView.findViewById(id);
 					et.setHint("Search Here");
 					tv.setTextColor(Color.parseColor("#F05543"));
 				} catch (Exception e) {
 					e.getMessage();
 				}
 				searchView.performClick();
+
+				if(searchView.getVisibility() == View.VISIBLE && !et.getHint().equals("Search Here")){
+					searchView.setVisibility(View.GONE);
+					tvCategoryType.setText(category);
+					isSearch = true;
+					search = et.getText().toString();
+					new HttpAsyncTask().execute(url);
+				}else if(searchView.getVisibility() == View.VISIBLE && et.getHint().equals("Search Here")){
+					Toast.makeText(FavListActivity.this, "Please enter some text", Toast.LENGTH_SHORT).show();
+				}else{
+					isSearch = false;
+					searchView.setVisibility(View.VISIBLE);
+					tvCategoryType.setText(category.substring(0, 1) + "...");
+					/*
+					 * InputFilter[] filterArray = new InputFilter[1];
+					 * filterArray[0] = new InputFilter.LengthFilter(20);
+					 * tvCategoryType.setFilters(filterArray);
+					 */
+
+				}
 			}
 		});
 
@@ -347,8 +431,10 @@ public class FavListActivity extends FragmentActivity {
 					&& GlobalCommonMethods.isJSONValid(response)) {
 				try {
 					JSONArray jsonArray = new JSONObject(response)
-							.getJSONObject("json").getJSONArray("vendor_list");
+					.getJSONObject("json").getJSONArray("vendor_list");
 					HashMap<String, String> hashMap;
+					if(jsonArray.length() != 0){
+						tvresult.setVisibility(View.GONE);
 					for (int i = 0; i < jsonArray.length(); i++) {
 						String email = new JSONObject(String.valueOf(jsonArray
 								.get(i))).get("vendor_email").toString();
@@ -358,18 +444,65 @@ public class FavListActivity extends FragmentActivity {
 								.get(i))).get("image").toString();
 						String price = new JSONObject(String.valueOf(jsonArray
 								.get(i))).get("starting_price").toString();
-						// String name=new
-						// JSONObject(String.valueOf(jsonArray.get(i)))
+
+
+						ArrayList<HashMap<String,String>> listImagesicon = new ArrayList<HashMap<String,String>>();
+
+//						item_icons = new JSONObject(String.valueOf(jsonArray
+//								.get(i))).getJSONArray("icons_line2");
+
+						String[] arricon1=new JSONObject(String.valueOf(jsonArray
+								.get(i))).getJSONArray("icons_line1").toString().split(",");
+
+
+						
+
+						for(int j=0;j<arricon1.length;j++)
+						{                              //[[{"\/media\/icons\/2x\/icon3.png", "DJ"}]
+							String[] arr2=arricon1[j].split(":");//[0].substring(arr1[0].split(":")[0].indexOf("\"")+1,arr1[0].split(":")[0].lastIndexOf("\"")).replaceAll("\", " ");
+							String _image=arr2[0].substring(arr2[0].split(":")[0].indexOf("\"")+1,arricon1[0].split(":")[0].lastIndexOf("\"")).replace("\\","");
+							String _name=arr2[1].substring(arr2[1].indexOf("\"")+1,arr2[1].lastIndexOf("\""));
+							HashMap<String, String> hashMapImages=new HashMap<String, String>();
+							hashMapImages.put("image1"+j,_image);
+							hashMapImages.put("name1"+j,_name);
+							listImagesicon.add(hashMapImages);
+						}
+						
+						
+						
+						
+						String[] arricon2=new JSONObject(String.valueOf(jsonArray
+								.get(i))).getJSONArray("icons_line2").toString().split(",");
+
+
+//						ArrayList<HashMap<String,String>> listImages2 = new ArrayList<HashMap<String,String>>();
+
+						for(int j=0;j<arricon2.length;j++)
+						{                              //[[{"\/media\/icons\/2x\/icon3.png", "DJ"}]
+							String[] arr2=arricon2[j].split(":");//[0].substring(arr1[0].split(":")[0].indexOf("\"")+1,arr1[0].split(":")[0].lastIndexOf("\"")).replaceAll("\", " ");
+							String _image=arr2[0].substring(arr2[0].split(":")[0].indexOf("\"")+1,arricon2[0].split(":")[0].lastIndexOf("\"")).replace("\\","");
+							String _name=arr2[1].substring(arr2[1].indexOf("\"")+1,arr2[1].lastIndexOf("\""));
+							HashMap<String, String> hashMapImages=new HashMap<String, String>();
+							hashMapImages.put("image2"+j,_image);
+							hashMapImages.put("name2"+j,_name);
+							listImagesicon.add(hashMapImages);
+						}
+//						System.out.println(listImages);//[{name=DJ, image=/media/icons/2x/icon3.png}, {name=MM, image=/media/icons/2x/icon4.png"}]
 						hashMap = new HashMap<String, String>();
 						hashMap.put("name", name);
 						hashMap.put("email", email);
 						hashMap.put("image", image);
 						hashMap.put("price", price);
 						listData.add(hashMap);
+						listImages1.add(listImagesicon);
 					}
 					adapterSubList.listData = listData;
+					adapterSubList.listImages = listImages1;
 					adapterSubList.notifyDataSetChanged();
-
+					}else{
+						tvresult.setVisibility(View.VISIBLE);
+					}
+					
 				} catch (Exception e) {
 				}
 			}
@@ -384,6 +517,11 @@ public class FavListActivity extends FragmentActivity {
 
 		int density = getResources().getDisplayMetrics().densityDpi;
 		String image_type = "", search_string = "";
+		if(isSearch){
+			search_string = search;
+		}else{
+			search_string = "";
+		}
 
 		if (density == DisplayMetrics.DENSITY_MEDIUM) {
 			image_type = "drawable-hdpi";

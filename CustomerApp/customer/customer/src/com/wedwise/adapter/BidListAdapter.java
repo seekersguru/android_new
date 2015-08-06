@@ -2,6 +2,8 @@ package com.wedwise.adapter;
 
 import java.util.ArrayList;
 
+import com.wedwiseapp.R;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,9 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.wedwiseapp.R;
-import com.wedwiseapp.util.CustomFonts;
 
 public class BidListAdapter extends BaseAdapter{
 
@@ -51,11 +50,10 @@ public class BidListAdapter extends BaseAdapter{
 		TextView tvSubject=(TextView) listItem.findViewById(R.id.tvSubject);
 		TextView tvDescription=(TextView) listItem.findViewById(R.id.tvDescription);
 		ImageView imViewAtttachment=(ImageView) listItem.findViewById(R.id.imViewAttachment);
-		tvContactName.setText(listMessages.get(position));
-//		CustomFonts.setFontOfTextView(mContext,tvContactName,"fonts/GothamRnd-Light.otf");
 //		CustomFonts.setFontOfTextView(mContext,tvDate,"fonts/GothamRnd-Light.otf");
 //		CustomFonts.setFontOfTextView(mContext,tvSubject,"fonts/GothamRnd-Light.otf");
 //		CustomFonts.setFontOfTextView(mContext,tvDescription,"fonts/GothamRnd-Light.otf");
+		tvContactName.setText(listMessages.get(position));
 		return listItem;
 	}
 

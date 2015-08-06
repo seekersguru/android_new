@@ -1,11 +1,17 @@
 package com.wedwise.gsonmodels;
 
+import java.io.Serializable;
+
 import org.json.JSONObject;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Map_Model extends TypeModel {
+public class Map_Model extends TypeModel implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2527567340544238947L;
 	String key_values = "key_values";
 	String lattitude = "android_lat";
 	String longitude = "android_lang";

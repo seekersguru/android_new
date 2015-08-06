@@ -25,15 +25,18 @@ import com.wedwiseapp.util.ShowDialog;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -48,6 +51,7 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 	ArrayList<ButtonBean> buttonList = new ArrayList<ButtonBean>();
 	ProgressDialog progress;
 	private String response;
+	LinearLayout llButtons;
 
 	@Override
 	protected void onCreate(Bundle arg0) {
@@ -55,10 +59,15 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.enquirydetails);
 		btnBack=(Button) findViewById(R.id.btnBack);
+		btnBack.setVisibility(View.GONE);
 		tvTitle=(TextView) findViewById(R.id.tvTitle);
+		tvTitle.setVisibility(View.GONE);
 		lvPrice=(ListView) findViewById(R.id.lvPrice);
+		llButtons=(LinearLayout)findViewById(R.id.button_layout);
 		btnAccept=(Button) findViewById(R.id.btnAccept);
 		btnReject=(Button) findViewById(R.id.btnReject);
+		btnAccept.setVisibility(View.GONE);
+		btnReject.setVisibility(View.GONE);
 		btnAccept.setOnClickListener(this);
 		btnReject.setOnClickListener(this);
 		btnBack.setOnClickListener(this);
@@ -87,14 +96,14 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 			finish();		
 			overridePendingTransition(R.anim.right_in, R.anim.right_out);
 			break;
-		case R.id.btnAccept:
-			int id = Integer.parseInt(String.valueOf(btnAccept.getTag())) ;
+		/*case R.id.btnAccept:
+			int id =(int) btnReject.getTag(); //(int) btnAccept.getTag();
 			checkInternetConnection(id,"button");
 			break;
 		case R.id.btnReject:
-			int id1 = Integer.parseInt(String.valueOf(btnReject.getTag())) ;;
+			int id1 = (int) btnAccept.getTag();//(int) btnReject.getTag();
 			checkInternetConnection(id1,"button");
-			break;
+			break;*/
 		default:
 			break;
 		}
@@ -119,7 +128,6 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 				String url=GlobalCommonValues.VENDOR_BID_BOOK_RESPONSE;
 				new HttpAsyncTask(id,"button").execute(url);
 			}
-
 		}
 		else{
 			ShowDialog.displayDialog(EnquiryDetailsActivity.this,"Connection error:","No Internet Connection");
@@ -157,13 +165,11 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 		@SuppressLint("DefaultLocale")
 		@Override
 		protected void onPostExecute(Void result) {
-			//			Toast.makeText(getBaseContext(), "Data Sent!"+response, Toast.LENGTH_LONG).show();
 			if(progress!=null && progress.isShowing())
 			{
 				progress.dismiss();
 				progress=null;
 			}
-
 			if(!TextUtils.isEmpty(response) && GlobalCommonMethods.isJSONValid(response))
 			{
 				try {
@@ -172,8 +178,10 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 						String _result = jsonObj.getString("result");
 						if(_result.equalsIgnoreCase("success")){
 							JSONObject jObject = jsonObj.getJSONObject("json");
+							//							tvTitle.setText(jObject.getString("label"));
+							String status = jObject.getString("status");
 							tvTitle.setText(jObject.getString("label"));
-
+							tvTitle.setVisibility(View.VISIBLE);
 							LinearLayout parent_layout = (LinearLayout)findViewById(R.id.parent_layout);
 							JSONArray jArray = jObject.getJSONArray("table");
 							for(int i=0;i<jArray.length();i++){
@@ -183,11 +191,10 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 								((TextView)child.findViewById(R.id.value_label)).setText(jArray.getJSONObject(i).getString(key));
 								parent_layout.addView(child);
 							}
-
 							//get buttons here
 							JSONArray buttonArray = jObject.getJSONArray("buttons");
 							if(buttonArray.length()==0){
-								((LinearLayout)findViewById(R.id.button_layout)).setVisibility(View.GONE);
+								llButtons.setVisibility(View.GONE);
 							}
 							for(int i=0;i<buttonArray.length();i++){
 								ButtonBean buttonDetail = new ButtonBean();
@@ -201,11 +208,28 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 									btnReject.setVisibility(View.VISIBLE);
 									btnReject.setTag(buttonDetail.buttonCode);
 								}
-
+								llButtons.setVisibility(View.GONE);
+								/*if(status.equalsIgnoreCase("pending"))
+								{
+									llButtons.setVisibility(View.VISIBLE);
+								}
+								else{
+									//									llButtons.setVisibility(View.GONE);
+									llButtons.removeAllViews();
+									TextView tvStatus=new TextView(getApplicationContext());
+									tvStatus.setText(status);
+									tvStatus.setTextColor(getResources().getColor(R.color.OrangeColorTheme));
+									tvStatus.setTextSize(16.0f);
+									tvStatus.setTypeface(null,Typeface.BOLD);
+									LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+//									params.setMargins(5, 15, 0, 0);
+									params.gravity = Gravity.CENTER;
+									tvStatus.setLayoutParams(params);
+									tvStatus.setGravity(Gravity.CENTER);
+									llButtons.addView(tvStatus);
+								}*/
 								//buttonList.add(buttonDetail);
 							}
-
-
 						}
 					}else{
 						// parsing response of Accept/Reject button
@@ -224,7 +248,6 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 					e.getMessage();
 				}
 			}
-
 		}
 	}
 
@@ -237,7 +260,7 @@ public class EnquiryDetailsActivity extends FragmentActivity implements OnClickL
 		}
 	};
 
-	// Create GetData Metod
+	// Create GetData Method
 	public  void  SetData(int id,String requestType)  throws  UnsupportedEncodingException
 	{
 		// Create data variable for sent values to server  

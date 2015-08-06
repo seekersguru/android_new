@@ -26,6 +26,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.wedwiseapp.R;
+import com.wedwiseapp.util.CustomFonts;
 
 @SuppressLint("ViewHolder")
 public class AlbumAdapter extends BaseAdapter
@@ -78,7 +79,7 @@ public class AlbumAdapter extends BaseAdapter
 		.build();
 		ImageLoader.getInstance().init(config);
 		ImageLoader.getInstance().displayImage(imagePath, imViewMenuImage, options, animateFirstListener);
-		//		CustomFonts.setFontOfTextView(mContext, tvCategoryName,"fonts/GothamRnd-Light.otf");
+		CustomFonts.setFontOfTextView(mContext, tvCategoryName,"fonts/GothamRoundedBook.ttf");
 		tvCategoryName.setShadowLayer(1, 2, 2, Color.BLACK);
 		/*if(position==0)
 			imViewMenuImage.setBackground(mContext.getResources().getDrawable(R.drawable.img1));	

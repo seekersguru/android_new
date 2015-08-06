@@ -8,27 +8,11 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import android.annotation.SuppressLint;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.Window;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 
 import com.commonsware.cwac.merge.MergeAdapter;
 import com.google.gson.Gson;
@@ -50,8 +34,30 @@ import com.wedwise.gsonmodels.SectionModel;
 import com.wedwise.gsonmodels.TypeModel;
 import com.wedwise.tab.BidBookCreateActivity;
 import com.wedwiseapp.R;
+import com.wedwiseapp.VendorDetailViewPagerScreen;
+import com.wedwiseapp.util.CustomFonts;
 import com.wedwiseapp.util.IntentHelper;
 import com.wedwiseapp.views.CTextView;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 
 public class MainActivity extends Activity implements OnClickListener{
 
@@ -68,6 +74,8 @@ public class MainActivity extends Activity implements OnClickListener{
 	String receiver_email="",_receiveremail="";
 	VendorDetail vendorDetail;
 	TextView tvTitle;
+	HashMap<String,HashMap<String,String>> vegValue = new HashMap<String, HashMap<String,String>>();
+	HashMap<String,HashMap<String,String>> vegValueBook = new HashMap<String, HashMap<String,String>>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +102,8 @@ public class MainActivity extends Activity implements OnClickListener{
 		btnCreateBid.setOnClickListener(this);
 		btnSchedule.setOnClickListener(this);
 
+		CustomFonts.setFontOfTextView(MainActivity.this, tvTitle, "fonts/GothamRoundedBook.ttf");
+		
 		if(getIntent()!=null && getIntent().getExtras()!=null)
 		{
 			_receiveremail=getIntent().getExtras().getString("_receiveremail");
@@ -169,6 +179,62 @@ public class MainActivity extends Activity implements OnClickListener{
 					finish();
 					return;
 				}
+				try {
+					
+					JSONObject js = new JSONObject(response).getJSONObject("json").getJSONObject("data").getJSONObject("bid").getJSONObject("package").getJSONObject("package_list");
+					
+					if(js instanceof JSONObject){
+						
+					   Iterator<String> jobj = js.keys();
+					   while (jobj.hasNext()) {
+						String type =  jobj.next();
+						JSONObject innerObj = js.getJSONObject(type);
+						
+                        Log.d("MainActivity", "Desc :"+innerObj.getString("description"));
+                        Log.d("MainActivity", "Desc :"+innerObj.getString("select_val"));
+                        HashMap<String,String> obj = new HashMap<String, String>();
+                        obj.put("Desc", innerObj.getString("description"));
+                        obj.put("Val", innerObj.getString("select_val"));
+                        
+                        vegValue.put(type, obj);
+					}
+					   
+					  
+					}
+//					js.ge
+					//Log.d("MainActivity", "Desc :"+js.get("description"));
+					//Log.d("MainActivity", "Select :"+js.get("select_val"));
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				try {
+					
+					JSONObject js = new JSONObject(response).getJSONObject("json").getJSONObject("data").getJSONObject("book").getJSONObject("package").getJSONObject("package_list");
+					
+					if(js instanceof JSONObject){
+						
+					   Iterator<String> jobj = js.keys();
+					   while (jobj.hasNext()) {
+						String type =  jobj.next();
+						JSONObject innerObj = js.getJSONObject(type);
+						
+                        HashMap<String,String> obj = new HashMap<String, String>();
+                        obj.put("Desc", innerObj.getString("description"));
+                        obj.put("Val", innerObj.getString("select_val"));
+                        
+                        vegValueBook.put(type, obj);
+					}
+					   
+					  
+					}
+				} catch (JSONException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
 				receiver_email=vendorDetail.getJson().getData().getInfo().getEmail();
 				Log.d(TAG, "vendorDetail= " + vendorDetail);
 				Log.d(TAG, "getVendorEmail= "
@@ -365,7 +431,15 @@ public class MainActivity extends Activity implements OnClickListener{
 				R.layout.vendor_detail_header, null);
 		tvTitle.setText(vendorDetail.getJson().getData().getInfo().getTopName());
 		CTextView tvVideoLink = (CTextView) view.findViewById(R.id.tvVideoLink);
+		TextView tvRate = (TextView) view.findViewById(R.id.tvRate);
 		CTextView tvRotatingView = (CTextView) view.findViewById(R.id.tvRotatingView);
+		ImageView fullscreen = (ImageView) view.findViewById(R.id.fullscreen);
+		tvRate.setText(vendorDetail.getJson().getData().getInfo().getStartingPrice());
+		
+		CustomFonts.setFontOfTextView(MainActivity.this, tvVideoLink, "fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(MainActivity.this, tvRate, "fonts/GothamRoundedBook.ttf");
+		CustomFonts.setFontOfTextView(MainActivity.this, tvRotatingView, "fonts/GothamRoundedBook.ttf");
+		
 		tvVideoLink.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -396,6 +470,16 @@ public class MainActivity extends Activity implements OnClickListener{
 		ViewPagerAdapter adapterview = new ViewPagerAdapter(MainActivity.this, imageArra);
 		myPager.setAdapter(adapterview);
 		myPager.setCurrentItem(0);
+		fullscreen.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(MainActivity.this, VendorDetailViewPagerScreen.class);
+				intent.putExtra("imageArray", imageArra);
+				startActivity(intent);
+				
+			}
+		});
 
 		mergeAdapter.addView(view);
 
@@ -444,6 +528,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			Intent myIntent=new Intent(getApplicationContext(),BidBookCreateActivity.class);
 			myIntent.putExtra("type","bid");
 			myIntent.putExtra("vendorEmail",_receiveremail);
+			myIntent.putExtra("package", vegValue);
 			startActivity(myIntent);
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);
 			break;
@@ -453,6 +538,7 @@ public class MainActivity extends Activity implements OnClickListener{
 			IntentHelper.addObjectForKey(bookDetail, "bookDetail");
 			Intent myIntent2=new Intent(getApplicationContext(),BidBookCreateActivity.class);
 			myIntent2.putExtra("type","book");
+			myIntent2.putExtra("packageBook", vegValueBook);
 			myIntent2.putExtra("vendorEmail",_receiveremail);
 			startActivity(myIntent2);
 			overridePendingTransition(R.anim.right_in, R.anim.left_out);

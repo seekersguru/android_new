@@ -4,10 +4,10 @@ package com.wedwiseapp;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.Window;
 
 import com.wedwise.fragments.VendorCategoryHomeFragment;
 import com.wedwise.navigationdrawer.NavigationDrawerCallbacks;
@@ -17,7 +17,7 @@ import com.wedwise.navigationdrawer.NavigationDrawerFragment;
 public class NavigationDrawerHomeActivity extends ActionBarActivity implements
 NavigationDrawerCallbacks {
 
-	private Toolbar mToolbar;
+//	private Toolbar mToolbar;
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 
 	@Override
@@ -25,9 +25,9 @@ NavigationDrawerCallbacks {
 		super.onCreate(savedInstanceState);
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_main_topdrawer);
-		mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
-		setSupportActionBar(mToolbar);
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
+//		mToolbar = (Toolbar) findViewById(R.id.toolbar_actionbar);
+//		setSupportActionBar(mToolbar);
+//		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		Fragment fragment=null;
 		fragment=new VendorCategoryHomeFragment();
 		FragmentManager fragmentManager = getFragmentManager();

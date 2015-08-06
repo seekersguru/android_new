@@ -24,11 +24,10 @@
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/marginleftToolbarText"
-            android:layout_toRightOf="@+id/btnBack"
             android:singleLine="true"
-            android:text="Vendor Detail"
+            android:text=""
             android:textColor="#F05543"
             android:textSize="@dimen/textSizeMedium" />
 
@@ -76,11 +75,11 @@
                 android:layout_weight=".25"
                 android:orientation="vertical" >
 
-                <View
-                    android:id="@+id/viewSeparatorOrangeFirst"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:background="@drawable/divider_orange" />
+<!--                 <View -->
+<!--                     android:id="@+id/viewSeparatorOrangeFirst" -->
+<!--                     android:layout_width="match_parent" -->
+<!--                     android:layout_height="3dp" -->
+<!--                     android:background="@drawable/divider_orange" /> -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -122,7 +121,7 @@
                         android:layout_width="@dimen/dimenBottomBarIcons"
                         android:layout_height="@dimen/dimenBottomBarIcons"
                         android:layout_gravity="center"
-                        android:background="@drawable/leads_icon" />
+                        android:background="@drawable/bid_icon_unselected" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -151,7 +150,7 @@
                         android:layout_width="@dimen/dimenBottomBarIcons"
                         android:layout_height="@dimen/dimenBottomBarIcons"
                         android:layout_gravity="center"
-                        android:background="@drawable/book_unselected" />
+                        android:background="@drawable/book_grey" />
                 </LinearLayout>
             </LinearLayout>
 

@@ -23,9 +23,8 @@
             android:id="@+id/tvCategoryType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="@dimen/paddingLeftEditText"
-            android:layout_toRightOf="@+id/btnBack"
             android:textColor="@color/OrangeColorTheme"
             android:textSize="@dimen/textSizeMedium"
             android:visibility="visible" />
@@ -36,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/marginleftToolbarText"
-            android:layout_toRightOf="@+id/btnBack"
             android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="@dimen/textSizeMedium" />
@@ -48,6 +46,7 @@
             android:layout_height="@dimen/heightSearchBar"
             android:layout_marginLeft="@dimen/marginLeftSearchBar"
             android:gravity="right"
+            android:layout_toLeftOf="@+id/btnSeacrh"
             android:iconifiedByDefault="true"
             android:paddingRight="@dimen/paddingLeftEditText"
             android:visibility="invisible" >
@@ -121,6 +120,17 @@
 <!--             android:background="#00000000" /> -->
 <!--     </FrameLayout> -->
 
+	 <TextView
+            android:id="@+id/tvresult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="@dimen/paddingLeftEditText"
+            android:textColor="@color/OrangeColorTheme"
+            android:textSize="@dimen/textSizeMedium"
+            android:text="no result found"
+            android:visibility="gone" />
+
     <ListView
         android:id="@+id/favList"
         android:layout_width="match_parent"
@@ -167,11 +177,11 @@
                 android:layout_weight=".25"
                 android:orientation="vertical" >
 
-                <View
-                    android:id="@+id/viewSeparatorOrangeFirst"
-                    android:layout_width="match_parent"
-                    android:layout_height="3dp"
-                    android:background="@drawable/divider_orange" />
+<!--                 <View -->
+<!--                     android:id="@+id/viewSeparatorOrangeFirst" -->
+<!--                     android:layout_width="match_parent" -->
+<!--                     android:layout_height="3dp" -->
+<!--                     android:background="@drawable/divider_orange" /> -->
 
                 <LinearLayout
                     android:layout_width="match_parent"

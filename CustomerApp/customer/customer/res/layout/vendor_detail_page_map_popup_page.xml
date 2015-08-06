@@ -20,35 +20,35 @@
             android:layout_marginLeft="10dp"
             android:background="@drawable/back_orange" />
 
-        <LinearLayout
-            android:id="@+id/llAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/marginLeftRightllFields"
-            android:layout_toRightOf="@+id/btnBack"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
+<!--         <LinearLayout -->
+<!--             android:id="@+id/llAddress" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="match_parent" -->
+<!--             android:layout_marginLeft="@dimen/marginLeftRightllFields" -->
+<!--             android:layout_toRightOf="@+id/btnBack" -->
+<!--             android:gravity="center_vertical" -->
+<!--             android:orientation="vertical" > -->
 
-            <TextView
-                android:id="@+id/tvPlace"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLength="50"
-                android:singleLine="true"
-                android:text="Random Place"
-                android:textColor="#000"
-                android:textSize="@dimen/textSizeMedium" />
+<!--             <TextView -->
+<!--                 android:id="@+id/tvPlace" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:maxLength="50" -->
+<!--                 android:singleLine="true" -->
+<!--                 android:text="Random Place" -->
+<!--                 android:textColor="#000" -->
+<!--                 android:textSize="@dimen/textSizeMedium" /> -->
 
-            <TextView
-                android:id="@+id/tvAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLength="50"
-                android:singleLine="true"
-                android:text="The Random Address at Rd,Va,54321"
-                android:textColor="#000"
-                android:textSize="@dimen/textSizeNormal" />
-        </LinearLayout>
+<!--             <TextView -->
+<!--                 android:id="@+id/tvAddress" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:maxLength="50" -->
+<!--                 android:singleLine="true" -->
+<!--                 android:text="The Random Address at Rd,Va,54321" -->
+<!--                 android:textColor="#000" -->
+<!--                 android:textSize="@dimen/textSizeNormal" /> -->
+<!--         </LinearLayout> -->
 
         <View
             android:layout_width="match_parent"
@@ -57,51 +57,49 @@
             android:background="@drawable/divider_bottom_bar" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rlBottomBar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bottomBarHeight"
-        android:layout_alignParentBottom="true"
-        android:background="@color/appbackgroundcolor" >
+<!--     <RelativeLayout -->
+<!--         android:id="@+id/rlBottomBar" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="@dimen/bottomBarHeight" -->
+<!--         android:layout_alignParentBottom="true" -->
+<!--         android:background="@color/appbackgroundcolor" > -->
 
-        <LinearLayout
-            android:id="@+id/llAddressBottom"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/marginLeftRightllFields"
-            android:gravity="center_vertical"
-            android:orientation="vertical" >
+<!--         <LinearLayout -->
+<!--             android:id="@+id/llAddressBottom" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="match_parent" -->
+<!--             android:layout_alignParentLeft="true" -->
+<!--             android:layout_centerVertical="true" -->
+<!--             android:layout_marginLeft="@dimen/marginLeftRightllFields" -->
+<!--             android:gravity="center_vertical" -->
+<!--             android:orientation="vertical" > -->
 
-            <TextView
-                android:id="@+id/tvPlaceBottom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLength="50"
-                android:singleLine="true"
-                android:text="Random Place"
-                android:textColor="#000"
-                android:textSize="@dimen/textSizeMedium" />
+<!--             <TextView -->
+<!--                 android:id="@+id/tvPlaceBottom" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:maxLength="50" -->
+<!--                 android:singleLine="true" -->
+<!--                 android:text="Random Place" -->
+<!--                 android:textColor="#000" -->
+<!--                 android:textSize="@dimen/textSizeMedium" /> -->
 
-            <TextView
-                android:id="@+id/tvAddressBottom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxLength="50"
-                android:singleLine="true"
-                android:text="The Random Address at Rd,Va,54321"
-                android:textColor="#000"
-                android:textSize="@dimen/textSizeNormal" />
-        </LinearLayout>
-    </RelativeLayout>
+<!--             <TextView -->
+<!--                 android:id="@+id/tvAddressBottom" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:maxLength="50" -->
+<!--                 android:singleLine="true" -->
+<!--                 android:text="The Random Address at Rd,Va,54321" -->
+<!--                 android:textColor="#000" -->
+<!--                 android:textSize="@dimen/textSizeNormal" /> -->
+<!--         </LinearLayout> -->
+<!--     </RelativeLayout> -->
 
-    <ImageView
+    <WebView
+        android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rlBottomBar"
-        android:layout_below="@+id/rlTopBar"
-        android:contentDescription="@string/app_name"
-        android:background="@drawable/map" />
+        android:layout_below="@+id/rlTopBar"/>
 
 </RelativeLayout>

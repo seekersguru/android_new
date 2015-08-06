@@ -20,7 +20,7 @@
             android:layout_width="@dimen/btnBackWidth"
             android:layout_height="@dimen/btnBackHeight"
             android:layout_marginLeft="@dimen/marginleftBackButton"
-            android:background="@drawable/back_orange" />
+            android:background="@drawable/arrow_back_orange" />
 
         <TextView
             android:id="@+id/tvToolBar"
